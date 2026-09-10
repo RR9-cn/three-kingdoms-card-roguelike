@@ -119,3 +119,11 @@
 - [x] 15.3 使用独立v6存档，完成规则、回归、桌面打包与本机启动证据。
 
 验证：67项规则测试、10项浏览器测试通过；macOS与Windows包已生成，打包后的macOS应用完成八关、随机整编、极限挑战、最小化和重启恢复。Windows仍只有交叉打包。证据见 `docs/evidence/FORGE_V051.md` 与 `docs/evidence/forge-v051-desktop-smoke.json`。
+
+## 16. v0.5.2 张角像素演出样板
+
+- [x] 16.1 使用 PixelLab 生成并登记张角角色、待机、受击、雷劫变招与败亡动作。
+- [x] 16.2 将动作接入第八关公开状态，加入雷光、暗场、受击与击败反馈，并支持减少动态效果。
+- [x] 16.3 完成浏览器、规则回归、桌面打包与本机演出证据；提交并推送 GitHub。
+
+验证：PixelLab 生成26帧透明PNG并登记角色、生成组和动画ID；67项规则测试、11项浏览器测试通过。macOS与Windows目录包已重新生成，打包后的macOS应用完成八关、张角演出、随机整编、极限挑战、最小化和重启恢复。证据见 `docs/evidence/BOSS_ANIMATION_V052.md` 与 `docs/evidence/forge-v052-desktop-smoke.json`；Windows仍只有交叉打包。

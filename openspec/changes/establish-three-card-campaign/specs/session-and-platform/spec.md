@@ -27,3 +27,10 @@ Electron SHALL 保持沙箱、隔离、关闭Node与拒绝外部导航；构建�
 #### Scenario: Windows cross build
 - **WHEN** 仅生成Windows包
 - **THEN** 原生与Steam发布仍标记待验证
+
+### Requirement: Stateful boss animation
+界面 SHALL 让张角根据备战、待入账受击、阶段变招与击败状态显示不同像素动作。动画 SHALL 仅依赖公开局面，不改变规则状态；减少动态效果时 SHALL 显示稳定关键帧。
+
+#### Scenario: Zhang Jiao crosses the phase threshold
+- **WHEN** 已入账攻势首次跨过张角40%兵力线且尚未击败
+- **THEN** 界面播放举杖引雷动作与阶段变招反馈，下一手继续显示第二阶段待机状态
