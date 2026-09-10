@@ -6,7 +6,8 @@ playwright-report/
 .env*
 !.env.example
 
-release/
+release/*
+!release/ThreeCardKingdoms-*-win32-x64.zip
 .desktop-stage/
 playwright-report/
 test-results/
