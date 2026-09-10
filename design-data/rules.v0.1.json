@@ -1,0 +1,26 @@
+{
+  "version": "0.1.0-design",
+  "status": "unvalidated-balance",
+  "deck": { "suits": ["spear", "cavalry", "bow", "scheme"], "ranks": [1,2,3,4,5,6,7,8,9], "independentSides": true, "reshuffleEachRound": true },
+  "categories": [
+    { "id": "high-card", "name": "散阵", "order": 0, "damageBonus": 0 },
+    { "id": "pair", "name": "合击", "order": 1, "damageBonus": 1 },
+    { "id": "straight", "name": "连阵", "order": 2, "damageBonus": 2 },
+    { "id": "flush", "name": "同袍", "order": 3, "damageBonus": 3 },
+    { "id": "straight-flush", "name": "同袍连阵", "order": 4, "damageBonus": 4 },
+    { "id": "three-kind", "name": "三军同心", "order": 5, "damageBonus": 6 }
+  ],
+  "round": { "commandPoints": 2, "commandCap": 4, "exchangeLimit": 1, "scoutLimit": 1, "tacticLimit": 1, "basePressure": 1, "maxPressure": 3, "pressureChoices": [2,3], "commitLimit": 1 },
+  "damage": { "base": 4, "perPressure": 2, "enemyYieldBase": 2, "playerWithdraw": 3, "exhaustionStartRound": 8, "exhaustionDamage": 4 },
+  "campaign": { "layers": 8, "initialHp": 40, "initialGold": 20, "tacticCapacity": 3, "relicCapacity": 4, "normalGold": 12, "eliteGold": 20, "skipTacticGold": 6, "skipRelicGold": 10 },
+  "shop": { "tacticPrice": 18, "relicPrice": 30, "healPrice": 12, "healAmount": 8 },
+  "camp": { "healAmount": 10, "maxHpAndCurrentGain": 4 },
+  "ai": { "pressureThreeYieldBonus": 0.10, "yieldCap": 0.85 },
+  "enemies": [
+    { "id": "yellow-blade", "hp": 20, "yieldByCategoryGroup": [0.45,0.20,0.02] },
+    { "id": "yellow-scout", "hp": 18, "yieldByCategoryGroup": [0.60,0.30,0.05] },
+    { "id": "yellow-guard", "hp": 22, "yieldByCategoryGroup": [0.15,0.05,0.00] },
+    { "id": "yellow-captain", "hp": 28, "yieldByCategoryGroup": [0.10,0.02,0.00], "hideAllEvery": 3 },
+    { "id": "zhang-jiao", "hp": 40, "yieldByCategoryGroup": [0,0,0], "neverYield": true, "pressureTwoEvery": 3 }
+  ]
+}

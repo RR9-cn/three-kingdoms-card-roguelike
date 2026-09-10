@@ -1,0 +1,33 @@
+{
+  "name": "three-card-kingdoms",
+  "version": "0.5.1",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/playtest"
+  ],
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test tests/*.test.ts",
+    "test:browser": "playwright test",
+    "simulate": "tsx tools/simulate.ts",
+    "desktop": "npm run build && electron apps/desktop/main.cjs",
+    "package:mac": "npm run build && node tools/package-desktop.mjs darwin arm64",
+    "package:win": "npm run build && node tools/package-desktop.mjs win32 x64",
+    "simulate:forge": "tsx tools/simulate-forge.ts",
+    "test:desktop:forge": "tsx tools/smoke-forge.ts",
+    "compare:forge": "tsx tools/compare-forge.ts"
+  },
+  "devDependencies": {
+    "@electron/packager": "20.3.0",
+    "@playwright/test": "1.63.0",
+    "@types/node": "24.10.1",
+    "electron": "44.3.0",
+    "tsx": "4.23.13",
+    "typescript": "7.0.2",
+    "vite": "8.2.2"
+  }
+}

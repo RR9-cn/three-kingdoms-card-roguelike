@@ -1,0 +1,44 @@
+{
+  "contentVersion": "0.1.0",
+  "seedPrefix": "balance-",
+  "count": 1000,
+  "notes": "Four fixed heuristics. Same route policy, skips rewards, no hidden information. Not a human win-rate estimate or complete build balance test.",
+  "results": [
+    {
+      "strategy": "show",
+      "runs": 1000,
+      "wins": 75,
+      "winRate": 0.075,
+      "meanRounds": 14.943,
+      "maxLayer": 8,
+      "firstWin": "balance-10"
+    },
+    {
+      "strategy": "press",
+      "runs": 1000,
+      "wins": 186,
+      "winRate": 0.186,
+      "meanRounds": 13.497,
+      "maxLayer": 8,
+      "firstWin": "balance-7"
+    },
+    {
+      "strategy": "shape",
+      "runs": 1000,
+      "wins": 697,
+      "winRate": 0.697,
+      "meanRounds": 15.842,
+      "maxLayer": 8,
+      "firstWin": "balance-0"
+    },
+    {
+      "strategy": "cautious",
+      "runs": 1000,
+      "wins": 675,
+      "winRate": 0.675,
+      "meanRounds": 18.207,
+      "maxLayer": 8,
+      "firstWin": "balance-0"
+    }
+  ]
+}

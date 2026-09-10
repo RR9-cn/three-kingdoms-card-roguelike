@@ -1,0 +1,132 @@
+{
+  "version": "0.3.1",
+  "method": "Paired forge-0..199, same recruitment/edit policy. Counterplay discards one spare card to lift ambush unless already lethal; otherwise replaces three non-selected cards when projected remaining score is insufficient. No future draw/RNG access. Not optimal play or a human enjoyment measure.",
+  "results": [
+    {
+      "starter": "guanyu",
+      "strategy": "greedy",
+      "runs": 200,
+      "wins": 83,
+      "winRate": 0.415,
+      "discards": 0,
+      "clears": 1410,
+      "lastHandClears": 190,
+      "meanPlaysPerClear": 2.1567375886524824,
+      "failures": [
+        0,
+        0,
+        0,
+        4,
+        2,
+        15,
+        21,
+        75
+      ]
+    },
+    {
+      "starter": "guanyu",
+      "strategy": "counterplay",
+      "runs": 200,
+      "wins": 139,
+      "winRate": 0.695,
+      "discards": 655,
+      "clears": 1516,
+      "lastHandClears": 181,
+      "meanPlaysPerClear": 2.062664907651715,
+      "failures": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        4,
+        15,
+        42
+      ]
+    },
+    {
+      "starter": "zhouyu",
+      "strategy": "greedy",
+      "runs": 200,
+      "wins": 60,
+      "winRate": 0.3,
+      "discards": 0,
+      "clears": 1382,
+      "lastHandClears": 178,
+      "meanPlaysPerClear": 2.142547033285094,
+      "failures": [
+        0,
+        0,
+        0,
+        4,
+        1,
+        16,
+        27,
+        92
+      ]
+    },
+    {
+      "starter": "zhouyu",
+      "strategy": "counterplay",
+      "runs": 200,
+      "wins": 118,
+      "winRate": 0.59,
+      "discards": 822,
+      "clears": 1514,
+      "lastHandClears": 168,
+      "meanPlaysPerClear": 1.9874504623513871,
+      "failures": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        2,
+        79
+      ]
+    },
+    {
+      "starter": "liubei",
+      "strategy": "greedy",
+      "runs": 200,
+      "wins": 80,
+      "winRate": 0.4,
+      "discards": 0,
+      "clears": 1441,
+      "lastHandClears": 175,
+      "meanPlaysPerClear": 2.0596807772380292,
+      "failures": [
+        0,
+        0,
+        0,
+        2,
+        2,
+        5,
+        15,
+        96
+      ]
+    },
+    {
+      "starter": "liubei",
+      "strategy": "counterplay",
+      "runs": 200,
+      "wins": 135,
+      "winRate": 0.675,
+      "discards": 677,
+      "clears": 1526,
+      "lastHandClears": 135,
+      "meanPlaysPerClear": 1.918086500655308,
+      "failures": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        3,
+        3,
+        59
+      ]
+    }
+  ]
+}

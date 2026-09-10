@@ -1,0 +1,4 @@
+{
+  "compilerOptions": { "target": "ES2022", "module": "ESNext", "moduleResolution": "Bundler", "strict": true, "resolveJsonModule": true, "esModuleInterop": true, "skipLibCheck": true, "noEmit": true, "types": ["node", "vite/client"], "lib": ["ES2022", "DOM"] },
+  "include": ["packages", "apps/playtest", "tests", "tools/*.ts", "vite.config.ts", "playwright.config.ts"]
+}

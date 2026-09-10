@@ -1,0 +1,1 @@
+{ "name": "@three-card/playtest", "private": true, "version": "0.1.0", "type": "module", "dependencies": { "@three-card/core": "*", "@three-card/content": "*" } }

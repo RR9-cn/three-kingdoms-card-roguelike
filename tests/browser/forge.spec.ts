@@ -1,0 +1,28 @@
+import {counterplayStrategy} from '../../tools/forge-counterplay';
+import {test,expect,type Page} from '@playwright/test';
+import type {ForgeAction,ForgeView} from '@three-card/core';
+import {forgeStrategy,bestForgeHand} from '../../tools/forge-strategy';
+const read=(page:Page)=>page.evaluate(()=>JSON.parse((window as any).render_game_to_text())) as Promise<{home:boolean;paused:boolean;view:ForgeView}>;
+async function click(page:Page,action:string){await page.locator(`[data-action="${action}"]`).click();if(!action.startsWith('card:')&&!action.startsWith('edit-card:'))await page.waitForTimeout(180);}
+async function begin(page:Page,seed:string,starter='liubei'){await page.goto('http://127.0.0.1:4173');await page.locator('#seed').fill(seed);await click(page,'new');await click(page,'starter:'+starter);await click(page,'begin:normal');}
+async function uiAction(page:Page,a:Omit<ForgeAction,'seq'>){
+ if((a.type==='play'||a.type==='discard')){for(const id of a.ids!)await click(page,'card:'+id);await click(page,a.type);}
+ else if(a.type==='begin')await click(page,'begin:normal');
+ else if(a.type==='starter')await click(page,'starter:'+a.id);
+ else if(a.type==='recruit'||a.type==='buy'){await click(page,a.type+':'+a.id);if(a.replace)await click(page,'replace:'+a.replace);}
+ else if(a.type==='reorder')await click(page,(a.direction===1?'right:':'left:')+a.id);
+ else {if(a.type==='bank'&&await page.locator('[data-action=skip-animation]').count())await click(page,'skip-animation');await click(page,a.type);}
+}
+test('build UI, preview parity, one random edit and independent resume',async({page})=>{
+ test.setTimeout(60000);const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('http://127.0.0.1:4173');await page.screenshot({path:'docs/evidence/forge-home.png'});await page.locator('#seed').fill('forge-0');await click(page,'new');await page.screenshot({path:'docs/evidence/forge-starters.png'});await click(page,'starter:liubei');await click(page,'begin:normal');
+ let v=(await read(page)).view;const best=bestForgeHand(v);for(const id of best.ids)await click(page,'card:'+id);await expect(page.locator('.total b')).toHaveText(new Intl.NumberFormat('zh-CN',{maximumFractionDigits:2}).format(best.score));await page.screenshot({path:'docs/evidence/forge-battle-1440.png'});
+ await page.setViewportSize({width:1280,height:720});expect(await page.locator('[data-action=play]').evaluate(el=>el.getBoundingClientRect().bottom<=innerHeight)).toBe(true);expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);await page.screenshot({path:'docs/evidence/forge-battle-1280.png'});await click(page,'play');expect((await read(page)).view.result!.total).toBe(best.score);
+ for(let n=0;n<20;n++){v=(await read(page)).view;if(v.phase==='recruit')break;await uiAction(page,counterplayStrategy(v,'liubei'));}v=(await read(page)).view;expect(v.phase).toBe('recruit');const before=v;await page.reload();await click(page,'continue');expect((await read(page)).view).toEqual(before);await page.screenshot({path:'docs/evidence/forge-recruit.png'});
+ await click(page,'recruit:'+v.recruits[0]);expect(await page.locator('[data-action=random-edit]').count()).toBe(1);expect(await page.locator('.edit-tabs').count()).toBe(0);await page.screenshot({path:'docs/evidence/forge-random-edit.png'});const beforeEdit=(await read(page)).view;await click(page,'random-edit');v=(await read(page)).view;expect(v.phase).toBe('shop');expect(v.stats.edits).toBe(beforeEdit.stats.edits+1);expect(v.lastEdit).toBeTruthy();await expect(page.locator('.random-edit-result')).toContainText(v.lastEdit!);await page.screenshot({path:'docs/evidence/forge-shop.png'});const editedArmy=structuredClone(v.army),editedLevels=[...v.levels];await click(page,'depart');await click(page,'begin:normal');v=(await read(page)).view;expect(v.army).toEqual(editedArmy);expect(v.levels).toEqual(editedLevels);expect(v.lastEdit).toBeNull();expect(errors).toEqual([]);
+});
+test('eight-stage campaign uses public UI and reaches victory',async({page})=>{
+ test.setTimeout(120000);await begin(page,'forge-v051-7');let replaced=false;for(let n=0;n<200;n++){const v=(await read(page)).view;if(['victory','defeat'].includes(v.phase))break;const a=counterplayStrategy(v,'liubei');if(a.replace)replaced=true;await uiAction(page,a);}expect((await read(page)).view.phase).toBe('victory');expect((await read(page)).view.stats.cleared).toBe(8);await page.screenshot({path:'docs/evidence/forge-victory.png'});console.log('Explicit replacement exercised:',replaced);
+});
+test('limited plays terminate in defeat without editing runtime state',async({page})=>{
+ test.setTimeout(60000);await begin(page,'defeat-proof','guanyu');for(let n=0;n<80;n++){const v=(await read(page)).view;if(['victory','defeat'].includes(v.phase))break;let a=forgeStrategy(v,'guanyu');if(v.phase==='battle')a={type:'play',ids:v.hand.slice(0,3).map(c=>c.id)};else if(v.phase==='recruit')a={type:'recruit',id:'skip'};else if(v.phase==='forge'){await click(page,'edit-skip');continue;}else if(v.phase==='shop')a={type:'depart'};await uiAction(page,a);}expect((await read(page)).view.phase).toBe('defeat');await page.screenshot({path:'docs/evidence/forge-defeat.png'});
+});

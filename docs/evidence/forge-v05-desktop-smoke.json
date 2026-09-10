@@ -1,0 +1,15 @@
+{
+  "version": "0.5.0",
+  "platform": "darwin",
+  "arch": "arm64",
+  "packaged": true,
+  "offlineLocalPages": true,
+  "legacyNavigation": true,
+  "rendererNodeDisabled": true,
+  "minimizePause": true,
+  "restartRestore": true,
+  "fullCampaignVictory": true,
+  "endlessContinuation": true,
+  "wagerSettledAndRestored": true,
+  "errors": []
+}

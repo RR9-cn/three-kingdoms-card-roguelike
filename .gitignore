@@ -1,0 +1,12 @@
+node_modules/
+dist/
+test-results/
+playwright-report/
+.DS_Store
+.env*
+!.env.example
+
+release/
+.desktop-stage/
+playwright-report/
+test-results/

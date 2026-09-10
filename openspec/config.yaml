@@ -1,0 +1,36 @@
+schema: spec-driven
+
+context: |
+  Steam PC 单人横屏三国卡牌肉鸽，工作名《三国·三张定天下》。
+  默认v0.2为六选三、有限出牌达标、永久改牌和20组件构筑；v0.1保留legacy入口。
+  当前为实施阶段，既有 art-prototype 仅为旧美术样板。
+  阅读 docs/GAME_DESIGN.md、docs/CONTENT.md 及 design-data/rules.v0.1.json。
+  采用独立 TypeScript 规则内核与 Electron 桌面客户端。
+  浏览器、本机桌面启动、Windows 原生验证与 Steam 上传必须区分。
+
+rules:
+  design:
+    - 规则与数值改动须同步游戏设计书、能力规格及种子配置。
+    - 明确随机状态、隐藏信息边界和效果执行顺序。
+  tasks:
+    - 尚未实现的任务不得勾选完成。
+    - 先规则内核和单战，再桌面平台冒烟，再征程和美术。
+
+# Project context (optional)
+# This is shown to AI when creating artifacts.
+# Add your tech stack, conventions, style guides, domain knowledge, etc.
+# Example:
+#   context: |
+#     Tech stack: TypeScript, React, Node.js
+#     We use conventional commits
+#     Domain: e-commerce platform
+
+# Per-artifact rules (optional)
+# Add custom rules for specific artifacts.
+# Example:
+#   rules:
+#     proposal:
+#       - Keep proposals under 500 words
+#       - Always include a "Non-goals" section
+#     tasks:
+#       - Break tasks into chunks of max 2 hours
