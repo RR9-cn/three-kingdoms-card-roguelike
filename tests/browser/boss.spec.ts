@@ -25,3 +25,11 @@ test('Zhang Jiao uses distinct idle, hit, thunder and defeat pixel motions',asyn
  let defeated=fixture(7,true);defeated.score=defeated.target-1;defeated=forgeAction(defeated,{seq:defeated.seq,type:'play',ids:defeated.hand.slice(0,3)}).state;defeated=forgeAction(defeated,{seq:defeated.seq,type:'bank'}).state;await load(page,defeated);await expect(page.locator('[data-boss-motion=defeat]')).toBeVisible();await page.waitForTimeout(800);await page.screenshot({path:'docs/evidence/boss-zhangjiao-defeat.png'});
  await page.emulateMedia({reducedMotion:'reduce'});await load(page,fixture(7,true));const src=await page.locator('[data-boss-motion=idle]').getAttribute('src');await page.waitForTimeout(300);expect(await page.locator('[data-boss-motion=idle]').getAttribute('src')).toBe(src);
 });
+
+test('home demo enters a disposable built Zhang Jiao battle',async({page})=>{
+ await page.goto('http://127.0.0.1:4173');await page.evaluate(()=>localStorage.clear());await page.reload();
+ await expect(page.locator('[data-action=demo]')).toHaveText('演出试玩 · 直达张角');await page.locator('[data-action=demo]').click();
+ await expect(page.locator('.demo-strip')).toContainText('第一手建议选择 1、2、6');await expect(page.locator('[aria-label="张角首领战"]')).toBeVisible();await expect(page.locator('.band-card')).toHaveCount(5);await expect(page.locator('[data-boss-motion=idle]')).toBeVisible();
+ expect(await page.evaluate(()=>Object.keys(localStorage).filter(k=>k.includes('three-card:forge')).length)).toBe(0);
+ await page.locator('[data-action=home]').click();await expect(page.locator('[data-action=continue]')).toHaveCount(0);
+});
