@@ -10,13 +10,13 @@ export type ForgePhase='starter'|'prepare'|'battle'|'result'|'recruit'|'forge'|'
 export interface ForgeState {
  schemaVersion:7;contentVersion:typeof FORGE_VERSION;seed:string;seq:number;rng:RandomState;phase:ForgePhase;stage:number;
  army:ArmyCard[];nextId:number;hand:string[];draw:string[];discard:string[];companions:Companion[];levels:number[];
- gold:number;score:number;target:number;pressed:boolean;hands:number;discards:number;played:number;lastCategory:number|null;scouted:boolean;lastSuit:Suit|null;momentum:number;primed:boolean;
+ gold:number;score:number;target:number;pressed:boolean;hands:number;discards:number;played:number;lastCategory:number|null;scouted:boolean;lastSuit:Suit|null;
  challenge:number;stageBest:number;recordBefore:number;settlement:'pending'|'bank'|'win'|'loss';lastEdit:string|null;
  result:Score|null;recruits:CompanionId[];offers:{id:CompanionId;sold:boolean}[];refreshes:number;
  stats:{plays:number;best:number;cleared:number;edits:number;pressureWins:number;recruited:number};
 }
-export type ForgeAction={seq:number;type:'starter'|'begin'|'play'|'discard'|'prime'|'next'|'recruit'|'edit'|'random-edit'|'buy'|'sell'|'refresh'|'depart'|'reorder'|'bank'|'gamble'|'extend';id?:string;ids?:string[];replace?:string;pressed?:boolean;edit?:ForgeEdit;cardId?:string;suit?:Suit;category?:number;direction?:number};
-export function newForge(seed:string):ForgeState{return{schemaVersion:7,contentVersion:FORGE_VERSION,seed,seq:0,rng:randomState(seed),phase:'starter',stage:0,army:deck().map(c=>({...c,bonus:0})),nextId:0,hand:[],draw:[],discard:[],companions:[],levels:[0,0,0,0,0,0],gold:R.startGold,score:0,target:STAGES[0].target,pressed:false,hands:R.hands,discards:R.discards,played:0,lastCategory:null,scouted:false,lastSuit:null,momentum:0,primed:false,challenge:0,stageBest:0,recordBefore:0,settlement:'bank',lastEdit:null,result:null,recruits:[...STARTERS],offers:[],refreshes:0,stats:{plays:0,best:0,cleared:0,edits:0,pressureWins:0,recruited:0}};}
+export type ForgeAction={seq:number;type:'starter'|'begin'|'play'|'discard'|'next'|'recruit'|'edit'|'random-edit'|'buy'|'sell'|'refresh'|'depart'|'reorder'|'bank'|'gamble'|'extend';id?:string;ids?:string[];replace?:string;pressed?:boolean;edit?:ForgeEdit;cardId?:string;suit?:Suit;category?:number;direction?:number};
+export function newForge(seed:string):ForgeState{return{schemaVersion:7,contentVersion:FORGE_VERSION,seed,seq:0,rng:randomState(seed),phase:'starter',stage:0,army:deck().map(c=>({...c,bonus:0})),nextId:0,hand:[],draw:[],discard:[],companions:[],levels:[0,0,0,0,0,0],gold:R.startGold,score:0,target:STAGES[0].target,pressed:false,hands:R.hands,discards:R.discards,played:0,lastCategory:null,scouted:false,lastSuit:null,challenge:0,stageBest:0,recordBefore:0,settlement:'bank',lastEdit:null,result:null,recruits:[...STARTERS],offers:[],refreshes:0,stats:{plays:0,best:0,cleared:0,edits:0,pressureWins:0,recruited:0}};}
 export const owns=(s:Pick<ForgeState,'companions'>,id:CompanionId)=>s.companions.some(c=>c.id===id);
 function selected(s:ForgeState,ids:string[],min:number,max:number):ArmyCard[]{requireRule(ids.length>=min&&ids.length<=max&&new Set(ids).size===ids.length&&ids.every(id=>s.hand.includes(id)),'请选择有效且不重复的手牌');return s.hand.filter(id=>ids.includes(id)).map(id=>s.army.find(c=>c.id===id)!);}
 export function formation(s:Pick<ForgeState,'companions'>,cards:Card[]):number{const basic=evaluate(cards).category;const ranks=cards.map(c=>c.rank).sort((a,b)=>a-b);if(owns(s,'scroll')&&ranks[0]<ranks[1]&&ranks[1]<ranks[2]&&ranks[1]-ranks[0]<=2&&ranks[2]-ranks[1]<=2)return Math.max(basic,new Set(cards.map(c=>c.suit)).size===1?4:2);return basic;}
@@ -45,7 +45,7 @@ function scoreForge(s:ForgeState,ids:string[],resolve:boolean):Score {
     if(c.id==='blade'&&card.rank>=7){mult+=2;push(COMPANIONS[c.id].name,'高点牌：+2倍率',card.id);}
     if(c.id==='diaochan'&&card.suit==='scheme'){mult+=2;push(COMPANIONS[c.id].name,'谋牌：+2倍率',card.id);}
    }
-   if(resolve&&trigger>0&&owns(s,'pursuit')&&bursts<3){const guaranteed=s.primed;if(guaranteed)s.primed=false;if(guaranteed||random(s.rng,'enemy')<.35){bursts++;repeat++;push(guaranteed?'聚势追击':'追击令',`${guaranteed?'军势保底命中！':'追击成功！'}追加第${bursts}/3次`,card.id);if(owns(s,'chain')){mult*=1.5;push('连营鼓','连营发动：倍率 ×1.5',card.id);}}else{const before=s.momentum;s.momentum=Math.min(5,s.momentum+1);push('追击令',`35%追击未触发，军势 ${before} → ${s.momentum}`,card.id);}}
+   if(resolve&&trigger>0&&owns(s,'pursuit')&&bursts<3){if(random(s.rng,'enemy')<.35){bursts++;repeat++;push('追击令',`追击成功！追加第${bursts}/3次`,card.id);if(owns(s,'chain')){mult*=1.5;push('连营鼓','连营发动：倍率 ×1.5',card.id);}}else push('追击令','35%追击未触发，本次连锁结束',card.id);}
   }
  }
  for(const c of s.companions){const name=COMPANIONS[c.id].name;switch(c.id){
@@ -90,7 +90,6 @@ function applyForge(s:ForgeState,a:ForgeAction){requireRule(a.seq===s.seq,'行�
  case 'begin':{phase(s,'prepare');requireRule(a.pressed===undefined||typeof a.pressed==='boolean','加压选项无效');s.pressed=a.pressed??false;s.target=Math.ceil(forgeStage(s).target*(s.pressed?R.pressureFactor:1));s.score=0;s.stageBest=0;s.settlement='bank';s.hands=forgeStage(s).rule==='last-stand'?3:R.hands;s.discards=R.discards+Number(owns(s,'horse'));s.played=0;s.lastCategory=null;s.lastSuit=null;s.scouted=false;s.result=null;s.hand=[];s.discard=[];s.draw=shuffle(s.army.map(c=>c.id),s.rng,'player');refill(s);s.phase='battle';return;}
  case 'play':{phase(s,'battle');requireRule(s.hands>0,'出牌次数不足');const floor=previewForge(s,a.ids??[]).total;const result=scoreForge(s,a.ids??[],true);result.floor=floor;s.recordBefore=s.stats.best;s.settlement='pending';s.hands--;s.played++;s.stats.plays++;s.result=result;s.lastCategory=result.category;s.lastSuit=result.cards[0].suit;for(const c of s.companions)if(result.growth[c.id]!==undefined)c.growth=result.growth[c.id];const played=result.cards.map(c=>c.id);s.hand=s.hand.filter(id=>!played.includes(id));s.discard.push(...played);s.phase='result';return;}
  case 'discard':{phase(s,'battle');requireRule(s.discards>0,'换牌次数已用完');const cards=selected(s,a.ids??[],1,3);s.hand=s.hand.filter(id=>!cards.some(c=>c.id===id));s.discard.push(...cards.map(c=>c.id));s.discards--;s.scouted=true;if(owns(s,'caocao'))s.gold+=2;refill(s);return;}
- case 'prime':phase(s,'battle');requireRule(owns(s,'pursuit'),'需要追击令才能聚势');requireRule(!s.primed,'已经聚势');requireRule(s.momentum>=2,'至少需要2军势');s.momentum-=2;s.primed=true;return;
  case 'bank':phase(s,'result');settle(s,false);return;
  case 'gamble':phase(s,'result');requireRule(s.result&&wagerValues(s.result.total).stake>0&&wagerValues(s.result.total).win>s.result.total,'分数不足或已达上限，无法押注');settle(s,true);return;
  case 'extend':phase(s,'victory');requireRule(s.stage===7,'尚未通关');s.gold+=10+s.hands+Math.min(5,Math.floor(s.gold/5))+(s.pressed?R.pressureReward:0);s.recruits=sample(s,3);s.phase='recruit';return;
@@ -130,7 +129,7 @@ export function isForgeState(value:unknown):value is ForgeState{try{
  if(!Array.isArray(s.companions)||s.companions.length>5||s.companions.some(c=>!c||!Object.hasOwn(COMPANIONS,c.id)||!int(c.growth))||new Set(s.companions.map(c=>c.id)).size!==s.companions.length)return false;
  if(!Array.isArray(s.levels)||s.levels.length!==6||!s.levels.every(int)||!int(s.gold)||!int(s.score)||!int(s.target)||!s.target||!int(s.hands)||s.hands>4||!int(s.discards)||s.discards>3||!int(s.nextId)||!int(s.played)||!int(s.refreshes)||typeof s.pressed!=='boolean')return false;
  if(!int(s.challenge)||!int(s.stageBest)||!int(s.recordBefore)||!['pending','bank','win','loss'].includes(s.settlement)||(s.challenge>0&&s.stage!==7)||(s.settlement==='pending'&&s.phase!=='result')||(s.lastEdit!==null&&typeof s.lastEdit!=='string'))return false;
- if(typeof s.scouted!=='boolean'||(s.lastSuit!==null&&!SUITS.includes(s.lastSuit))||!int(s.momentum)||s.momentum>5||typeof s.primed!=='boolean')return false;
+ if(typeof s.scouted!=='boolean'||(s.lastSuit!==null&&!SUITS.includes(s.lastSuit)))return false;
  if(s.lastCategory!==null&&(!int(s.lastCategory)||s.lastCategory>=6))return false;
  if(!s.rng||['player','enemy','ai','map','reward'].some(k=>!int(s.rng[k as keyof RandomState])||s.rng[k as keyof RandomState]>0xffffffff))return false;
  if(!s.stats||['plays','best','cleared','edits','pressureWins','recruited'].some(k=>!int(s.stats[k as keyof typeof s.stats])))return false;

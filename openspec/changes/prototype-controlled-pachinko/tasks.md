@@ -1,14 +1,14 @@
-## 1. Controlled chain rules
+## 1. Simple chain rules
 
-- [x] 1.1 Add v7 run state for momentum and priming with strict validation and independent storage.
-- [x] 1.2 Award bounded momentum on real pursuit failure and implement the atomic prime action.
-- [x] 1.3 Verify preview purity, RNG behavior, persistence, replay and invalid actions with rule tests.
+- [x] 1.1 Keep pursuit at a fixed 35% chance with at most three additions.
+- [x] 1.2 Remove momentum, priming, guarantee actions and their state fields.
+- [x] 1.3 Preserve preview purity, RNG behavior, persistence and replay.
 
 ## 2. Player feedback
 
-- [x] 2.1 Show momentum, prime availability and the armed guarantee in the battle controls and rules.
+- [x] 2.1 Keep battle controls free of an additional pursuit resource.
 - [x] 2.2 Add truthful four-tier chain feedback with reduced-motion behavior.
-- [x] 2.3 Seed the disposable Zhang Jiao showcase so failure, priming and a guaranteed chain can be observed quickly.
+- [x] 2.3 Keep the disposable Zhang Jiao showcase focused on retrigger, pursuit and chain feedback.
 
 ## 3. Validation and delivery
 
