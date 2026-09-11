@@ -15,3 +15,11 @@
 #### Scenario: Pursuit chain reaches two additions
 - **WHEN** 本手已经揭晓两次追加
 - **THEN** 界面进入连营反馈层级，显示真实追加次数且不提前暴露下一次判定
+
+### Requirement: Formation rules are explained in play
+
+规则界面 SHALL 展示全部六种阵型的组成条件、示例、基础兵力和基础倍率。选牌预览 SHALL 说明当前三张牌所属阵型的成立条件。
+
+#### Scenario: Player checks formation rules
+- **WHEN** 玩家打开规则界面
+- **THEN** 玩家无需试选即可比较散阵、合击、连阵、同袍、同袍连阵和三军同心

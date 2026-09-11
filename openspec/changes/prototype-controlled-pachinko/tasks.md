@@ -9,6 +9,7 @@
 - [x] 2.1 Keep battle controls free of an additional pursuit resource.
 - [x] 2.2 Add truthful four-tier chain feedback with reduced-motion behavior.
 - [x] 2.3 Keep the disposable Zhang Jiao showcase focused on retrigger, pursuit and chain feedback.
+- [x] 2.4 Explain all six formations in the rulebook and identify the selected formation in preview.
 
 ## 3. Validation and delivery
 
