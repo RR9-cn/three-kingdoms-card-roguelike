@@ -1,5 +1,5 @@
 /** v0.2 content: all effects are implemented by the core, never executable text. */
-export const FORGE_VERSION='0.5.1';
+export const FORGE_VERSION='0.6.0';
 export const FORGE_RULES={hands:4,discards:2,handSize:6,slots:5,startGold:12,minDeck:12,maxDeck:60,baseChips:[8,16,24,32,45,60],baseMult:[1,2,2,3,4,5],levelChips:10,levelMult:1,refreshBase:3,pressureReward:8,pressureFactor:1.5} as const;
 export const COMPANIONS={
  pursuit:{name:'追击令',mark:'追',role:'连锁',price:12,text:'每次重触发后，35%概率追加计分；追加可继续触发，每手最多追加3次。',hint:'需要张飞或诸葛亮启动；强化牌与逐牌效果可再次发动。',effect:'burst-repeat'},
