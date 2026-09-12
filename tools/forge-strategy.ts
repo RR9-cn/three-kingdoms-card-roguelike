@@ -13,7 +13,6 @@ export function forgeStrategy(v:ForgeView,starter:CompanionId):Omit<ForgeAction,
   const available=sorted(v.offers.filter(o=>!o.sold&&!v.companions.some(c=>c.id===o.id)&&v.gold>=COMPANIONS[o.id].price).map(o=>o.id));
   if(available.length){const id=available[0];if(v.companions.length<5)return{type:'buy',id};const worst=sorted(v.companions.map(c=>c.id)).at(-1)!;if(rank(id)<rank(worst))return{type:'buy',id,replace:worst};}
   if(v.gold>24&&v.refreshes<2)return{type:'refresh'};
-  const multiplier=['lvbu','simayi','seal','oath'];for(let i=0;i<v.companions.length-1;i++)if(multiplier.includes(v.companions[i].id)&&!multiplier.includes(v.companions[i+1].id))return{type:'reorder',id:v.companions[i].id,direction:1};
   return{type:'depart'};
  }
  throw Error('terminal state');

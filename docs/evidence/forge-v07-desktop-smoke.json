@@ -1,0 +1,20 @@
+{
+  "version": "0.7.0",
+  "saveContentVersion": "0.7.0",
+  "schemaVersion": 8,
+  "platform": "darwin",
+  "arch": "arm64",
+  "packaged": true,
+  "offlineLocalPages": true,
+  "legacyNavigation": true,
+  "rendererNodeDisabled": true,
+  "minimizePause": true,
+  "restartRestore": true,
+  "fullCampaignVictory": true,
+  "endlessContinuation": true,
+  "wagerSettledAndRestored": true,
+  "randomPostBattleEdit": true,
+  "simpleScoring": true,
+  "zhangJiaoAnimation": true,
+  "errors": []
+}

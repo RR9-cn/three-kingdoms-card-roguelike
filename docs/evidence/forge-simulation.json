@@ -1,75 +1,75 @@
 {
-  "version": "0.2.0",
+  "version": "0.7.0",
   "targets": [
-    140,
-    300,
+    100,
+    220,
+    320,
     600,
-    1000,
-    1600,
-    2400,
-    3400,
-    4800
+    950,
+    1350,
+    1800,
+    1900
   ],
-  "strategy": "Public-view greedy hand score; fixed starter-specific recruitment preference; upgrades last scoring hand category; no discards, no pressure. This is a smoke heuristic, not an optimal build or human win-rate estimate.",
+  "strategy": "Public-view greedy hand score; fixed starter-specific recruitment preference; accepts the random positive edit; no discards, no pressure. This is a smoke heuristic, not an optimal build or human win-rate estimate.",
   "results": [
     {
       "starter": "guanyu",
       "runs": 200,
-      "wins": 165,
-      "winRate": 0.825,
+      "wins": 185,
+      "winRate": 0.925,
       "firstWin": "forge-0",
-      "firstLoss": "forge-13",
-      "best": 6021,
-      "meanActions": 71.15,
+      "firstLoss": "forge-4",
+      "best": 4466,
+      "meanActions": 85.635,
       "failures": [
         0,
         0,
-        0,
+        2,
+        1,
         0,
         0,
         1,
-        8,
-        26
+        11
       ]
     },
     {
       "starter": "zhouyu",
       "runs": 200,
-      "wins": 155,
-      "winRate": 0.775,
-      "firstWin": "forge-0",
-      "firstLoss": "forge-3",
-      "best": 6681,
-      "meanActions": 71.85,
+      "wins": 131,
+      "winRate": 0.655,
+      "firstWin": "forge-1",
+      "firstLoss": "forge-0",
+      "best": 2923,
+      "meanActions": 89.845,
       "failures": [
         0,
         0,
-        0,
-        0,
+        4,
+        3,
         0,
         3,
-        4,
-        38
+        7,
+        52
       ]
     },
     {
       "starter": "liubei",
       "runs": 200,
-      "wins": 176,
-      "winRate": 0.88,
+      "wins": 194,
+      "winRate": 0.97,
       "firstWin": "forge-0",
-      "firstLoss": "forge-5",
-      "best": 6523,
-      "meanActions": 70.035,
+      "firstLoss": "forge-27",
+      "best": 2980,
+      "meanActions": 85.21,
       "failures": [
         0,
         0,
         0,
         0,
         0,
-        1,
-        3,
-        20
+        0,
+        0,
+        6
       ]
     }
   ]

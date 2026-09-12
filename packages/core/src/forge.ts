@@ -8,15 +8,15 @@ export interface ScoreStep {source:string;text:string;chips:number;mult:number;c
 export interface Score {category:number;chips:number;mult:number;total:number;steps:ScoreStep[];cards:ArmyCard[];growth:Record<string,number>;penalty:number;floor:number;bursts:number}
 export type ForgePhase='starter'|'prepare'|'battle'|'result'|'recruit'|'forge'|'shop'|'victory'|'defeat';
 export interface ForgeState {
- schemaVersion:7;contentVersion:typeof FORGE_VERSION;seed:string;seq:number;rng:RandomState;phase:ForgePhase;stage:number;
+ schemaVersion:8;contentVersion:typeof FORGE_VERSION;seed:string;seq:number;rng:RandomState;phase:ForgePhase;stage:number;
  army:ArmyCard[];nextId:number;hand:string[];draw:string[];discard:string[];companions:Companion[];levels:number[];
  gold:number;score:number;target:number;pressed:boolean;hands:number;discards:number;played:number;lastCategory:number|null;scouted:boolean;lastSuit:Suit|null;
  challenge:number;stageBest:number;recordBefore:number;settlement:'pending'|'bank'|'win'|'loss';lastEdit:string|null;
  result:Score|null;recruits:CompanionId[];offers:{id:CompanionId;sold:boolean}[];refreshes:number;
  stats:{plays:number;best:number;cleared:number;edits:number;pressureWins:number;recruited:number};
 }
-export type ForgeAction={seq:number;type:'starter'|'begin'|'play'|'discard'|'next'|'recruit'|'edit'|'random-edit'|'buy'|'sell'|'refresh'|'depart'|'reorder'|'bank'|'gamble'|'extend';id?:string;ids?:string[];replace?:string;pressed?:boolean;edit?:ForgeEdit;cardId?:string;suit?:Suit;category?:number;direction?:number};
-export function newForge(seed:string):ForgeState{return{schemaVersion:7,contentVersion:FORGE_VERSION,seed,seq:0,rng:randomState(seed),phase:'starter',stage:0,army:deck().map(c=>({...c,bonus:0})),nextId:0,hand:[],draw:[],discard:[],companions:[],levels:[0,0,0,0,0,0],gold:R.startGold,score:0,target:STAGES[0].target,pressed:false,hands:R.hands,discards:R.discards,played:0,lastCategory:null,scouted:false,lastSuit:null,challenge:0,stageBest:0,recordBefore:0,settlement:'bank',lastEdit:null,result:null,recruits:[...STARTERS],offers:[],refreshes:0,stats:{plays:0,best:0,cleared:0,edits:0,pressureWins:0,recruited:0}};}
+export type ForgeAction={seq:number;type:'starter'|'begin'|'play'|'discard'|'next'|'recruit'|'edit'|'random-edit'|'buy'|'sell'|'refresh'|'depart'|'bank'|'gamble'|'extend';id?:string;ids?:string[];replace?:string;pressed?:boolean;edit?:ForgeEdit;cardId?:string;suit?:Suit;category?:number};
+export function newForge(seed:string):ForgeState{return{schemaVersion:8,contentVersion:FORGE_VERSION,seed,seq:0,rng:randomState(seed),phase:'starter',stage:0,army:deck().map(c=>({...c,bonus:0})),nextId:0,hand:[],draw:[],discard:[],companions:[],levels:[0,0,0,0,0,0],gold:R.startGold,score:0,target:STAGES[0].target,pressed:false,hands:R.hands,discards:R.discards,played:0,lastCategory:null,scouted:false,lastSuit:null,challenge:0,stageBest:0,recordBefore:0,settlement:'bank',lastEdit:null,result:null,recruits:[...STARTERS],offers:[],refreshes:0,stats:{plays:0,best:0,cleared:0,edits:0,pressureWins:0,recruited:0}};}
 export const owns=(s:Pick<ForgeState,'companions'>,id:CompanionId)=>s.companions.some(c=>c.id===id);
 function selected(s:ForgeState,ids:string[],min:number,max:number):ArmyCard[]{requireRule(ids.length>=min&&ids.length<=max&&new Set(ids).size===ids.length&&ids.every(id=>s.hand.includes(id)),'请选择有效且不重复的手牌');return s.hand.filter(id=>ids.includes(id)).map(id=>s.army.find(c=>c.id===id)!);}
 export function formation(s:Pick<ForgeState,'companions'>,cards:Card[]):number{const basic=evaluate(cards).category;const ranks=cards.map(c=>c.rank).sort((a,b)=>a-b);if(owns(s,'scroll')&&ranks[0]<ranks[1]&&ranks[1]<ranks[2]&&ranks[1]-ranks[0]<=2&&ranks[2]-ranks[1]<=2)return Math.max(basic,new Set(cards.map(c=>c.suit)).size===1?4:2);return basic;}
@@ -24,11 +24,11 @@ export function bossEncounter(s:Pick<ForgeState,'stage'|'score'|'target'> & {cha
 export function forgeRule(s:Pick<ForgeState,'stage'|'score'|'target'> & {challenge?:number}){const boss=bossEncounter(s);if(boss?.phase===1)return s.stage===3?'variety':'thunder';return forgeStage(s).rule;}
 function scoreForge(s:ForgeState,ids:string[],resolve:boolean):Score {
  const cards=selected(s,ids,3,3),category=formation(s,cards),level=s.levels[category];
- let chips=R.baseChips[category]+R.levelChips*level,mult=R.baseMult[category]+R.levelMult*level;
+ let chips=0,mult=R.baseMult[category]+R.levelMult*level;
  let bursts=0;
  const steps:ScoreStep[]=[],growth:Record<string,number>={};
  const push=(source:string,text:string,cardId?:string)=>steps.push({source,text,chips,mult,...cardId?{cardId}:{}});
- push('阵型',`${HAND_NAMES[category]} Lv.${level+1} · ${chips}兵力 × ${mult}倍率`);
+ push('阵型',`${HAND_NAMES[category]} Lv.${level+1} · ${mult}倍率`);
  const pair=cards.some(c=>cards.filter(x=>x.rank===c.rank).length>=2),firstPair=cards.find(c=>cards.filter(x=>x.rank===c.rank).length>=2)?.id;
  const suitCount=new Set(cards.map(c=>c.suit)).size;
  for(let i=0;i<cards.length;i++){
@@ -38,29 +38,29 @@ function scoreForge(s:ForgeState,ids:string[],resolve:boolean):Score {
   for(let trigger=0;trigger<repeat;trigger++){
    if(trigger>0)push(repeatSources[trigger-1]??'追击令',`${card.rank}点牌 · 第${trigger+1}次计分`,card.id);
    const base=forgeStage(s).rule==='high-armor'&&card.rank>=7?0:card.rank;
-   chips+=base+card.bonus;push(trigger?'重触发牌':'阵牌',`+${base+card.bonus}兵力${base===0?'（铁甲减免点数）':''}`,card.id);
+   chips+=base+card.bonus;push(trigger?'重触发牌':'阵牌',`+${base+card.bonus}点数${base===0?'（铁甲减免牌面点数）':''}`,card.id);
    for(const c of s.companions){
-    if(c.id==='liubei'&&card.rank<=4){chips+=10;mult++;push(COMPANIONS[c.id].name,'低点牌：+10兵力、+1倍率',card.id);}
-    if(c.id==='huangzhong'&&card.rank>=7){chips+=18;push(COMPANIONS[c.id].name,'高点牌：+18兵力',card.id);}
+    if(c.id==='liubei'&&card.rank<=4){chips+=10;mult++;push(COMPANIONS[c.id].name,'低点牌：+10点数、+1倍率',card.id);}
+    if(c.id==='huangzhong'&&card.rank>=7){chips+=18;push(COMPANIONS[c.id].name,'高点牌：+18点数',card.id);}
     if(c.id==='blade'&&card.rank>=7){mult+=2;push(COMPANIONS[c.id].name,'高点牌：+2倍率',card.id);}
     if(c.id==='diaochan'&&card.suit==='scheme'){mult+=2;push(COMPANIONS[c.id].name,'谋牌：+2倍率',card.id);}
    }
-   if(resolve&&trigger>0&&owns(s,'pursuit')&&bursts<3){if(random(s.rng,'enemy')<.35){bursts++;repeat++;push('追击令',`追击成功！追加第${bursts}/3次`,card.id);if(owns(s,'chain')){mult*=1.5;push('连营鼓','连营发动：倍率 ×1.5',card.id);}}else push('追击令','35%追击未触发，本次连锁结束',card.id);}
+   if(resolve&&trigger>0&&owns(s,'pursuit')&&bursts<3){if(random(s.rng,'enemy')<.35){bursts++;repeat++;push('追击令',`追击成功！追加第${bursts}/3次`,card.id);}else push('追击令','35%追击未触发，本次连锁结束',card.id);}
   }
  }
- for(const c of s.companions){const name=COMPANIONS[c.id].name;switch(c.id){
-  case 'guanyu': {const value=c.growth+Number(pair);growth[c.id]=value;if(value){mult+=value;push(name,`${pair?'本次成长+1，':''}累计 +${value}倍率`);}break;}
-  case 'zhaoyun': {const straight=[2,4].includes(category),value=c.growth+(straight?2:0);growth[c.id]=value;if(value){mult+=value;push(name,`${straight?'本次成长+2，':''}累计 +${value}倍率`);}break;}
-  case 'zhouyu':if(suitCount<=2){mult+=3;push(name,'同兵种协作：+3倍率');}break;
-  case 'sunquan':if(suitCount===3){mult+=4;push(name,'三兵种：+4倍率');}break;
-  case 'lvbu':if(category===5){mult*=3;push(name,'三军同心：倍率 ×3');}break;
-  case 'simayi':if(s.hands===1){mult*=2;push(name,'最后一手：倍率 ×2');}break;
-  case 'drum':if(pair){chips+=30;push(name,'合击：+30兵力');}break;
-  case 'seal':if(s.pressed){mult*=1.25;push(name,'加压：倍率 ×1.25');}break;
-  case 'granary':{const value=Math.min(8,Math.floor(s.gold/5));if(value){mult+=value;push(name,`持有${s.gold}军资：+${value}倍率`);}break;}
-  case 'abacus':{const value=Math.max(0,36-s.army.length)*6;if(value){chips+=value;push(name,`精简牌库：+${value}兵力`);}break;}
-  case 'oath':if(suitCount===1){mult*=1.8;push(name,'同袍：倍率 ×1.8');}break;
- }}
+ const held=(id:CompanionId)=>s.companions.find(c=>c.id===id);
+ const guanyu=held('guanyu');if(guanyu){const value=guanyu.growth+Number(pair);growth.guanyu=value;if(value){mult+=value;push('关羽',`${pair?'本次成长+1，':''}累计 +${value}倍率`);}}
+ const zhaoyun=held('zhaoyun');if(zhaoyun){const straight=[2,4].includes(category),value=zhaoyun.growth+(straight?2:0);growth.zhaoyun=value;if(value){mult+=value;push('赵云',`${straight?'本次成长+2，':''}累计 +${value}倍率`);}}
+ if(owns(s,'zhouyu')&&suitCount<=2){mult+=7;push('周瑜','同兵种协作：+7倍率');}
+ if(owns(s,'sunquan')&&suitCount===3){mult+=4;push('孙权','三兵种：+4倍率');}
+ if(owns(s,'granary')){const value=Math.min(8,Math.floor(s.gold/5));if(value){mult+=value;push('常平粮仓',`持有${s.gold}军资：+${value}倍率`);}}
+ if(owns(s,'drum')&&pair){chips+=30;push('合击战鼓','合击：+30点数');}
+ if(owns(s,'abacus')){const value=Math.max(0,36-s.army.length)*6;if(value){chips+=value;push('精兵简册',`精简牌库：+${value}点数`);}}
+ if(owns(s,'chain'))for(let i=0;i<bursts;i++){mult*=1.5;push('连营鼓',`连营发动 · 第${i+1}次追加：倍率 ×1.5`);}
+ if(owns(s,'lvbu')&&category===5){mult*=3;push('吕布','三军同心：倍率 ×3');}
+ if(owns(s,'simayi')&&s.hands===1){mult*=2;push('司马懿','最后一手：倍率 ×2');}
+ if(owns(s,'seal')&&s.pressed){mult*=1.25;push('破军虎符','加压：倍率 ×1.25');}
+ if(owns(s,'oath')&&suitCount===1){mult*=1.8;push('同袍旌旗','同袍：倍率 ×1.8');}
  let penalty=1;
  if(forgeRule(s)==='variety'&&s.lastCategory===category){penalty=.5;push('疑阵','连续相同阵型：最终攻势 ×0.5');}
  if(forgeRule(s)==='ambush'&&!s.scouted){penalty=.65;push('水寨伏击','本手未换牌：最终攻势 ×0.65');}
@@ -80,7 +80,7 @@ function randomEdit(s:ForgeState){
  const available:(() => void)[]=[];
  if(s.army.length<R.maxDeck)available.push(()=>{const card=s.army[Math.floor(random(s.rng,'reward')*s.army.length)];s.army.push({...card,id:`copy-${s.nextId++}`});s.lastEdit=`军师募兵：复制了${SUIT_NAMES[card.suit]}${card.rank}`;});
  const trainable=s.army.filter(card=>card.rank<9);if(trainable.length)available.push(()=>{const card=trainable[Math.floor(random(s.rng,'reward')*trainable.length)];card.rank=Math.min(9,card.rank+2);s.lastEdit=`军师练兵：${SUIT_NAMES[card.suit]}升至${card.rank}点`;});
- available.push(()=>{const card=s.army[Math.floor(random(s.rng,'reward')*s.army.length)];card.bonus+=12;s.lastEdit=`军师精锐：${SUIT_NAMES[card.suit]}${card.rank}获得+12兵力`;});
+ available.push(()=>{const card=s.army[Math.floor(random(s.rng,'reward')*s.army.length)];card.bonus+=12;s.lastEdit=`军师精锐：${SUIT_NAMES[card.suit]}${card.rank}获得+12点数`;});
  available.push(()=>{const category=Math.floor(random(s.rng,'reward')*HAND_NAMES.length);s.levels[category]++;s.lastEdit=`军师研习：${HAND_NAMES[category]}升至Lv.${s.levels[category]+1}`;});
  available[Math.floor(random(s.rng,'reward')*available.length)]();
  s.stats.edits++;
@@ -111,14 +111,13 @@ function applyForge(s:ForgeState,a:ForgeAction){requireRule(a.seq===s.seq,'行�
  case 'sell':{phase(s,'shop');const index=s.companions.findIndex(c=>c.id===a.id);requireRule(index>=0,'没有持有此组件');s.gold+=Math.floor(COMPANIONS[s.companions[index].id].price/2);s.companions.splice(index,1);return;}
  case 'refresh':phase(s,'shop');requireRule(s.gold>=R.refreshBase+s.refreshes,'刷新所需军资不足');s.gold-=R.refreshBase+s.refreshes;s.refreshes++;s.offers=sample(s,3).map(id=>({id,sold:false}));return;
  case 'depart':phase(s,'shop');if(s.stage===7)s.challenge++;else s.stage++;s.phase='prepare';s.target=forgeStage(s).target;s.score=0;s.result=null;s.pressed=false;s.offers=[];s.lastEdit=null;return;
- case 'reorder':{phase(s,'shop','prepare','battle');requireRule(a.direction===-1||a.direction===1,'排列方向无效');const i=s.companions.findIndex(c=>c.id===a.id),j=i+a.direction;requireRule(i>=0&&j>=0&&j<s.companions.length,'组件已在边界');[s.companions[i],s.companions[j]]=[s.companions[j],s.companions[i]];return;}
  }throw new RuleError('未知行动');}
 export function forgeAction(state:ForgeState,a:ForgeAction):{state:ForgeState;error?:string}{const s=copy(state);try{applyForge(s,a);s.seq++;return{state:s};}catch(e){if(e instanceof RuleError)return{state,error:e.message};throw e;}}
 export function forgeView(s:ForgeState){const{rng,draw,discard,...visible}=s;return copy({...visible,hand:s.hand.map(id=>s.army.find(c=>c.id===id)!),drawCount:draw.length,discardCount:discard.length});}
 export type ForgeView=ReturnType<typeof forgeView>;
 export function isForgeState(value:unknown):value is ForgeState{try{
  if(!value||typeof value!=='object')return false;const s=value as ForgeState;const int=(n:unknown)=>Number.isSafeInteger(n)&&Number(n)>=0;
- if(s.schemaVersion!==7||s.contentVersion!==FORGE_VERSION||typeof s.seed!=='string'||!int(s.seq)||!int(s.stage)||s.stage>=STAGES.length)return false;
+ if(s.schemaVersion!==8||s.contentVersion!==FORGE_VERSION||typeof s.seed!=='string'||!int(s.seq)||!int(s.stage)||s.stage>=STAGES.length)return false;
  if(!['starter','prepare','battle','result','recruit','forge','shop','victory','defeat'].includes(s.phase)||!Array.isArray(s.army)||s.army.length<R.minDeck||s.army.length>R.maxDeck)return false;
  if(s.army.some(c=>!c||typeof c.id!=='string'||!SUITS.includes(c.suit)||!int(c.rank)||c.rank<1||c.rank>9||!int(c.bonus)))return false;
  const armyIds=s.army.map(c=>c.id);if(new Set(armyIds).size!==armyIds.length)return false;

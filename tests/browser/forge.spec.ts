@@ -10,7 +10,6 @@ async function uiAction(page:Page,a:Omit<ForgeAction,'seq'>){
  else if(a.type==='begin')await click(page,'begin:normal');
  else if(a.type==='starter')await click(page,'starter:'+a.id);
  else if(a.type==='recruit'||a.type==='buy'){await click(page,a.type+':'+a.id);if(a.replace)await click(page,'replace:'+a.replace);}
- else if(a.type==='reorder')await click(page,(a.direction===1?'right:':'left:')+a.id);
  else {if(a.type==='bank'&&await page.locator('[data-action=skip-animation]').count())await click(page,'skip-animation');await click(page,a.type);}
 }
 test('build UI, preview parity, one random edit and independent resume',async({page})=>{
