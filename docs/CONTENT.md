@@ -25,7 +25,7 @@
 | 精兵简册 | 精简 | 8 | 牌库少于36张时，每少一张，+6点数。 |
 | 同袍旌旗 | 爆发 | 12 | 三张牌同兵种，当前倍率 ×1.8。 |
 
-完整计分、经济、整编与关卡规则见 GAME_DESIGN.md。名称印章和牌面是代码排版；像素立绘沿用原 PixelLab 素材，本轮没有生成新角色图片。来源及原始提示词见 art-prototype/assets/manifest.json 和 art-prototype/prompts.md。
+完整计分、经济、整编与关卡规则见 GAME_DESIGN.md。名称印章和牌面使用代码排版；当前像素素材位于 `apps/playtest/public/assets/`。
 
 ## 连锁组件与品质
 

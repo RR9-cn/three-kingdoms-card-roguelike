@@ -1,6 +1,6 @@
 import {hash} from './random';
 import {isForgeState,type ForgeState} from './forge';
-import type {StorageAdapter} from './storage';
+export interface StorageAdapter {get(key:string):string|null;set(key:string,value:string):void}
 const PREFIX='three-card:forge:v8';
 function parse(raw:string|null){try{const e=JSON.parse(raw??'null');if(!e||!Number.isSafeInteger(e.generation)||e.generation<0||typeof e.payload!=='string'||hash(e.payload)!==e.checksum)return null;const state=JSON.parse(e.payload);return isForgeState(state)?{generation:e.generation,state}:null;}catch{return null;}}
 export function loadForge(storage:StorageAdapter):{state:ForgeState|null;notice:string|null}{const raw=[storage.get(`${PREFIX}:0`),storage.get(`${PREFIX}:1`)];const slots=raw.map(parse).filter((s):s is NonNullable<typeof s>=>!!s).sort((a,b)=>b.generation-a.generation);const broken=raw.some((r,i)=>r!==null&&!parse(raw[i]));const previous=['v2','v3','v3.1','v4','v5','v6','v7'].some(v=>[0,1].some(slot=>storage.get(`three-card:forge:${v}:${slot}`)!==null));return{state:slots[0]?.state??null,notice:!slots.length&&!broken&&previous?'旧构筑存档已保留；v0.7简化了计分规则，请开启新征程。':broken?(slots.length?'存档异常，已恢复上一份完整进度。':'新版存档损坏或版本不兼容，已保留；可重新开始。'):null};}

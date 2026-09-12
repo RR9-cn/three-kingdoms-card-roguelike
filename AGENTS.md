@@ -2,7 +2,7 @@
 
 - 产品方向是Steam PC 单人横屏三国卡牌肉鸽，核心为三张阵牌、局内改牌与武将军宝构筑。
 - 先读 README、docs/GAME_DESIGN.md 和当前 OpenSpec 变更；需求调整时保持规则文档、规格、数据和实施任务一致。
-- `art-prototype/` 为早期美术快照，新增视觉稿放新目录，不覆盖其源图。
+- 当前游戏素材统一放在 `apps/playtest/public/assets/`，不在仓库内保留可运行的历史原型。
 - 游戏规则内核不得引用 DOM、Electron、Steamworks API 或实时 LLM。随机使用可保存的种子与状态。
 - AI 决策只能读它有权获知的牌和公开行动，不读取玩家暗牌或未来牌序。
 - 不将单元测试或浏览器演示表述为 Windows 原生验证或 Steam 发布完成。

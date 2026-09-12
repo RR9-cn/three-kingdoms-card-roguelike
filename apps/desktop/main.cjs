@@ -1,7 +1,7 @@
 const { app, BrowserWindow, Menu } = require('electron');
 const path = require('node:path');
 const {pathToFileURL} = require('node:url');
-const localPages = new Set(['index.html','legacy.html'].map(name=>pathToFileURL(path.join(__dirname,'../../dist',name)).href));
+const localPages = new Set(['index.html'].map(name=>pathToFileURL(path.join(__dirname,'../../dist',name)).href));
 app.setName('Three Card Kingdoms');
 if (process.env.THREE_CARD_USER_DATA) app.setPath('userData', path.resolve(process.env.THREE_CARD_USER_DATA));
 else app.setPath('userData',path.join(app.getPath('appData'),'ThreeCardKingdoms'));

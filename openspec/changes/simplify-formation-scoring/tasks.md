@@ -15,3 +15,9 @@
 - [x] 3.1 Run strict OpenSpec, type, rule and browser validation.
 - [x] 3.2 Rebuild macOS and Windows packages and run packaged desktop smoke.
 - [x] 3.3 Launch the packaged macOS build, commit and push the change.
+
+## 4. Current-version cleanup
+
+- [x] 4.1 Remove the legacy page, old battle/campaign core, obsolete tests and old build scripts.
+- [x] 4.2 Remove historical prototype documents and evidence while retaining current v0.7 validation.
+- [x] 4.3 Rebuild, validate, launch, commit and push the current-only project.

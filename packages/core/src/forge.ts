@@ -1,7 +1,7 @@
 import {forgeStage,companionRarity,SCORE_CAP,type Rarity,BOSSES,COMPANIONS,COMPANION_IDS,STARTERS,FORGE_RULES as R,FORGE_VERSION,STAGES,SUITS,SUIT_NAMES,HAND_NAMES,type CompanionId,type ForgeEdit,type Suit} from '@three-card/content';
 import {deck,evaluate,type Card} from './cards';
 import {random,randomState,shuffle,type RandomState} from './random';
-import {copy,requireRule,RuleError} from './battle';
+import {copy,requireRule,RuleError} from './rules';
 export interface ArmyCard extends Card {bonus:number}
 export interface Companion {id:CompanionId;growth:number}
 export interface ScoreStep {source:string;text:string;chips:number;mult:number;cardId?:string}

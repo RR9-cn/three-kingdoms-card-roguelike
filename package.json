@@ -13,7 +13,6 @@
     "typecheck": "tsc --noEmit",
     "test": "tsx --test tests/*.test.ts",
     "test:browser": "playwright test",
-    "simulate": "tsx tools/simulate.ts",
     "desktop": "npm run build && electron apps/desktop/main.cjs",
     "package:mac": "npm run build && node tools/package-desktop.mjs darwin arm64",
     "package:win": "npm run build && node tools/package-desktop.mjs win32 x64",
