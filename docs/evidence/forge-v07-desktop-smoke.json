@@ -11,7 +11,7 @@
   "restartRestore": true,
   "fullCampaignVictory": true,
   "endlessContinuation": true,
-  "wagerSettledAndRestored": true,
+  "directHandSettlement": true,
   "randomPostBattleEdit": true,
   "simpleScoring": true,
   "zhangJiaoAnimation": true,

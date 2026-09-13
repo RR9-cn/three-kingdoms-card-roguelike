@@ -11,7 +11,8 @@ async function uiAction(page:Page,a:Omit<ForgeAction,'seq'>){
  else if(a.type==='starter')await click(page,'starter:'+a.id);
  else if(a.type==='recruit'||a.type==='buy'){await click(page,a.type+':'+a.id);if(a.replace)await click(page,'replace:'+a.replace);}
  else if(a.type==='edit'){if(a.edit==='level')await click(page,'apply-level:'+a.category);else if(a.edit==='suit'){await click(page,'edit-card:'+a.cardId);await click(page,`apply-suit:${a.cardId}:${a.suit}`);}else await click(page,'edit-card:'+a.cardId);}
- else {if(a.type==='bank'&&await page.locator('[data-action=skip-animation]').count())await click(page,'skip-animation');await click(page,a.type);}
+ else if(a.type==='bank'){if(await page.locator('[data-action=skip-animation]').count())await click(page,'skip-animation');else await expect(page.locator('.settlement-result')).toBeVisible();}
+ else await click(page,a.type);
 }
 test('build UI, preview parity, one random edit and independent resume',async({page})=>{
  test.setTimeout(60000);const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('http://127.0.0.1:4173');await page.screenshot({path:'docs/evidence/forge-home.png'});await page.locator('#seed').fill('forge-0');await click(page,'new');await page.screenshot({path:'docs/evidence/forge-starters.png'});await click(page,'starter:liubei');await click(page,'begin:normal');
