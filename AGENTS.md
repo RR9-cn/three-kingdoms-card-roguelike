@@ -1,6 +1,6 @@
 # 项目工作约定
 
-- 产品方向是Steam PC 单人横屏三国卡牌肉鸽，核心为三张阵牌、局内改牌与武将军宝构筑。
+- 产品方向是Steam PC 单人横屏三国卡牌肉鸽，核心为三张阵牌、局内改牌与将星构筑。
 - 先读 README、docs/GAME_DESIGN.md 和当前 OpenSpec 变更；需求调整时保持规则文档、规格、数据和实施任务一致。
 - 当前游戏素材统一放在 `apps/playtest/public/assets/`，不在仓库内保留可运行的历史原型。
 - 游戏规则内核不得引用 DOM、Electron、Steamworks API 或实时 LLM。随机使用可保存的种子与状态。

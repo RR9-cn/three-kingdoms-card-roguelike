@@ -2,28 +2,28 @@
 export const FORGE_VERSION='0.7.0';
 export const FORGE_RULES={hands:4,discards:2,handSize:6,slots:5,startGold:12,minDeck:12,maxDeck:60,baseMult:[1,2,3,4,6,10],levelMult:1,refreshBase:3,pressureReward:8,pressureFactor:1.5} as const;
 export const COMPANIONS={
- pursuit:{name:'追击令',mark:'追',role:'连锁',price:12,text:'每次重触发后，35%概率追加计分；追加可继续触发，每手最多追加3次。',hint:'需要张飞或诸葛亮启动；强化牌与逐牌效果可再次发动。',effect:'burst-repeat'},
- chain:{name:'连营鼓',mark:'营',role:'连锁',price:16,text:'追击令每成功追加一次，当前倍率×1.5。',hint:'与追击令配合，最多三次放大；单独持有不会生效。',effect:'burst-mult'},
- guanyu:{name:'关羽',mark:'关',role:'成长',price:10,text:'打出含对子阵型，本组件永久 +1 倍率；立即生效。',hint:'越早招募，越值得反复出对子。',effect:'pair-growth'},
+ pursuit:{name:'马超',mark:'马',role:'连锁',price:12,text:'锦马追阵：每次重触发后，35%概率追加计分；可连续追加，每手最多3次。',hint:'需要张飞或诸葛亮启动；强化牌与逐牌效果可再次发动。',effect:'burst-repeat'},
+ chain:{name:'陆逊',mark:'陆',role:'连锁',price:16,text:'火烧连营：每次追击成功，当前倍率 ×1.5。',hint:'与马超配合，最多三次放大；单独持有不会生效。',effect:'burst-mult'},
+ guanyu:{name:'关羽',mark:'关',role:'成长',price:10,text:'打出含对子阵型，关羽永久 +1 倍率；立即生效。',hint:'越早招募，越值得反复出对子。',effect:'pair-growth'},
  zhangfei:{name:'张飞',mark:'张',role:'重触发',price:12,text:'含对子时，第一张属于对子的牌额外计分一次。',hint:'重复触发这张牌的点数、强化和逐牌效果。',effect:'pair-repeat'},
  liubei:{name:'刘备',mark:'刘',role:'逐牌',price:10,text:'每张点数不大于4的牌计分时，+10点数、+1倍率。',hint:'低点牌也可以成为构筑核心。',effect:'low-card'},
  zhouyu:{name:'周瑜',mark:'周',role:'兵种',price:10,text:'出牌至少两张同兵种，+7倍率。',hint:'对子和连阵也能受益，不必等待同袍。',effect:'two-suit'},
- zhaoyun:{name:'赵云',mark:'赵',role:'成长',price:10,text:'打出连阵或同袍连阵，本组件永久 +2 倍率。',hint:'配合兵书扩展连阵的组成方式。',effect:'straight-growth'},
+ zhaoyun:{name:'赵云',mark:'赵',role:'成长',price:10,text:'打出连阵或同袍连阵，赵云永久 +2 倍率。',hint:'配合庞统扩展连阵的组成方式。',effect:'straight-growth'},
  huangzhong:{name:'黄忠',mark:'黄',role:'逐牌',price:9,text:'每张点数不小于7的牌计分时，+18点数。',hint:'升点、复制和重触发共同放大高点牌。',effect:'high-chips'},
  zhugeliang:{name:'诸葛亮',mark:'诸',role:'重触发',price:14,text:'最右侧出牌额外计分一次。',hint:'出牌按手牌槽位排序，重复计算该牌效果。',effect:'last-repeat'},
- caocao:{name:'曹操',mark:'曹',role:'经济',price:8,text:'每次换牌获得2军资。',hint:'与白马增加换牌次数、粮仓存钱相互配合。',effect:'discard-gold'},
+ caocao:{name:'曹操',mark:'曹',role:'经济',price:8,text:'每次换牌获得2军资。',hint:'与公孙瓒增加换牌次数、鲁肃存钱相互配合。',effect:'discard-gold'},
  sunquan:{name:'孙权',mark:'孙',role:'杂兵',price:9,text:'出牌包含三种不同兵种，+4倍率。',hint:'保留多种兵种，走另一条成型路线。',effect:'mixed-suits'},
  lvbu:{name:'吕布',mark:'吕',role:'爆发',price:12,text:'打出三军同心，当前倍率 ×3。',hint:'复制相同点数，提高三军同心出现频率。',effect:'triple-mult'},
  diaochan:{name:'貂蝉',mark:'貂',role:'逐牌',price:10,text:'每张谋牌计分时，+2倍率。',hint:'改编兵种可以让更多牌触发。',effect:'scheme-mult'},
  simayi:{name:'司马懿',mark:'司',role:'压轴',price:10,text:'本关最后一次出牌，当前倍率 ×2。',hint:'可以保底，也可以为最后一手蓄力。',effect:'last-hand'},
- blade:{name:'青龙偃月刀',mark:'刀',role:'逐牌',price:11,text:'每张点数不小于7的牌计分时，+2倍率。',hint:'同一张牌的重触发会再次获得倍率。',effect:'high-mult'},
- drum:{name:'合击战鼓',mark:'鼓',role:'基础',price:7,text:'出牌含对子，+30点数。',hint:'提供前期强度，之后再考虑是否腾位置。',effect:'pair-chips'},
- horse:{name:'白马',mark:'马',role:'换牌',price:8,text:'每关换牌次数 +1。',hint:'战前结算次数，可为组牌和军资服务。',effect:'extra-discard'},
- scroll:{name:'八阵兵书',mark:'阵',role:'规则',price:12,text:'三个不同点数，排序后相邻间隔至多2，也可组成连阵。',hint:'例如1、3、5；同兵种则组成同袍连阵。',effect:'gap-straight'},
- seal:{name:'破军虎符',mark:'符',role:'加压',price:9,text:'选择加压的关卡，当前倍率 ×1.25。',hint:'战前目标增加50%，胜后额外获得8军资。',effect:'pressure-mult'},
- granary:{name:'常平粮仓',mark:'粮',role:'经济',price:9,text:'每持有5军资，+1倍率，上限 +8。',hint:'现在花钱补强，还是存钱吃利息和倍率？',effect:'wealth-mult'},
- abacus:{name:'精兵简册',mark:'简',role:'精简',price:8,text:'牌库少于36张时，每少一张，+6点数。',hint:'删牌既改善抽牌稳定性，也提高攻势。',effect:'thin-deck'},
- oath:{name:'同袍旌旗',mark:'旗',role:'爆发',price:12,text:'三张牌同兵种，当前倍率 ×1.8。',hint:'和周瑜、貂蝉及改编兵种相互配合。',effect:'flush-mult'},
+ blade:{name:'太史慈',mark:'太',role:'逐牌',price:11,text:'神亭酣战：每张点数不小于7的牌计分时，+2倍率。',hint:'同一张牌的重触发会再次获得倍率。',effect:'high-mult'},
+ drum:{name:'张辽',mark:'辽',role:'基础',price:7,text:'威震逍遥津：出牌含对子，+30点数。',hint:'提供前期强度，之后再考虑是否腾位置。',effect:'pair-chips'},
+ horse:{name:'公孙瓒',mark:'瓒',role:'换牌',price:8,text:'白马义从：每关换牌次数 +1。',hint:'战前结算次数，可为组牌和军资服务。',effect:'extra-discard'},
+ scroll:{name:'庞统',mark:'庞',role:'规则',price:12,text:'连环奇谋：三个不同点数，排序后相邻间隔至多2，也可组成连阵。',hint:'例如1、3、5；同兵种则组成同袍连阵。',effect:'gap-straight'},
+ seal:{name:'董卓',mark:'董',role:'加压',price:9,text:'暴政压阵：选择加压的关卡，当前倍率 ×1.25。',hint:'战前目标增加50%，胜后额外获得8军资。',effect:'pressure-mult'},
+ granary:{name:'鲁肃',mark:'鲁',role:'经济',price:9,text:'屯粮济军：每持有5军资，+1倍率，上限 +8。',hint:'现在花钱补强，还是存钱吃利息和倍率？',effect:'wealth-mult'},
+ abacus:{name:'荀彧',mark:'荀',role:'精简',price:8,text:'王佐简兵：牌库少于36张时，每少一张，+6点数。',hint:'删牌既改善抽牌稳定性，也提高攻势。',effect:'thin-deck'},
+ oath:{name:'孙策',mark:'策',role:'爆发',price:12,text:'江东同袍：三张牌同兵种，当前倍率 ×1.8。',hint:'和周瑜、貂蝉及改编兵种相互配合。',effect:'flush-mult'},
 } as const;
 export type CompanionId=keyof typeof COMPANIONS;
 export const COMPANION_IDS=Object.keys(COMPANIONS) as CompanionId[];
@@ -31,7 +31,7 @@ export const STARTERS:CompanionId[]=['guanyu','zhouyu','liubei'];
 export const STAGES=[
  {name:'初出茅庐',enemy:'黄巾前哨',target:100,rule:'none',text:'四次出牌内积累足够攻势。'},
  {name:'长坂试锋',enemy:'黄巾游骑',target:220,rule:'none',text:'组牌、招募与整编的成果开始显现。'},
- {name:'虎牢列阵',enemy:'铁甲先锋',target:320,rule:'high-armor',text:'铁甲：点数7–9的牌基础点数按0计；逐牌组件仍生效。'},
+ {name:'虎牢列阵',enemy:'铁甲先锋',target:320,rule:'high-armor',text:'铁甲：点数7–9的牌基础点数按0计；逐牌将星仍生效。'},
  {name:'地公设坛',enemy:'张宝 · 地公将军',target:600,rule:'ambush',text:'首领张宝：前40%兵力为伏击，换牌解除本手减伤；之后转入疑阵，连续同牌型攻势减半。'},
  {name:'官渡鏖兵',enemy:'黄巾督军',target:950,rule:'none',text:'高目标检验成长与倍率的积累。'},
  {name:'赤壁逆风',enemy:'雷鼓祭司',target:1350,rule:'variety',text:'疑阵：连续打出相同牌型时，最终攻势减半。'},
@@ -47,7 +47,7 @@ export const BOSSES:Partial<Record<number,{name:string;title:string;mark:string;
 };
 
 export type Rarity='common'|'rare'|'legendary';
-export const RARITY_NAMES:Record<Rarity,string>={common:'良将 / 良品',rare:'名将 / 珍品',legendary:'传奇'};
+export const RARITY_NAMES:Record<Rarity,string>={common:'良将',rare:'名将',legendary:'传奇'};
 export function companionRarity(id:CompanionId):Rarity{return ['zhugeliang','lvbu','chain'].includes(id)?'legendary':['zhangfei','zhaoyun','diaochan','scroll','oath','pursuit'].includes(id)?'rare':'common';}
 export const SCORE_CAP=1_000_000_000_000;
 export function forgeStage(s:{stage:number;challenge?:number}):{name:string;enemy:string;target:number;rule:string;text:string}{if(!s.challenge)return STAGES[s.stage];return{name:`极限挑战 · 第${s.challenge}层`,enemy:'无尽军势',target:Math.min(SCORE_CAP,Math.ceil(1900*1.6**Math.min(s.challenge,40))),rule:'none',text:'保留整套构筑继续冲分。4次出牌、2次换牌；失败仍保留八关通关与本局纪录。'};}

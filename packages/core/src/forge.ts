@@ -36,7 +36,7 @@ function scoreForge(s:ForgeState,ids:string[],resolve:boolean):Score {
   if(owns(s,'zhangfei')&&card.id===firstPair){repeat++;repeatSources.push('张飞');}
   if(owns(s,'zhugeliang')&&i===cards.length-1){repeat++;repeatSources.push('诸葛亮');}
   for(let trigger=0;trigger<repeat;trigger++){
-   if(trigger>0)push(repeatSources[trigger-1]??'追击令',`${card.rank}点牌 · 第${trigger+1}次计分`,card.id);
+   if(trigger>0)push(repeatSources[trigger-1]??COMPANIONS.pursuit.name,`${card.rank}点牌 · 第${trigger+1}次计分`,card.id);
    const base=forgeStage(s).rule==='high-armor'&&card.rank>=7?0:card.rank;
    chips+=base+card.bonus;push(trigger?'重触发牌':'阵牌',`+${base+card.bonus}点数${base===0?'（铁甲减免牌面点数）':''}`,card.id);
    for(const c of s.companions){
@@ -45,7 +45,7 @@ function scoreForge(s:ForgeState,ids:string[],resolve:boolean):Score {
     if(c.id==='blade'&&card.rank>=7){mult+=2;push(COMPANIONS[c.id].name,'高点牌：+2倍率',card.id);}
     if(c.id==='diaochan'&&card.suit==='scheme'){mult+=2;push(COMPANIONS[c.id].name,'谋牌：+2倍率',card.id);}
    }
-   if(resolve&&trigger>0&&owns(s,'pursuit')&&bursts<3){if(random(s.rng,'enemy')<.35){bursts++;repeat++;push('追击令',`追击成功！追加第${bursts}/3次`,card.id);}else push('追击令','35%追击未触发，本次连锁结束',card.id);}
+   if(resolve&&trigger>0&&owns(s,'pursuit')&&bursts<3){if(random(s.rng,'enemy')<.35){bursts++;repeat++;push(COMPANIONS.pursuit.name,`追击成功！追加第${bursts}/3次`,card.id);}else push(COMPANIONS.pursuit.name,'35%追击未触发，本次连锁结束',card.id);}
   }
  }
  const held=(id:CompanionId)=>s.companions.find(c=>c.id===id);
@@ -53,14 +53,14 @@ function scoreForge(s:ForgeState,ids:string[],resolve:boolean):Score {
  const zhaoyun=held('zhaoyun');if(zhaoyun){const straight=[2,4].includes(category),value=zhaoyun.growth+(straight?2:0);growth.zhaoyun=value;if(value){mult+=value;push('赵云',`${straight?'本次成长+2，':''}累计 +${value}倍率`);}}
  if(owns(s,'zhouyu')&&suitCount<=2){mult+=7;push('周瑜','同兵种协作：+7倍率');}
  if(owns(s,'sunquan')&&suitCount===3){mult+=4;push('孙权','三兵种：+4倍率');}
- if(owns(s,'granary')){const value=Math.min(8,Math.floor(s.gold/5));if(value){mult+=value;push('常平粮仓',`持有${s.gold}军资：+${value}倍率`);}}
- if(owns(s,'drum')&&pair){chips+=30;push('合击战鼓','合击：+30点数');}
- if(owns(s,'abacus')){const value=Math.max(0,36-s.army.length)*6;if(value){chips+=value;push('精兵简册',`精简牌库：+${value}点数`);}}
- if(owns(s,'chain'))for(let i=0;i<bursts;i++){mult*=1.5;push('连营鼓',`连营发动 · 第${i+1}次追加：倍率 ×1.5`);}
+ if(owns(s,'granary')){const value=Math.min(8,Math.floor(s.gold/5));if(value){mult+=value;push(COMPANIONS.granary.name,`持有${s.gold}军资：+${value}倍率`);}}
+ if(owns(s,'drum')&&pair){chips+=30;push(COMPANIONS.drum.name,'合击：+30点数');}
+ if(owns(s,'abacus')){const value=Math.max(0,36-s.army.length)*6;if(value){chips+=value;push(COMPANIONS.abacus.name,`精简牌库：+${value}点数`);}}
+ if(owns(s,'chain'))for(let i=0;i<bursts;i++){mult*=1.5;push(COMPANIONS.chain.name,`连营发动 · 第${i+1}次追加：倍率 ×1.5`);}
  if(owns(s,'lvbu')&&category===5){mult*=3;push('吕布','三军同心：倍率 ×3');}
  if(owns(s,'simayi')&&s.hands===1){mult*=2;push('司马懿','最后一手：倍率 ×2');}
- if(owns(s,'seal')&&s.pressed){mult*=1.25;push('破军虎符','加压：倍率 ×1.25');}
- if(owns(s,'oath')&&suitCount===1){mult*=1.8;push('同袍旌旗','同袍：倍率 ×1.8');}
+ if(owns(s,'seal')&&s.pressed){mult*=1.25;push(COMPANIONS.seal.name,'加压：倍率 ×1.25');}
+ if(owns(s,'oath')&&suitCount===1){mult*=1.8;push(COMPANIONS.oath.name,'同袍：倍率 ×1.8');}
  let penalty=1;
  if(forgeRule(s)==='variety'&&s.lastCategory===category){penalty=.5;push('疑阵','连续相同阵型：最终攻势 ×0.5');}
  if(forgeRule(s)==='ambush'&&!s.scouted){penalty=.65;push('水寨伏击','本手未换牌：最终攻势 ×0.65');}
@@ -74,7 +74,7 @@ function sample(s:ForgeState,n:number):CompanionId[]{let pool=COMPANION_IDS.filt
 export function wagerValues(total:number){const stake=Math.floor(total*.2);return{stake,win:Math.min(SCORE_CAP,total+stake),loss:total-stake};}
 function settle(s:ForgeState,gamble:boolean){requireRule(s.result&&s.settlement==='pending','本手已结算');const r=s.result;s.settlement=gamble?(random(s.rng,'ai')<.5?'win':'loss'):'bank';if(gamble){const v=wagerValues(r.total);r.total=s.settlement==='win'?v.win:v.loss;r.steps.push({source:'乘胜追击',text:s.settlement==='win'?`押注成功：+${v.stake}攻势`:`押注失利：−${v.stake}攻势`,chips:r.chips,mult:r.mult});}s.score=Math.min(SCORE_CAP,s.score+r.total);s.stats.best=Math.max(s.stats.best,r.total);s.stageBest=Math.max(s.stageBest,r.total);}
 function refill(s:ForgeState){while(s.hand.length<R.handSize){if(!s.draw.length){if(!s.discard.length)break;s.draw=shuffle(s.discard,s.rng,'player');s.discard=[];}s.hand.push(s.draw.shift()!);}}
-function gain(s:ForgeState,id:string|undefined,replace?:string){requireRule(id&&Object.hasOwn(COMPANIONS,id)&&!owns(s,id as CompanionId),'组件无效或已持有');if(s.companions.length>=R.slots){const index=s.companions.findIndex(c=>c.id===replace);requireRule(index>=0,'五个位置已满，请选择替换对象');s.companions.splice(index,1,{id:id as CompanionId,growth:0});}else s.companions.push({id:id as CompanionId,growth:0});s.stats.recruited++;}
+function gain(s:ForgeState,id:string|undefined,replace?:string){requireRule(id&&Object.hasOwn(COMPANIONS,id)&&!owns(s,id as CompanionId),'将星无效或已持有');if(s.companions.length>=R.slots){const index=s.companions.findIndex(c=>c.id===replace);requireRule(index>=0,'五个位置已满，请选择替换对象');s.companions.splice(index,1,{id:id as CompanionId,growth:0});}else s.companions.push({id:id as CompanionId,growth:0});s.stats.recruited++;}
 function phase(s:ForgeState,...allowed:ForgePhase[]){requireRule(allowed.includes(s.phase),'当前阶段不能执行此行动');}
 function randomEdit(s:ForgeState){
  const available:(() => void)[]=[];
@@ -108,7 +108,7 @@ function applyForge(s:ForgeState,a:ForgeAction){requireRule(a.seq===s.seq,'行�
   }}s.stats.edits++;
  }s.hand=[];s.draw=[];s.discard=[];s.offers=sample(s,3).map(id=>({id,sold:false}));s.refreshes=0;s.phase='shop';return;}
  case 'buy':{phase(s,'shop');const offer=s.offers.find(o=>o.id===a.id&&!o.sold);requireRule(offer,'商品不存在或已售罄');const price=COMPANIONS[offer.id].price;requireRule(s.gold>=price,'军资不足');gain(s,offer.id,a.replace);s.gold-=price;offer.sold=true;return;}
- case 'sell':{phase(s,'shop');const index=s.companions.findIndex(c=>c.id===a.id);requireRule(index>=0,'没有持有此组件');s.gold+=Math.floor(COMPANIONS[s.companions[index].id].price/2);s.companions.splice(index,1);return;}
+ case 'sell':{phase(s,'shop');const index=s.companions.findIndex(c=>c.id===a.id);requireRule(index>=0,'没有持有此将星');s.gold+=Math.floor(COMPANIONS[s.companions[index].id].price/2);s.companions.splice(index,1);return;}
  case 'refresh':phase(s,'shop');requireRule(s.gold>=R.refreshBase+s.refreshes,'刷新所需军资不足');s.gold-=R.refreshBase+s.refreshes;s.refreshes++;s.offers=sample(s,3).map(id=>({id,sold:false}));return;
  case 'depart':phase(s,'shop');if(s.stage===7)s.challenge++;else s.stage++;s.phase='prepare';s.target=forgeStage(s).target;s.score=0;s.result=null;s.pressed=false;s.offers=[];s.lastEdit=null;return;
  }throw new RuleError('未知行动');}

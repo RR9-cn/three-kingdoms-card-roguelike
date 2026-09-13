@@ -2,7 +2,7 @@ schema: spec-driven
 
 context: |
   Steam PC 单人横屏三国卡牌肉鸽，工作名《三国·三张定天下》。
-  当前唯一版本为v0.7：六选三、点数之和乘阵型倍率、有限出牌达标和22组件构筑。
+  当前唯一版本为v0.7：六选三、点数之和乘阵型倍率、有限出牌达标和22将星构筑。
   阅读 docs/GAME_DESIGN.md 与 docs/CONTENT.md。
   采用独立 TypeScript 规则内核与 Electron 桌面客户端。
   浏览器、本机桌面启动、Windows 原生验证与 Steam 上传必须区分。
