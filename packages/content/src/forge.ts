@@ -2,19 +2,19 @@
 export const FORGE_VERSION='0.7.0';
 export const FORGE_RULES={hands:4,discards:2,handSize:6,slots:5,startGold:12,minDeck:12,maxDeck:60,baseMult:[1,2,3,4,6,10],levelMult:1,refreshBase:3,pressureReward:8,pressureFactor:1.5} as const;
 export const COMPANIONS={
- pursuit:{name:'马超',mark:'马',role:'连锁',price:12,text:'锦马追阵：每次重触发后，35%概率追加计分；可连续追加，每手最多3次。',hint:'需要张飞或诸葛亮启动；强化牌与逐牌效果可再次发动。',effect:'burst-repeat'},
- chain:{name:'陆逊',mark:'陆',role:'连锁',price:16,text:'火烧连营：每次追击成功，当前倍率 ×1.5。',hint:'与马超配合，最多三次放大；单独持有不会生效。',effect:'burst-mult'},
- guanyu:{name:'关羽',mark:'关',role:'成长',price:10,text:'打出含对子阵型，关羽永久 +1 倍率；立即生效。',hint:'越早招募，越值得反复出对子。',effect:'pair-growth'},
- zhangfei:{name:'张飞',mark:'张',role:'重触发',price:12,text:'含对子时，第一张属于对子的牌额外计分一次。',hint:'重复触发这张牌的点数、强化和逐牌效果。',effect:'pair-repeat'},
- liubei:{name:'刘备',mark:'刘',role:'逐牌',price:10,text:'每张点数不大于4的牌计分时，+10点数、+1倍率。',hint:'低点牌也可以成为构筑核心。',effect:'low-card'},
- zhouyu:{name:'周瑜',mark:'周',role:'兵种',price:10,text:'出牌至少两张同兵种，+7倍率。',hint:'对子和连阵也能受益，不必等待同袍。',effect:'two-suit'},
- zhaoyun:{name:'赵云',mark:'赵',role:'成长',price:10,text:'打出连阵或同袍连阵，赵云永久 +2 倍率。',hint:'配合庞统扩展连阵的组成方式。',effect:'straight-growth'},
+ pursuit:{name:'马超',mark:'马',role:'接力',price:12,text:'每次额外计分后，35%概率让该牌再额外计分；每手最多追击3次。',hint:'张飞、周瑜、赵云和诸葛亮都能让马超起跑。',effect:'burst-repeat'},
+ chain:{name:'陆逊',mark:'陆',role:'响应',price:16,text:'每次阵牌额外计分后，+3倍率。',hint:'不区分是谁发起；确定额外计分和马超追击都会放大。',effect:'burst-mult'},
+ guanyu:{name:'关羽',mark:'关',role:'成长',price:10,text:'打出对子或本手发生额外计分，关羽永久 +1 倍率；每手一次。',hint:'自己能靠对子成长，也能接入任何额外计分来源。',effect:'pair-growth'},
+ zhangfei:{name:'张飞',mark:'张',role:'发起',price:12,text:'含对子时，第一张对子牌额外计分一次。',hint:'让该牌的强化与逐牌将星再次发动。',effect:'pair-repeat'},
+ liubei:{name:'刘备',mark:'刘',role:'响应',price:10,text:'每当不大于4点的牌计分，+10点数、+1倍率。',hint:'额外计分时也发动，可接张飞、周瑜、赵云或诸葛亮。',effect:'low-card'},
+ zhouyu:{name:'周瑜',mark:'周',role:'发起',price:10,text:'至少两张同兵种时，这些同兵种牌各额外计分一次。',hint:'两张即可启动；三张同兵种会发起三次接力。',effect:'two-suit'},
+ zhaoyun:{name:'赵云',mark:'赵',role:'发起',price:10,text:'打出连阵或同袍连阵时，最低点牌额外计分一次。',hint:'低点牌可以继续触发刘备，也能带动追击。',effect:'straight-growth'},
  huangzhong:{name:'黄忠',mark:'黄',role:'逐牌',price:9,text:'每张点数不小于7的牌计分时，+18点数。',hint:'升点、复制和重触发共同放大高点牌。',effect:'high-chips'},
- zhugeliang:{name:'诸葛亮',mark:'诸',role:'重触发',price:14,text:'最右侧出牌额外计分一次。',hint:'出牌按手牌槽位排序，重复计算该牌效果。',effect:'last-repeat'},
+ zhugeliang:{name:'诸葛亮',mark:'诸',role:'发起',price:14,text:'最右侧出牌额外计分一次。',hint:'不要求阵型，能把任意逐牌效果接入连锁。',effect:'last-repeat'},
  caocao:{name:'曹操',mark:'曹',role:'经济',price:8,text:'每次换牌获得2军资。',hint:'与公孙瓒增加换牌次数、鲁肃存钱相互配合。',effect:'discard-gold'},
  sunquan:{name:'孙权',mark:'孙',role:'杂兵',price:9,text:'出牌包含三种不同兵种，+4倍率。',hint:'保留多种兵种，走另一条成型路线。',effect:'mixed-suits'},
  lvbu:{name:'吕布',mark:'吕',role:'爆发',price:12,text:'打出三军同心，当前倍率 ×3。',hint:'复制相同点数，提高三军同心出现频率。',effect:'triple-mult'},
- diaochan:{name:'貂蝉',mark:'貂',role:'逐牌',price:10,text:'每张谋牌计分时，+2倍率。',hint:'改编兵种可以让更多牌触发。',effect:'scheme-mult'},
+ diaochan:{name:'貂蝉',mark:'貂',role:'响应',price:10,text:'每当谋牌计分，+2倍率。',hint:'谋牌额外计分时也发动；改编可以制造核心牌。',effect:'scheme-mult'},
  simayi:{name:'司马懿',mark:'司',role:'压轴',price:10,text:'本关最后一次出牌，当前倍率 ×2。',hint:'可以保底，也可以为最后一手蓄力。',effect:'last-hand'},
  blade:{name:'太史慈',mark:'太',role:'逐牌',price:11,text:'神亭酣战：每张点数不小于7的牌计分时，+2倍率。',hint:'同一张牌的重触发会再次获得倍率。',effect:'high-mult'},
  drum:{name:'张辽',mark:'辽',role:'基础',price:7,text:'威震逍遥津：出牌含对子，+30点数。',hint:'提供前期强度，之后再考虑是否腾位置。',effect:'pair-chips'},
@@ -27,7 +27,7 @@ export const COMPANIONS={
 } as const;
 export type CompanionId=keyof typeof COMPANIONS;
 export const ALL_COMPANION_IDS=Object.keys(COMPANIONS) as CompanionId[];
-/** New runs only: three four-general engines. Other stable IDs remain loadable for v8 saves. */
+/** New runs only: twelve freely combinable generals. Other stable IDs remain loadable for v8 saves. */
 export const COMPANION_IDS:CompanionId[]=['guanyu','zhangfei','pursuit','chain','liubei','zhugeliang','caocao','abacus','zhouyu','diaochan','oath','zhaoyun'];
 export const STARTERS:CompanionId[]=['guanyu','zhouyu','liubei'];
 export const STAGES=[

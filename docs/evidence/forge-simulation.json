@@ -15,61 +15,61 @@
     {
       "starter": "guanyu",
       "runs": 200,
-      "wins": 76,
-      "winRate": 0.38,
-      "firstWin": "forge-4",
-      "firstLoss": "forge-0",
-      "best": 4651,
-      "meanActions": 99.865,
+      "wins": 179,
+      "winRate": 0.895,
+      "firstWin": "forge-0",
+      "firstLoss": "forge-8",
+      "best": 4495,
+      "meanActions": 97.135,
       "failures": [
         0,
         0,
+        2,
+        1,
         0,
-        0,
-        0,
-        10,
-        25,
-        89
+        2,
+        1,
+        15
       ]
     },
     {
       "starter": "zhouyu",
       "runs": 200,
-      "wins": 179,
-      "winRate": 0.895,
-      "firstWin": "forge-0",
-      "firstLoss": "forge-7",
-      "best": 3708,
-      "meanActions": 91.39,
+      "wins": 105,
+      "winRate": 0.525,
+      "firstWin": "forge-2",
+      "firstLoss": "forge-0",
+      "best": 4176,
+      "meanActions": 91.6,
       "failures": [
         0,
         0,
         1,
-        0,
-        0,
-        0,
-        0,
-        20
+        6,
+        7,
+        7,
+        10,
+        64
       ]
     },
     {
       "starter": "liubei",
       "runs": 200,
-      "wins": 169,
-      "winRate": 0.845,
+      "wins": 127,
+      "winRate": 0.635,
       "firstWin": "forge-0",
-      "firstLoss": "forge-5",
-      "best": 3312,
-      "meanActions": 91.775,
+      "firstLoss": "forge-1",
+      "best": 7825,
+      "meanActions": 91.64,
       "failures": [
         0,
         0,
         0,
         0,
         0,
-        0,
-        0,
-        31
+        4,
+        10,
+        59
       ]
     }
   ]
