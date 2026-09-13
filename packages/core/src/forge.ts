@@ -11,12 +11,12 @@ export interface ForgeState {
  schemaVersion:8;contentVersion:typeof FORGE_VERSION;seed:string;seq:number;rng:RandomState;phase:ForgePhase;stage:number;
  army:ArmyCard[];nextId:number;hand:string[];draw:string[];discard:string[];companions:Companion[];levels:number[];
  gold:number;score:number;target:number;pressed:boolean;hands:number;discards:number;played:number;lastCategory:number|null;scouted:boolean;lastSuit:Suit|null;
- challenge:number;stageBest:number;recordBefore:number;settlement:'pending'|'bank'|'win'|'loss';lastEdit:string|null;
+ challenge:number;stageBest:number;recordBefore:number;settlement:'pending'|'bank'|'win'|'loss';lastEdit:string|null;pendingEdit:ForgeEdit|null;
  result:Score|null;recruits:CompanionId[];offers:{id:CompanionId;sold:boolean}[];refreshes:number;
  stats:{plays:number;best:number;cleared:number;edits:number;pressureWins:number;recruited:number};
 }
 export type ForgeAction={seq:number;type:'starter'|'begin'|'play'|'discard'|'next'|'recruit'|'edit'|'random-edit'|'buy'|'sell'|'refresh'|'depart'|'bank'|'gamble'|'extend';id?:string;ids?:string[];replace?:string;pressed?:boolean;edit?:ForgeEdit;cardId?:string;suit?:Suit;category?:number};
-export function newForge(seed:string):ForgeState{return{schemaVersion:8,contentVersion:FORGE_VERSION,seed,seq:0,rng:randomState(seed),phase:'starter',stage:0,army:deck().map(c=>({...c,bonus:0})),nextId:0,hand:[],draw:[],discard:[],companions:[],levels:[0,0,0,0,0,0],gold:R.startGold,score:0,target:STAGES[0].target,pressed:false,hands:R.hands,discards:R.discards,played:0,lastCategory:null,scouted:false,lastSuit:null,challenge:0,stageBest:0,recordBefore:0,settlement:'bank',lastEdit:null,result:null,recruits:[...STARTERS],offers:[],refreshes:0,stats:{plays:0,best:0,cleared:0,edits:0,pressureWins:0,recruited:0}};}
+export function newForge(seed:string):ForgeState{return{schemaVersion:8,contentVersion:FORGE_VERSION,seed,seq:0,rng:randomState(seed),phase:'starter',stage:0,army:deck().map(c=>({...c,bonus:0})),nextId:0,hand:[],draw:[],discard:[],companions:[],levels:[0,0,0,0,0,0],gold:R.startGold,score:0,target:STAGES[0].target,pressed:false,hands:R.hands,discards:R.discards,played:0,lastCategory:null,scouted:false,lastSuit:null,challenge:0,stageBest:0,recordBefore:0,settlement:'bank',lastEdit:null,pendingEdit:null,result:null,recruits:[...STARTERS],offers:[],refreshes:0,stats:{plays:0,best:0,cleared:0,edits:0,pressureWins:0,recruited:0}};}
 export const owns=(s:Pick<ForgeState,'companions'>,id:CompanionId)=>s.companions.some(c=>c.id===id);
 function selected(s:ForgeState,ids:string[],min:number,max:number):ArmyCard[]{requireRule(ids.length>=min&&ids.length<=max&&new Set(ids).size===ids.length&&ids.every(id=>s.hand.includes(id)),'请选择有效且不重复的手牌');return s.hand.filter(id=>ids.includes(id)).map(id=>s.army.find(c=>c.id===id)!);}
 export function formation(s:Pick<ForgeState,'companions'>,cards:Card[]):number{const basic=evaluate(cards).category;const ranks=cards.map(c=>c.rank).sort((a,b)=>a-b);if(owns(s,'scroll')&&ranks[0]<ranks[1]&&ranks[1]<ranks[2]&&ranks[1]-ranks[0]<=2&&ranks[2]-ranks[1]<=2)return Math.max(basic,new Set(cards.map(c=>c.suit)).size===1?4:2);return basic;}
@@ -76,15 +76,8 @@ function settle(s:ForgeState,gamble:boolean){requireRule(s.result&&s.settlement=
 function refill(s:ForgeState){while(s.hand.length<R.handSize){if(!s.draw.length){if(!s.discard.length)break;s.draw=shuffle(s.discard,s.rng,'player');s.discard=[];}s.hand.push(s.draw.shift()!);}}
 function gain(s:ForgeState,id:string|undefined,replace?:string){requireRule(id&&Object.hasOwn(COMPANIONS,id)&&!owns(s,id as CompanionId),'将星无效或已持有');if(s.companions.length>=R.slots){const index=s.companions.findIndex(c=>c.id===replace);requireRule(index>=0,'五个位置已满，请选择替换对象');s.companions.splice(index,1,{id:id as CompanionId,growth:0});}else s.companions.push({id:id as CompanionId,growth:0});s.stats.recruited++;}
 function phase(s:ForgeState,...allowed:ForgePhase[]){requireRule(allowed.includes(s.phase),'当前阶段不能执行此行动');}
-function randomEdit(s:ForgeState){
- const available:(() => void)[]=[];
- if(s.army.length<R.maxDeck)available.push(()=>{const card=s.army[Math.floor(random(s.rng,'reward')*s.army.length)];s.army.push({...card,id:`copy-${s.nextId++}`});s.lastEdit=`军师募兵：复制了${SUIT_NAMES[card.suit]}${card.rank}`;});
- const trainable=s.army.filter(card=>card.rank<9);if(trainable.length)available.push(()=>{const card=trainable[Math.floor(random(s.rng,'reward')*trainable.length)];card.rank=Math.min(9,card.rank+2);s.lastEdit=`军师练兵：${SUIT_NAMES[card.suit]}升至${card.rank}点`;});
- available.push(()=>{const card=s.army[Math.floor(random(s.rng,'reward')*s.army.length)];card.bonus+=12;s.lastEdit=`军师精锐：${SUIT_NAMES[card.suit]}${card.rank}获得+12点数`;});
- available.push(()=>{const category=Math.floor(random(s.rng,'reward')*HAND_NAMES.length);s.levels[category]++;s.lastEdit=`军师研习：${HAND_NAMES[category]}升至Lv.${s.levels[category]+1}`;});
- available[Math.floor(random(s.rng,'reward')*available.length)]();
- s.stats.edits++;
-}
+function randomEdit(s:ForgeState){const available:ForgeEdit[]=['enhance','suit','level'];if(s.army.length>R.minDeck)available.push('remove');if(s.army.length<R.maxDeck)available.push('copy');if(s.army.some(card=>card.rank<9))available.push('rank');s.pendingEdit=available[Math.floor(random(s.rng,'reward')*available.length)];}
+function finishEdit(s:ForgeState){s.pendingEdit=null;s.hand=[];s.draw=[];s.discard=[];s.offers=sample(s,3).map(id=>({id,sold:false}));s.refreshes=0;s.phase='shop';}
 function applyForge(s:ForgeState,a:ForgeAction){requireRule(a.seq===s.seq,'行动已处理，请以当前局面为准');switch(a.type){
  case 'starter':phase(s,'starter');requireRule(a.id&&STARTERS.includes(a.id as CompanionId),'请选择一个开局核心');gain(s,a.id);s.recruits=[];s.phase='prepare';return;
  case 'begin':{phase(s,'prepare');requireRule(a.pressed===undefined||typeof a.pressed==='boolean','加压选项无效');s.pressed=a.pressed??false;s.target=Math.ceil(forgeStage(s).target*(s.pressed?R.pressureFactor:1));s.score=0;s.stageBest=0;s.settlement='bank';s.hands=forgeStage(s).rule==='last-stand'?3:R.hands;s.discards=R.discards+Number(owns(s,'horse'));s.played=0;s.lastCategory=null;s.lastSuit=null;s.scouted=false;s.result=null;s.hand=[];s.discard=[];s.draw=shuffle(s.army.map(c=>c.id),s.rng,'player');refill(s);s.phase='battle';return;}
@@ -95,22 +88,22 @@ function applyForge(s:ForgeState,a:ForgeAction){requireRule(a.seq===s.seq,'行�
  case 'extend':phase(s,'victory');requireRule(s.stage===7,'尚未通关');s.gold+=10+s.hands+Math.min(5,Math.floor(s.gold/5))+(s.pressed?R.pressureReward:0);s.recruits=sample(s,3);s.phase='recruit';return;
  case 'next':{phase(s,'result');if(s.settlement==='pending')settle(s,false);if(s.score>=s.target){s.stats.cleared++;if(s.pressed)s.stats.pressureWins++;if(s.stage===STAGES.length-1){s.phase='victory';return;}const interest=Math.min(5,Math.floor(s.gold/5));s.gold+=10+s.hands+interest+(s.pressed?R.pressureReward:0);s.recruits=sample(s,3);s.phase='recruit';}else if(s.hands===0)s.phase='defeat';else{refill(s);s.result=null;s.scouted=false;s.phase='battle';}return;}
  case 'recruit':phase(s,'recruit');if(a.id==='skip')s.gold+=4;else{requireRule(a.id&&s.recruits.includes(a.id as CompanionId),'不在本次征募名单中');gain(s,a.id,a.replace);}s.recruits=[];s.phase='forge';return;
- case 'random-edit':{phase(s,'forge');randomEdit(s);s.hand=[];s.draw=[];s.discard=[];s.offers=sample(s,3).map(id=>({id,sold:false}));s.refreshes=0;s.phase='shop';return;}
- case 'edit':{phase(s,'forge');if(a.id==='skip')s.gold+=3;else{
-  requireRule(a.edit&&['remove','copy','rank','enhance','suit','level'].includes(a.edit),'请选择整编方式');
-  if(a.edit==='level'){requireRule(Number.isInteger(a.category)&&a.category!>=0&&a.category!<6,'请选择牌型');s.levels[a.category!]++;}
+ case 'random-edit':{phase(s,'forge');requireRule(!s.pendingEdit,'本次整编已经揭晓');randomEdit(s);return;}
+ case 'edit':{phase(s,'forge');if(a.id==='skip'){requireRule(!s.pendingEdit,'整编已经揭晓，请选择目标');s.gold+=3;finishEdit(s);}else{
+  requireRule(a.edit&&a.edit===s.pendingEdit,'请完成已经揭晓的整编');
+  if(a.edit==='level'){requireRule(Number.isInteger(a.category)&&a.category!>=0&&a.category!<6,'请选择牌型');s.levels[a.category!]++;s.lastEdit=`军师研习：${HAND_NAMES[a.category!]}升至Lv.${s.levels[a.category!]+1}`;}
   else{const index=s.army.findIndex(c=>c.id===a.cardId);requireRule(index>=0,'请选择牌库中的牌');const card=s.army[index];switch(a.edit){
-   case 'remove':requireRule(s.army.length>R.minDeck,'牌库不能少于12张');s.army.splice(index,1);break;
-   case 'copy':requireRule(s.army.length<R.maxDeck,'牌库最多60张');s.army.push({...card,id:`copy-${s.nextId++}`});break;
-   case 'rank':requireRule(card.rank<9,'点数已满');card.rank=Math.min(9,card.rank+2);break;
-   case 'enhance':card.bonus+=12;break;
-   case 'suit':requireRule(a.suit&&SUITS.includes(a.suit)&&a.suit!==card.suit,'请选择不同兵种');card.suit=a.suit;break;
-  }}s.stats.edits++;
- }s.hand=[];s.draw=[];s.discard=[];s.offers=sample(s,3).map(id=>({id,sold:false}));s.refreshes=0;s.phase='shop';return;}
+   case 'remove':requireRule(s.army.length>R.minDeck,'牌库不能少于12张');s.army.splice(index,1);s.lastEdit=`军师裁军：移除${SUIT_NAMES[card.suit]}${card.rank}`;break;
+   case 'copy':requireRule(s.army.length<R.maxDeck,'牌库最多60张');s.army.push({...card,id:`copy-${s.nextId++}`});s.lastEdit=`军师募兵：复制${SUIT_NAMES[card.suit]}${card.rank}`;break;
+   case 'rank':requireRule(card.rank<9,'点数已满');card.rank=Math.min(9,card.rank+2);s.lastEdit=`军师练兵：${SUIT_NAMES[card.suit]}升至${card.rank}点`;break;
+   case 'enhance':card.bonus+=12;s.lastEdit=`军师精锐：${SUIT_NAMES[card.suit]}${card.rank}获得+12点数`;break;
+   case 'suit':requireRule(a.suit&&SUITS.includes(a.suit)&&a.suit!==card.suit,'请选择不同兵种');const before=SUIT_NAMES[card.suit];card.suit=a.suit;s.lastEdit=`军师改编：${before}${card.rank}改为${SUIT_NAMES[card.suit]}`;break;
+  }}s.stats.edits++;finishEdit(s);
+ }return;}
  case 'buy':{phase(s,'shop');const offer=s.offers.find(o=>o.id===a.id&&!o.sold);requireRule(offer,'商品不存在或已售罄');const price=COMPANIONS[offer.id].price;requireRule(s.gold>=price,'军资不足');gain(s,offer.id,a.replace);s.gold-=price;offer.sold=true;return;}
  case 'sell':{phase(s,'shop');const index=s.companions.findIndex(c=>c.id===a.id);requireRule(index>=0,'没有持有此将星');s.gold+=Math.floor(COMPANIONS[s.companions[index].id].price/2);s.companions.splice(index,1);return;}
  case 'refresh':phase(s,'shop');requireRule(s.gold>=R.refreshBase+s.refreshes,'刷新所需军资不足');s.gold-=R.refreshBase+s.refreshes;s.refreshes++;s.offers=sample(s,3).map(id=>({id,sold:false}));return;
- case 'depart':phase(s,'shop');if(s.stage===7)s.challenge++;else s.stage++;s.phase='prepare';s.target=forgeStage(s).target;s.score=0;s.result=null;s.pressed=false;s.offers=[];s.lastEdit=null;return;
+ case 'depart':phase(s,'shop');if(s.stage===7)s.challenge++;else s.stage++;s.phase='prepare';s.target=forgeStage(s).target;s.score=0;s.result=null;s.pressed=false;s.offers=[];s.lastEdit=null;s.pendingEdit=null;return;
  }throw new RuleError('未知行动');}
 export function forgeAction(state:ForgeState,a:ForgeAction):{state:ForgeState;error?:string}{const s=copy(state);try{applyForge(s,a);s.seq++;return{state:s};}catch(e){if(e instanceof RuleError)return{state,error:e.message};throw e;}}
 export function forgeView(s:ForgeState){const{rng,draw,discard,...visible}=s;return copy({...visible,hand:s.hand.map(id=>s.army.find(c=>c.id===id)!),drawCount:draw.length,discardCount:discard.length});}
@@ -128,6 +121,7 @@ export function isForgeState(value:unknown):value is ForgeState{try{
  if(!Array.isArray(s.companions)||s.companions.length>5||s.companions.some(c=>!c||!Object.hasOwn(COMPANIONS,c.id)||!int(c.growth))||new Set(s.companions.map(c=>c.id)).size!==s.companions.length)return false;
  if(!Array.isArray(s.levels)||s.levels.length!==6||!s.levels.every(int)||!int(s.gold)||!int(s.score)||!int(s.target)||!s.target||!int(s.hands)||s.hands>4||!int(s.discards)||s.discards>3||!int(s.nextId)||!int(s.played)||!int(s.refreshes)||typeof s.pressed!=='boolean')return false;
  if(!int(s.challenge)||!int(s.stageBest)||!int(s.recordBefore)||!['pending','bank','win','loss'].includes(s.settlement)||(s.challenge>0&&s.stage!==7)||(s.settlement==='pending'&&s.phase!=='result')||(s.lastEdit!==null&&typeof s.lastEdit!=='string'))return false;
+ if(s.pendingEdit===undefined)s.pendingEdit=null;if(s.pendingEdit!==null&&!['remove','copy','rank','enhance','suit','level'].includes(s.pendingEdit))return false;if(s.pendingEdit!==null&&s.phase!=='forge')return false;
  if(typeof s.scouted!=='boolean'||(s.lastSuit!==null&&!SUITS.includes(s.lastSuit)))return false;
  if(s.lastCategory!==null&&(!int(s.lastCategory)||s.lastCategory>=6))return false;
  if(!s.rng||['player','enemy','ai','map','reward'].some(k=>!int(s.rng[k as keyof RandomState])||s.rng[k as keyof RandomState]>0xffffffff))return false;

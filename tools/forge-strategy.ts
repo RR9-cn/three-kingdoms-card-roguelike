@@ -8,7 +8,13 @@ export function forgeStrategy(v:ForgeView,starter:CompanionId):Omit<ForgeAction,
  if(v.phase==='battle')return{type:'play',ids:bestForgeHand(v).ids};
  if(v.phase==='result')return{type:v.settlement==='pending'?'bank':'next'};
  if(v.phase==='recruit'){const id=sorted(v.recruits)[0];if(!id)return{type:'recruit',id:'skip'};if(v.companions.length<5)return{type:'recruit',id};const worst=sorted(v.companions.map(c=>c.id)).at(-1)!;return rank(id)<rank(worst)?{type:'recruit',id,replace:worst}:{type:'recruit',id:'skip'};}
- if(v.phase==='forge')return{type:'random-edit'};
+ if(v.phase==='forge'){
+  if(!v.pendingEdit)return{type:'random-edit'};
+  if(v.pendingEdit==='level')return{type:'edit',edit:'level',category:starter==='guanyu'?1:starter==='zhouyu'?3:0};
+  const ordered=[...v.army].sort((a,b)=>starter==='liubei'?a.rank-b.rank:b.rank-a.rank),card=v.pendingEdit==='remove'?ordered.at(-1)!:ordered.find(c=>v.pendingEdit!=='rank'||c.rank<9)!;
+  if(v.pendingEdit==='suit')return{type:'edit',edit:'suit',cardId:card.id,suit:card.suit==='scheme'?'spear':'scheme'};
+  return{type:'edit',edit:v.pendingEdit,cardId:card.id};
+ }
  if(v.phase==='shop'){
   const available=sorted(v.offers.filter(o=>!o.sold&&!v.companions.some(c=>c.id===o.id)&&v.gold>=COMPANIONS[o.id].price).map(o=>o.id));
   if(available.length){const id=available[0];if(v.companions.length<5)return{type:'buy',id};const worst=sorted(v.companions.map(c=>c.id)).at(-1)!;if(rank(id)<rank(worst))return{type:'buy',id,replace:worst};}

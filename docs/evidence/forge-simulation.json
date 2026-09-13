@@ -10,57 +10,57 @@
     1800,
     1900
   ],
-  "strategy": "Public-view greedy hand score; fixed starter-specific recruitment preference; accepts the random positive edit; no discards, no pressure. This is a smoke heuristic, not an optimal build or human win-rate estimate.",
+  "strategy": "Public-view greedy hand score; fixed starter-specific recruitment preference; accepts the revealed edit type and chooses its target; no discards, no pressure. This is a smoke heuristic, not an optimal build or human win-rate estimate.",
   "results": [
     {
       "starter": "guanyu",
       "runs": 200,
-      "wins": 185,
-      "winRate": 0.925,
-      "firstWin": "forge-0",
-      "firstLoss": "forge-4",
-      "best": 4466,
-      "meanActions": 85.635,
+      "wins": 76,
+      "winRate": 0.38,
+      "firstWin": "forge-4",
+      "firstLoss": "forge-0",
+      "best": 4651,
+      "meanActions": 99.865,
       "failures": [
         0,
         0,
-        2,
-        1,
         0,
         0,
-        1,
-        11
+        0,
+        10,
+        25,
+        89
       ]
     },
     {
       "starter": "zhouyu",
       "runs": 200,
-      "wins": 131,
-      "winRate": 0.655,
-      "firstWin": "forge-1",
-      "firstLoss": "forge-0",
-      "best": 2923,
-      "meanActions": 89.845,
+      "wins": 179,
+      "winRate": 0.895,
+      "firstWin": "forge-0",
+      "firstLoss": "forge-7",
+      "best": 3708,
+      "meanActions": 91.39,
       "failures": [
         0,
         0,
-        4,
-        3,
+        1,
         0,
-        3,
-        7,
-        52
+        0,
+        0,
+        0,
+        20
       ]
     },
     {
       "starter": "liubei",
       "runs": 200,
-      "wins": 194,
-      "winRate": 0.97,
+      "wins": 169,
+      "winRate": 0.845,
       "firstWin": "forge-0",
-      "firstLoss": "forge-27",
-      "best": 2980,
-      "meanActions": 85.21,
+      "firstLoss": "forge-5",
+      "best": 3312,
+      "meanActions": 91.775,
       "failures": [
         0,
         0,
@@ -69,7 +69,7 @@
         0,
         0,
         0,
-        6
+        31
       ]
     }
   ]

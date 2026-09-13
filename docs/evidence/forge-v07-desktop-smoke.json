@@ -4,7 +4,7 @@
   "schemaVersion": 8,
   "platform": "darwin",
   "arch": "arm64",
-  "packaged": false,
+  "packaged": true,
   "offlineLocalPage": true,
   "rendererNodeDisabled": true,
   "minimizePause": true,

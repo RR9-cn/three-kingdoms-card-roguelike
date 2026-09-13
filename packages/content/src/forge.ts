@@ -26,7 +26,9 @@ export const COMPANIONS={
  oath:{name:'孙策',mark:'策',role:'爆发',price:12,text:'江东同袍：三张牌同兵种，当前倍率 ×1.8。',hint:'和周瑜、貂蝉及改编兵种相互配合。',effect:'flush-mult'},
 } as const;
 export type CompanionId=keyof typeof COMPANIONS;
-export const COMPANION_IDS=Object.keys(COMPANIONS) as CompanionId[];
+export const ALL_COMPANION_IDS=Object.keys(COMPANIONS) as CompanionId[];
+/** New runs only: three four-general engines. Other stable IDs remain loadable for v8 saves. */
+export const COMPANION_IDS:CompanionId[]=['guanyu','zhangfei','pursuit','chain','liubei','zhugeliang','caocao','abacus','zhouyu','diaochan','oath','zhaoyun'];
 export const STARTERS:CompanionId[]=['guanyu','zhouyu','liubei'];
 export const STAGES=[
  {name:'初出茅庐',enemy:'黄巾前哨',target:100,rule:'none',text:'四次出牌内积累足够攻势。'},
@@ -39,7 +41,7 @@ export const STAGES=[
  {name:'苍天已死',enemy:'张角',target:1900,rule:'last-stand',text:'终局张角：仅3次出牌。击破40%兵力后唤雷；出牌后手中未留下谋牌，攻势×0.6。'},
 ] as const;
 export type ForgeEdit='remove'|'copy'|'rank'|'enhance'|'suit'|'level';
-export const EDITS:Record<ForgeEdit,{name:string;text:string}>={remove:{name:'裁军',text:'永久删除一张牌，最低12张。'},copy:{name:'募兵',text:'复制一张牌，保留点数、兵种与强化。'},rank:{name:'练兵',text:'一张牌点数 +2，上限9。'},enhance:{name:'精锐',text:'一张牌每次计分额外 +12点数。'},suit:{name:'改编',text:'永久改变一张牌的兵种。'},level:{name:'研习',text:'指定牌型等级 +1：倍率 +1。'}};
+export const EDITS:Record<ForgeEdit,{name:string;text:string}>={remove:{name:'裁军',text:'选择一张牌永久删除，牌库最低12张。'},copy:{name:'募兵',text:'选择一张牌复制，保留点数、兵种与强化。'},rank:{name:'练兵',text:'选择一张未满9点的牌，点数 +2。'},enhance:{name:'精锐',text:'选择一张牌，使其每次计分额外 +12点数。'},suit:{name:'改编',text:'选择一张牌，再决定它的新兵种。'},level:{name:'研习',text:'选择一种阵型，使其倍率永久 +1。'}};
 
 export const BOSSES:Partial<Record<number,{name:string;title:string;mark:string;intro:string;defeated:string;phases:readonly {name:string;text:string;quote:string}[]}>>={
  3:{name:'张宝',title:'地公将军',mark:'地',intro:'雾锁祭坛，黄巾伏兵四起。',defeated:'地公坛破，疑阵尽散。',phases:[{name:'伏兵蔽日',text:'未换牌的这一手攻势×0.65；换牌可解除。',quote:'入我阵中，还想全身而退？'},{name:'移形疑阵',text:'连续相同牌型攻势×0.5；换牌不再解除减伤。',quote:'破得了伏兵，可识得我的疑阵？'}]},
