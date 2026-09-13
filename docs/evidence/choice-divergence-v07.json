@@ -1,0 +1,485 @@
+{
+  "schemaVersion": 1,
+  "contentVersion": "0.7.0",
+  "seed": "choice-divergence-v07",
+  "sampleCount": 400,
+  "boundaries": {
+    "deck": "未整编的36张基础牌库；每个样本抽取六张公开手牌。",
+    "state": "第1关中性战斗状态、零成长、零阵型升级、零军资，不包含Boss与换牌。",
+    "preview": "只使用正式确定性预览；不抽取马超追击等出牌后隐藏随机结果。",
+    "interpretation": "报告用于定位人工审核候选，不代表强弱平衡结论或真人选择预测。"
+  },
+  "summary": {
+    "buildCount": 299,
+    "marginalComparisons": 321600,
+    "singleGeneralAgreementRate": 0.7271,
+    "meanBestSecondMarginPct": 25.49,
+    "meanDistinctSingleGeneralOptima": 2.88
+  },
+  "generals": [
+    {
+      "id": "guanyu",
+      "name": "关羽",
+      "role": "成长",
+      "scope": "guaranteed-battle",
+      "comparisons": 26800,
+      "choiceChangeRate": 0.1216,
+      "meanScoreUpliftPct": 17.98,
+      "byContextSize": [
+        {
+          "size": 0,
+          "comparisons": 400,
+          "choiceChangeRate": 0.185,
+          "meanScoreUpliftPct": 13
+        },
+        {
+          "size": 1,
+          "comparisons": 4400,
+          "choiceChangeRate": 0.1536,
+          "meanScoreUpliftPct": 17.19
+        },
+        {
+          "size": 2,
+          "comparisons": 22000,
+          "choiceChangeRate": 0.114,
+          "meanScoreUpliftPct": 18.23
+        }
+      ]
+    },
+    {
+      "id": "zhangfei",
+      "name": "张飞",
+      "role": "发起",
+      "scope": "guaranteed-battle",
+      "comparisons": 26800,
+      "choiceChangeRate": 0.1639,
+      "meanScoreUpliftPct": 23.02,
+      "byContextSize": [
+        {
+          "size": 0,
+          "comparisons": 400,
+          "choiceChangeRate": 0.07,
+          "meanScoreUpliftPct": 8.35
+        },
+        {
+          "size": 1,
+          "comparisons": 4400,
+          "choiceChangeRate": 0.1357,
+          "meanScoreUpliftPct": 19.25
+        },
+        {
+          "size": 2,
+          "comparisons": 22000,
+          "choiceChangeRate": 0.1713,
+          "meanScoreUpliftPct": 24.04
+        }
+      ]
+    },
+    {
+      "id": "pursuit",
+      "name": "马超",
+      "role": "接力",
+      "scope": "random-after-play",
+      "comparisons": 26800,
+      "choiceChangeRate": 0,
+      "meanScoreUpliftPct": 0,
+      "byContextSize": [
+        {
+          "size": 0,
+          "comparisons": 400,
+          "choiceChangeRate": 0,
+          "meanScoreUpliftPct": 0
+        },
+        {
+          "size": 1,
+          "comparisons": 4400,
+          "choiceChangeRate": 0,
+          "meanScoreUpliftPct": 0
+        },
+        {
+          "size": 2,
+          "comparisons": 22000,
+          "choiceChangeRate": 0,
+          "meanScoreUpliftPct": 0
+        }
+      ]
+    },
+    {
+      "id": "chain",
+      "name": "陆逊",
+      "role": "响应",
+      "scope": "guaranteed-battle",
+      "comparisons": 26800,
+      "choiceChangeRate": 0.12,
+      "meanScoreUpliftPct": 66.52,
+      "byContextSize": [
+        {
+          "size": 0,
+          "comparisons": 400,
+          "choiceChangeRate": 0,
+          "meanScoreUpliftPct": 0
+        },
+        {
+          "size": 1,
+          "comparisons": 4400,
+          "choiceChangeRate": 0.0843,
+          "meanScoreUpliftPct": 42.27
+        },
+        {
+          "size": 2,
+          "comparisons": 22000,
+          "choiceChangeRate": 0.1293,
+          "meanScoreUpliftPct": 72.58
+        }
+      ]
+    },
+    {
+      "id": "liubei",
+      "name": "刘备",
+      "role": "响应",
+      "scope": "guaranteed-battle",
+      "comparisons": 26800,
+      "choiceChangeRate": 0.6959,
+      "meanScoreUpliftPct": 268.59,
+      "byContextSize": [
+        {
+          "size": 0,
+          "comparisons": 400,
+          "choiceChangeRate": 0.7525,
+          "meanScoreUpliftPct": 250.95
+        },
+        {
+          "size": 1,
+          "comparisons": 4400,
+          "choiceChangeRate": 0.7177,
+          "meanScoreUpliftPct": 266.76
+        },
+        {
+          "size": 2,
+          "comparisons": 22000,
+          "choiceChangeRate": 0.6905,
+          "meanScoreUpliftPct": 269.28
+        }
+      ]
+    },
+    {
+      "id": "zhugeliang",
+      "name": "诸葛亮",
+      "role": "发起",
+      "scope": "guaranteed-battle",
+      "comparisons": 26800,
+      "choiceChangeRate": 0.131,
+      "meanScoreUpliftPct": 58.79,
+      "byContextSize": [
+        {
+          "size": 0,
+          "comparisons": 400,
+          "choiceChangeRate": 0.075,
+          "meanScoreUpliftPct": 34.97
+        },
+        {
+          "size": 1,
+          "comparisons": 4400,
+          "choiceChangeRate": 0.1148,
+          "meanScoreUpliftPct": 51.71
+        },
+        {
+          "size": 2,
+          "comparisons": 22000,
+          "choiceChangeRate": 0.1352,
+          "meanScoreUpliftPct": 60.64
+        }
+      ]
+    },
+    {
+      "id": "caocao",
+      "name": "曹操",
+      "role": "经济",
+      "scope": "discard-economy",
+      "comparisons": 26800,
+      "choiceChangeRate": 0,
+      "meanScoreUpliftPct": 0,
+      "byContextSize": [
+        {
+          "size": 0,
+          "comparisons": 400,
+          "choiceChangeRate": 0,
+          "meanScoreUpliftPct": 0
+        },
+        {
+          "size": 1,
+          "comparisons": 4400,
+          "choiceChangeRate": 0,
+          "meanScoreUpliftPct": 0
+        },
+        {
+          "size": 2,
+          "comparisons": 22000,
+          "choiceChangeRate": 0,
+          "meanScoreUpliftPct": 0
+        }
+      ]
+    },
+    {
+      "id": "abacus",
+      "name": "荀彧",
+      "role": "精简",
+      "scope": "deck-state",
+      "comparisons": 26800,
+      "choiceChangeRate": 0,
+      "meanScoreUpliftPct": 0,
+      "byContextSize": [
+        {
+          "size": 0,
+          "comparisons": 400,
+          "choiceChangeRate": 0,
+          "meanScoreUpliftPct": 0
+        },
+        {
+          "size": 1,
+          "comparisons": 4400,
+          "choiceChangeRate": 0,
+          "meanScoreUpliftPct": 0
+        },
+        {
+          "size": 2,
+          "comparisons": 22000,
+          "choiceChangeRate": 0,
+          "meanScoreUpliftPct": 0
+        }
+      ]
+    },
+    {
+      "id": "zhouyu",
+      "name": "周瑜",
+      "role": "发起",
+      "scope": "guaranteed-battle",
+      "comparisons": 26800,
+      "choiceChangeRate": 0.2911,
+      "meanScoreUpliftPct": 141.5,
+      "byContextSize": [
+        {
+          "size": 0,
+          "comparisons": 400,
+          "choiceChangeRate": 0.1775,
+          "meanScoreUpliftPct": 73.89
+        },
+        {
+          "size": 1,
+          "comparisons": 4400,
+          "choiceChangeRate": 0.2477,
+          "meanScoreUpliftPct": 119.91
+        },
+        {
+          "size": 2,
+          "comparisons": 22000,
+          "choiceChangeRate": 0.3019,
+          "meanScoreUpliftPct": 147.05
+        }
+      ]
+    },
+    {
+      "id": "diaochan",
+      "name": "貂蝉",
+      "role": "响应",
+      "scope": "guaranteed-battle",
+      "comparisons": 26800,
+      "choiceChangeRate": 0.3702,
+      "meanScoreUpliftPct": 78.52,
+      "byContextSize": [
+        {
+          "size": 0,
+          "comparisons": 400,
+          "choiceChangeRate": 0.3725,
+          "meanScoreUpliftPct": 71.49
+        },
+        {
+          "size": 1,
+          "comparisons": 4400,
+          "choiceChangeRate": 0.3768,
+          "meanScoreUpliftPct": 78.65
+        },
+        {
+          "size": 2,
+          "comparisons": 22000,
+          "choiceChangeRate": 0.3688,
+          "meanScoreUpliftPct": 78.62
+        }
+      ]
+    },
+    {
+      "id": "oath",
+      "name": "孙策",
+      "role": "爆发",
+      "scope": "guaranteed-battle",
+      "comparisons": 26800,
+      "choiceChangeRate": 0.1419,
+      "meanScoreUpliftPct": 40.49,
+      "byContextSize": [
+        {
+          "size": 0,
+          "comparisons": 400,
+          "choiceChangeRate": 0.0675,
+          "meanScoreUpliftPct": 45.25
+        },
+        {
+          "size": 1,
+          "comparisons": 4400,
+          "choiceChangeRate": 0.1168,
+          "meanScoreUpliftPct": 43.08
+        },
+        {
+          "size": 2,
+          "comparisons": 22000,
+          "choiceChangeRate": 0.1483,
+          "meanScoreUpliftPct": 39.89
+        }
+      ]
+    },
+    {
+      "id": "zhaoyun",
+      "name": "赵云",
+      "role": "发起",
+      "scope": "guaranteed-battle",
+      "comparisons": 26800,
+      "choiceChangeRate": 0.119,
+      "meanScoreUpliftPct": 16.81,
+      "byContextSize": [
+        {
+          "size": 0,
+          "comparisons": 400,
+          "choiceChangeRate": 0.1,
+          "meanScoreUpliftPct": 9.09
+        },
+        {
+          "size": 1,
+          "comparisons": 4400,
+          "choiceChangeRate": 0.108,
+          "meanScoreUpliftPct": 15.09
+        },
+        {
+          "size": 2,
+          "comparisons": 22000,
+          "choiceChangeRate": 0.1216,
+          "meanScoreUpliftPct": 17.3
+        }
+      ]
+    }
+  ],
+  "formations": [
+    {
+      "category": 0,
+      "name": "散阵",
+      "share": 0.0749
+    },
+    {
+      "category": 1,
+      "name": "合击",
+      "share": 0.2608
+    },
+    {
+      "category": 2,
+      "name": "连阵",
+      "share": 0.1855
+    },
+    {
+      "category": 3,
+      "name": "同袍",
+      "share": 0.3622
+    },
+    {
+      "category": 4,
+      "name": "同袍连阵",
+      "share": 0.0686
+    },
+    {
+      "category": 5,
+      "name": "三军同心",
+      "share": 0.048
+    }
+  ],
+  "triggerSources": [
+    {
+      "name": "诸葛亮",
+      "share": 0.2248
+    },
+    {
+      "name": "周瑜",
+      "share": 0.2102
+    },
+    {
+      "name": "张飞",
+      "share": 0.0998
+    },
+    {
+      "name": "赵云",
+      "share": 0.0825
+    }
+  ],
+  "closestSingleGeneralPairs": [
+    {
+      "left": "曹操",
+      "right": "荀彧",
+      "agreementRate": 1
+    },
+    {
+      "left": "陆逊",
+      "right": "曹操",
+      "agreementRate": 1
+    },
+    {
+      "left": "陆逊",
+      "right": "荀彧",
+      "agreementRate": 1
+    },
+    {
+      "left": "马超",
+      "right": "陆逊",
+      "agreementRate": 1
+    },
+    {
+      "left": "马超",
+      "right": "曹操",
+      "agreementRate": 1
+    }
+  ],
+  "mostDivergentSingleGeneralPairs": [
+    {
+      "left": "关羽",
+      "right": "刘备",
+      "agreementRate": 0.175
+    },
+    {
+      "left": "刘备",
+      "right": "貂蝉",
+      "agreementRate": 0.195
+    },
+    {
+      "left": "张飞",
+      "right": "刘备",
+      "agreementRate": 0.2225
+    },
+    {
+      "left": "刘备",
+      "right": "赵云",
+      "agreementRate": 0.2375
+    },
+    {
+      "left": "刘备",
+      "right": "诸葛亮",
+      "agreementRate": 0.2425
+    }
+  ],
+  "manualReviewCandidates": [
+    {
+      "id": "chain",
+      "name": "陆逊",
+      "reason": "确定得分平均提升 66.52%，但最优三张改变率为 12%；仅列为人工检查候选。"
+    },
+    {
+      "id": "zhugeliang",
+      "name": "诸葛亮",
+      "reason": "确定得分平均提升 58.79%，但最优三张改变率为 13.1%；仅列为人工检查候选。"
+    }
+  ]
+}

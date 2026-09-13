@@ -17,6 +17,7 @@
     "package:mac": "npm run build && node tools/package-desktop.mjs darwin arm64",
     "package:win": "npm run build && node tools/package-desktop.mjs win32 x64",
     "simulate:forge": "tsx tools/simulate-forge.ts",
+    "analyze:choices": "tsx tools/analyze-choice-divergence.ts",
     "test:desktop:forge": "tsx tools/smoke-forge.ts",
     "compare:forge": "tsx tools/compare-forge.ts"
   },
