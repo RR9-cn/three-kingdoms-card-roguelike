@@ -1,7 +1,7 @@
 {
   "version": "0.7.0",
   "targets": [
-    100,
+    180,
     220,
     320,
     600,
@@ -15,41 +15,41 @@
     {
       "starter": "guanyu",
       "runs": 200,
-      "wins": 176,
-      "winRate": 0.88,
+      "wins": 168,
+      "winRate": 0.84,
       "firstWin": "forge-0",
       "firstLoss": "forge-8",
-      "best": 4495,
-      "meanActions": 97.095,
+      "best": 4880,
+      "meanActions": 97.215,
       "failures": [
+        4,
         0,
-        0,
-        2,
+        1,
         1,
         0,
         2,
         1,
-        18
+        23
       ]
     },
     {
       "starter": "zhouyu",
       "runs": 200,
-      "wins": 106,
-      "winRate": 0.53,
-      "firstWin": "forge-2",
-      "firstLoss": "forge-0",
-      "best": 4176,
-      "meanActions": 91.665,
+      "wins": 103,
+      "winRate": 0.515,
+      "firstWin": "forge-0",
+      "firstLoss": "forge-1",
+      "best": 4586,
+      "meanActions": 93.005,
       "failures": [
-        0,
-        0,
         1,
-        5,
-        7,
+        0,
+        0,
+        6,
         8,
-        10,
-        63
+        7,
+        11,
+        64
       ]
     },
     {
@@ -60,7 +60,7 @@
       "firstWin": "forge-3",
       "firstLoss": "forge-0",
       "best": 6854,
-      "meanActions": 91.475,
+      "meanActions": 92.405,
       "failures": [
         0,
         0,
@@ -68,8 +68,8 @@
         0,
         0,
         1,
-        28,
-        79
+        27,
+        80
       ]
     }
   ]

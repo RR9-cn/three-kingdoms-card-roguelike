@@ -31,7 +31,7 @@ export const ALL_COMPANION_IDS=Object.keys(COMPANIONS) as CompanionId[];
 export const COMPANION_IDS:CompanionId[]=['guanyu','zhangfei','pursuit','chain','liubei','zhugeliang','caocao','abacus','zhouyu','diaochan','oath','zhaoyun'];
 export const STARTERS:CompanionId[]=['guanyu','zhouyu','liubei'];
 export const STAGES=[
- {name:'初出茅庐',enemy:'黄巾前哨',target:100,rule:'none',text:'四次出牌内积累足够攻势。'},
+ {name:'初出茅庐',enemy:'黄巾前哨',target:180,rule:'none',text:'四次出牌内积累足够攻势。'},
  {name:'长坂试锋',enemy:'黄巾游骑',target:220,rule:'none',text:'组牌、招募与整编的成果开始显现。'},
  {name:'虎牢列阵',enemy:'铁甲先锋',target:320,rule:'high-armor',text:'铁甲：点数7–9的牌基础点数按0计；逐牌将星仍生效。'},
  {name:'地公设坛',enemy:'张宝 · 地公将军',target:600,rule:'ambush',text:'首领张宝：前40%兵力为伏击，换牌解除本手减伤；之后转入疑阵，连续同牌型攻势减半。'},
