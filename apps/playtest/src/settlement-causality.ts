@@ -5,6 +5,14 @@ export interface CausalNode {label:string;kind:'source'|'card'|'response'}
 
 const generalNames:Set<string>=new Set(Object.values(COMPANIONS).map(companion=>companion.name));
 
+export function hasAdditionalScoring(score:Score):boolean{
+ return score.steps.some(step=>step.source==='额外计分牌');
+}
+
+export function pursuitAttackGain(score:Score):number{
+ return score.bursts>0?Math.max(0,score.total-score.floor):0;
+}
+
 export function settlementCausalChain(score:Score,visibleCount:number):CausalNode[]{
  let current:CausalNode[]|null=null,last:CausalNode[]=[];
  let cardId:string|undefined;
