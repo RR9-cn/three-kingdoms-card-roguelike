@@ -46,7 +46,7 @@ function scoreForge(s:ForgeState,ids:string[],resolve:boolean):Score {
    const base=forgeStage(s).rule==='high-armor'&&card.rank>=7?0:card.rank;
    chips+=base+card.bonus;push(trigger?'额外计分牌':'阵牌',`+${base+card.bonus}点数${base===0?'（铁甲减免牌面点数）':''}`,card.id);
    for(const c of s.companions){
-    if(c.id==='liubei'&&card.rank<=4){chips+=10;mult++;push(COMPANIONS[c.id].name,'低点牌：+10点数、+1倍率',card.id);}
+    if(c.id==='liubei'&&card.rank<=4){mult+=6;push(COMPANIONS[c.id].name,'低点牌：+6倍率',card.id);}
     if(c.id==='huangzhong'&&card.rank>=7){chips+=18;push(COMPANIONS[c.id].name,'高点牌：+18点数',card.id);}
     if(c.id==='blade'&&card.rank>=7){mult+=2;push(COMPANIONS[c.id].name,'高点牌：+2倍率',card.id);}
     if(c.id==='diaochan'&&card.suit==='scheme'){mult+=2;push(COMPANIONS[c.id].name,'谋牌：+2倍率',card.id);}

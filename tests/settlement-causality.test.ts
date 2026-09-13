@@ -8,14 +8,14 @@ const steps:ScoreStep[]=[
  {source:'阵牌',text:'+7点数',chips:7,mult:2,cardId:'spear-7'},
  {source:'张飞',text:'7点牌 · 发起第1次额外计分',chips:7,mult:2,cardId:'spear-7'},
  {source:'额外计分牌',text:'+7点数',chips:14,mult:2,cardId:'spear-7'},
- {source:'刘备',text:'低点牌：+10点数、+1倍率',chips:24,mult:3,cardId:'spear-7'},
- {source:'陆逊',text:'响应额外计分：+3倍率',chips:24,mult:6,cardId:'spear-7'},
- {source:'马超',text:'追击成功！追加第1/3次',chips:24,mult:6,cardId:'spear-7'},
- {source:'马超',text:'7点牌 · 发起第2次额外计分',chips:24,mult:6,cardId:'spear-7'},
- {source:'额外计分牌',text:'+7点数',chips:31,mult:6,cardId:'spear-7'},
- {source:'阵牌',text:'+2点数',chips:33,mult:6,cardId:'bow-2'},
+ {source:'刘备',text:'低点牌：+6倍率',chips:14,mult:8,cardId:'spear-7'},
+ {source:'陆逊',text:'响应额外计分：+3倍率',chips:14,mult:11,cardId:'spear-7'},
+ {source:'马超',text:'追击成功！追加第1/3次',chips:14,mult:11,cardId:'spear-7'},
+ {source:'马超',text:'7点牌 · 发起第2次额外计分',chips:14,mult:11,cardId:'spear-7'},
+ {source:'额外计分牌',text:'+7点数',chips:21,mult:11,cardId:'spear-7'},
+ {source:'阵牌',text:'+2点数',chips:23,mult:11,cardId:'bow-2'},
 ];
-const score:Score={category:1,chips:33,mult:6,total:222,steps,cards:[{id:'spear-7',suit:'spear',rank:7,bonus:0},{id:'bow-2',suit:'bow',rank:2,bonus:0},{id:'cavalry-7',suit:'cavalry',rank:7,bonus:0}],growth:{},penalty:1,floor:198,bursts:1};
+const score:Score={category:1,chips:23,mult:11,total:277,steps,cards:[{id:'spear-7',suit:'spear',rank:7,bonus:0},{id:'bow-2',suit:'bow',rank:2,bonus:0},{id:'cavalry-7',suit:'cavalry',rank:7,bonus:0}],growth:{},penalty:1,floor:253,bursts:1};
 
 test('causal chain appears only after a revealed trigger and grows in score-step order',()=>{
  assert.deepEqual(settlementCausalChain(score,2),[]);

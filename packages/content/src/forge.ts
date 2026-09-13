@@ -6,7 +6,7 @@ export const COMPANIONS={
  chain:{name:'陆逊',mark:'陆',role:'响应',price:16,text:'每次阵牌额外计分后，+3倍率。',hint:'不区分是谁发起；确定额外计分和马超追击都会放大。',effect:'burst-mult'},
  guanyu:{name:'关羽',mark:'关',role:'成长',price:10,text:'打出对子或本手发生额外计分，关羽永久 +1 倍率；每手一次。',hint:'自己能靠对子成长，也能接入任何额外计分来源。',effect:'pair-growth'},
  zhangfei:{name:'张飞',mark:'张',role:'发起',price:12,text:'含对子时，第一张对子牌额外计分一次。',hint:'让该牌的强化与逐牌将星再次发动。',effect:'pair-repeat'},
- liubei:{name:'刘备',mark:'刘',role:'响应',price:10,text:'每当不大于4点的牌计分，+10点数、+1倍率。',hint:'额外计分时也发动，可接张飞、周瑜、赵云或诸葛亮。',effect:'low-card'},
+ liubei:{name:'刘备',mark:'刘',role:'响应',price:10,text:'每当不大于4点的牌计分，+6倍率。',hint:'额外计分时也发动，可接张飞、周瑜、赵云或诸葛亮。',effect:'low-card'},
  zhouyu:{name:'周瑜',mark:'周',role:'发起',price:10,text:'至少两张同兵种时，这些同兵种牌各额外计分一次。',hint:'两张即可启动；三张同兵种会发起三次接力。',effect:'two-suit'},
  zhaoyun:{name:'赵云',mark:'赵',role:'发起',price:10,text:'打出连阵或同袍连阵时，最低点牌额外计分一次。',hint:'低点牌可以继续触发刘备，也能带动追击。',effect:'straight-growth'},
  huangzhong:{name:'黄忠',mark:'黄',role:'逐牌',price:9,text:'每张点数不小于7的牌计分时，+18点数。',hint:'升点、复制和重触发共同放大高点牌。',effect:'high-chips'},
