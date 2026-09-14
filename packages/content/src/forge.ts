@@ -33,11 +33,11 @@ export const STARTERS:CompanionId[]=['guanyu','zhouyu','liubei'];
 export const STAGES=[
  {name:'初出茅庐',enemy:'黄巾前哨',target:180,rule:'none',text:'四次出牌内积累足够攻势。'},
  {name:'长坂试锋',enemy:'黄巾游骑',target:220,rule:'none',text:'组牌、招募与整编的成果开始显现。'},
- {name:'虎牢列阵',enemy:'铁甲先锋',target:320,rule:'high-armor',text:'铁甲：点数7–9的牌基础点数按0计；逐牌将星仍生效。'},
+ {name:'虎牢列阵',enemy:'铁甲先锋',target:320,rule:'none',text:'目标继续提高，检验当前构筑能否稳定形成攻势。'},
  {name:'地公设坛',enemy:'张宝 · 地公将军',target:600,rule:'ambush',text:'首领张宝：前40%兵力为伏击，换牌解除本手减伤；之后转入疑阵，连续同牌型攻势减半。'},
  {name:'官渡鏖兵',enemy:'黄巾督军',target:950,rule:'none',text:'高目标检验成长与倍率的积累。'},
- {name:'赤壁逆风',enemy:'雷鼓祭司',target:1350,rule:'variety',text:'疑阵：连续打出相同牌型时，最终攻势减半。'},
- {name:'破军前夜',enemy:'黄巾渠帅',target:1800,rule:'flank',text:'渠帅识阵：首张出牌兵种与上一手相同时，攻势减半。改变首牌兵种可绕过。'},
+ {name:'赤壁逆风',enemy:'雷鼓祭司',target:1350,rule:'none',text:'中期构筑检验：用已经形成的组合跨过更高目标。'},
+ {name:'破军前夜',enemy:'黄巾渠帅',target:1800,rule:'none',text:'决战前的强度检验，不改变你的出牌规则。'},
  {name:'苍天已死',enemy:'张角',target:1900,rule:'last-stand',text:'终局张角：仅3次出牌。击破40%兵力后唤雷；出牌后手中未留下谋牌，攻势×0.6。'},
 ] as const;
 export type ForgeEdit='remove'|'copy'|'rank'|'enhance'|'suit'|'level';
