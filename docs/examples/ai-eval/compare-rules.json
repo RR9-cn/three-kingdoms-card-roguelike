@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "operation": "compare_rules",
+  "starters": ["guanyu", "zhouyu", "liubei"],
+  "runsPerStarter": 200,
+  "seedPrefix": "stage-balance-v1",
+  "policy": "counterplay",
+  "baseline": "current",
+  "variants": {
+    "current": {},
+    "liubei_5": {"liubeiMultiplier": 5},
+    "stage2_260": {"stageTargets": {"2": 260}}
+  }
+}

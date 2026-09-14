@@ -19,7 +19,8 @@
     "simulate:forge": "tsx tools/simulate-forge.ts",
     "analyze:choices": "tsx tools/analyze-choice-divergence.ts",
     "test:desktop:forge": "tsx tools/smoke-forge.ts",
-    "compare:forge": "tsx tools/compare-forge.ts"
+    "compare:forge": "tsx tools/compare-forge.ts",
+    "eval:ai": "tsx tools/ai-eval.ts"
   },
   "devDependencies": {
     "@electron/packager": "20.3.0",

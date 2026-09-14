@@ -1,0 +1,277 @@
+{
+  "meta": {
+    "schemaVersion": 1,
+    "operation": "compare_rules",
+    "gameVersion": "0.7.0",
+    "policy": "counterplay",
+    "localRuns": 1800,
+    "rawLogs": false,
+    "interpretation": "Automated policy regression evidence; not human win rate or enjoyment."
+  },
+  "request": {
+    "starters": [
+      "guanyu",
+      "zhouyu",
+      "liubei"
+    ],
+    "runsPerStarter": 200,
+    "seedPrefix": "stage-balance-v1",
+    "baseline": "current"
+  },
+  "baseline": {
+    "name": "current",
+    "overrides": {}
+  },
+  "variants": [
+    {
+      "name": "liubei_5",
+      "overrides": {
+        "liubeiMultiplier": 5
+      },
+      "winRateDeltas": [
+        {
+          "starter": "guanyu",
+          "baseline": 0.86,
+          "value": 0.87,
+          "delta": 0.01
+        },
+        {
+          "starter": "zhouyu",
+          "baseline": 0.66,
+          "value": 0.635,
+          "delta": -0.025
+        },
+        {
+          "starter": "liubei",
+          "baseline": 0.705,
+          "value": 0.645,
+          "delta": -0.06
+        }
+      ],
+      "largestStageChanges": [
+        {
+          "starter": "zhouyu",
+          "stage": 6,
+          "metric": "medianHands",
+          "baseline": 2,
+          "value": 3,
+          "delta": 1
+        },
+        {
+          "starter": "zhouyu",
+          "stage": 7,
+          "metric": "medianHands",
+          "baseline": 2,
+          "value": 3,
+          "delta": 1
+        },
+        {
+          "starter": "zhouyu",
+          "stage": 8,
+          "metric": "medianHands",
+          "baseline": 2,
+          "value": 3,
+          "delta": 1
+        },
+        {
+          "starter": "liubei",
+          "stage": 1,
+          "metric": "medianHands",
+          "baseline": 1,
+          "value": 2,
+          "delta": 1
+        },
+        {
+          "starter": "liubei",
+          "stage": 2,
+          "metric": "medianHands",
+          "baseline": 1,
+          "value": 2,
+          "delta": 1
+        },
+        {
+          "starter": "liubei",
+          "stage": 6,
+          "metric": "medianHands",
+          "baseline": 2,
+          "value": 3,
+          "delta": 1
+        },
+        {
+          "starter": "liubei",
+          "stage": 8,
+          "metric": "medianHands",
+          "baseline": 2,
+          "value": 3,
+          "delta": 1
+        },
+        {
+          "starter": "liubei",
+          "stage": 3,
+          "metric": "medianHands",
+          "baseline": 1.5,
+          "value": 2,
+          "delta": 0.5
+        },
+        {
+          "starter": "liubei",
+          "stage": 1,
+          "metric": "oneHandRate",
+          "baseline": 0.695,
+          "value": 0.33,
+          "delta": -0.365
+        },
+        {
+          "starter": "liubei",
+          "stage": 3,
+          "metric": "p90PeakRatio",
+          "baseline": 2.313,
+          "value": 1.951,
+          "delta": -0.362
+        },
+        {
+          "starter": "liubei",
+          "stage": 5,
+          "metric": "p90PeakRatio",
+          "baseline": 1.405,
+          "value": 1.101,
+          "delta": -0.304
+        },
+        {
+          "starter": "liubei",
+          "stage": 2,
+          "metric": "p90PeakRatio",
+          "baseline": 2.473,
+          "value": 2.182,
+          "delta": -0.291
+        }
+      ]
+    },
+    {
+      "name": "stage2_260",
+      "overrides": {
+        "stageTargets": {
+          "2": 260
+        }
+      },
+      "winRateDeltas": [
+        {
+          "starter": "guanyu",
+          "baseline": 0.86,
+          "value": 0.88,
+          "delta": 0.02
+        },
+        {
+          "starter": "zhouyu",
+          "baseline": 0.66,
+          "value": 0.685,
+          "delta": 0.025
+        },
+        {
+          "starter": "liubei",
+          "baseline": 0.705,
+          "value": 0.695,
+          "delta": -0.01
+        }
+      ],
+      "largestStageChanges": [
+        {
+          "starter": "guanyu",
+          "stage": 6,
+          "metric": "medianHands",
+          "baseline": 3,
+          "value": 2,
+          "delta": -1
+        },
+        {
+          "starter": "guanyu",
+          "stage": 8,
+          "metric": "medianHands",
+          "baseline": 3,
+          "value": 2,
+          "delta": -1
+        },
+        {
+          "starter": "zhouyu",
+          "stage": 7,
+          "metric": "medianHands",
+          "baseline": 2,
+          "value": 3,
+          "delta": 1
+        },
+        {
+          "starter": "liubei",
+          "stage": 2,
+          "metric": "medianHands",
+          "baseline": 1,
+          "value": 2,
+          "delta": 1
+        },
+        {
+          "starter": "liubei",
+          "stage": 3,
+          "metric": "medianHands",
+          "baseline": 1.5,
+          "value": 1,
+          "delta": -0.5
+        },
+        {
+          "starter": "liubei",
+          "stage": 2,
+          "metric": "p90PeakRatio",
+          "baseline": 2.473,
+          "value": 2.092,
+          "delta": -0.381
+        },
+        {
+          "starter": "zhouyu",
+          "stage": 2,
+          "metric": "p90PeakRatio",
+          "baseline": 2.418,
+          "value": 2.051,
+          "delta": -0.367
+        },
+        {
+          "starter": "guanyu",
+          "stage": 3,
+          "metric": "p90PeakRatio",
+          "baseline": 1.969,
+          "value": 2.126,
+          "delta": 0.157
+        },
+        {
+          "starter": "guanyu",
+          "stage": 2,
+          "metric": "p90PeakRatio",
+          "baseline": 1.269,
+          "value": 1.117,
+          "delta": -0.152
+        },
+        {
+          "starter": "liubei",
+          "stage": 2,
+          "metric": "medianPeakRatio",
+          "baseline": 1.152,
+          "value": 1,
+          "delta": -0.152
+        },
+        {
+          "starter": "guanyu",
+          "stage": 2,
+          "metric": "oneHandRate",
+          "baseline": 0.235,
+          "value": 0.1,
+          "delta": -0.135
+        },
+        {
+          "starter": "liubei",
+          "stage": 2,
+          "metric": "oneHandRate",
+          "baseline": 0.57,
+          "value": 0.45,
+          "delta": -0.12
+        }
+      ]
+    }
+  ]
+}

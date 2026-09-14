@@ -15,6 +15,7 @@ npm run desktop             # 编译并启动桌面游戏
 npm test                    # 当前规则、将星、事务与存档
 npm run test:browser        # 当前浏览器流程
 npm run simulate:forge      # 三个开局核心，各200个相同种子
+npm run eval:ai --silent -- --request docs/examples/ai-eval/simulate-batch.json
 npm run analyze:choices     # 固定样本的构筑选牌分歧诊断
 npm run test:desktop:forge  # macOS桌面完整征程与恢复
 npm run package:mac         # macOS arm64
@@ -36,6 +37,7 @@ macOS应用位于 `release/ThreeCardKingdoms-darwin-arm64/ThreeCardKingdoms.app`
 - [当前游戏设计](docs/GAME_DESIGN.md)
 - [当前将星内容](docs/CONTENT.md)
 - [当前验证记录](docs/evidence/SIMPLE_SCORING_V07.md)
+- [AI本地评测接口](docs/AI_EVALUATION_API.md)
 - [v0.7选牌分歧诊断](docs/evidence/CHOICE_DIVERGENCE_V07.md)
 - [v0.7选牌分歧人工审核](docs/evidence/CHOICE_DIVERGENCE_REVIEW_V07.md)
 - `packages/core/src/forge.ts`：纯规则内核

@@ -1,0 +1,223 @@
+{
+  "meta": {
+    "schemaVersion": 1,
+    "operation": "inspect_run",
+    "gameVersion": "0.7.0",
+    "policy": "counterplay",
+    "localRuns": 1,
+    "rawLogs": false,
+    "interpretation": "Automated policy regression evidence; not human win rate or enjoyment."
+  },
+  "request": {
+    "seed": "stage-balance-v1-174",
+    "starter": "liubei",
+    "overrides": {}
+  },
+  "run": {
+    "seed": "stage-balance-v1-174",
+    "starter": "liubei",
+    "status": "victory",
+    "failedStage": null,
+    "bestAttack": 9238,
+    "stages": [
+      {
+        "stage": 1,
+        "name": "初出茅庐",
+        "target": 180,
+        "status": "win",
+        "handsUsed": 1,
+        "discardsUsed": 0,
+        "bestAttack": 208,
+        "peakRatio": 1.156,
+        "bestFormation": "散阵",
+        "generals": [
+          "刘备"
+        ],
+        "triggers": {
+          "刘备": 2
+        },
+        "purchases": [
+          "整编：军师精锐：枪1获得+12点数",
+          "武将：马超"
+        ]
+      },
+      {
+        "stage": 2,
+        "name": "长坂试锋",
+        "target": 220,
+        "status": "win",
+        "handsUsed": 2,
+        "discardsUsed": 0,
+        "bestAttack": 182,
+        "peakRatio": 0.827,
+        "bestFormation": "散阵",
+        "generals": [
+          "刘备",
+          "马超"
+        ],
+        "triggers": {
+          "刘备": 2
+        },
+        "purchases": [
+          "整编：军师精锐：枪1获得+12点数",
+          "武将：周瑜"
+        ]
+      },
+      {
+        "stage": 3,
+        "name": "虎牢列阵",
+        "target": 320,
+        "status": "win",
+        "handsUsed": 1,
+        "discardsUsed": 0,
+        "bestAttack": 1596,
+        "peakRatio": 4.988,
+        "bestFormation": "同袍",
+        "generals": [
+          "刘备",
+          "马超",
+          "周瑜"
+        ],
+        "triggers": {
+          "周瑜": 3,
+          "马超": 6,
+          "刘备": 4
+        },
+        "purchases": [
+          "整编：军师研习：散阵升至Lv.2"
+        ]
+      },
+      {
+        "stage": 4,
+        "name": "地公设坛",
+        "target": 600,
+        "status": "win",
+        "handsUsed": 2,
+        "discardsUsed": 1,
+        "bestAttack": 420,
+        "peakRatio": 0.7,
+        "bestFormation": "连阵",
+        "generals": [
+          "刘备",
+          "马超",
+          "周瑜"
+        ],
+        "triggers": {
+          "刘备": 3,
+          "周瑜": 2
+        },
+        "purchases": [
+          "整编：军师研习：散阵升至Lv.3",
+          "武将：关羽"
+        ]
+      },
+      {
+        "stage": 5,
+        "name": "官渡鏖兵",
+        "target": 950,
+        "status": "win",
+        "handsUsed": 1,
+        "discardsUsed": 0,
+        "bestAttack": 952,
+        "peakRatio": 1.002,
+        "bestFormation": "散阵",
+        "generals": [
+          "刘备",
+          "马超",
+          "周瑜",
+          "关羽"
+        ],
+        "triggers": {
+          "刘备": 4,
+          "周瑜": 2,
+          "马超": 4,
+          "关羽": 1
+        },
+        "purchases": [
+          "整编：军师研习：散阵升至Lv.4"
+        ]
+      },
+      {
+        "stage": 6,
+        "name": "赤壁逆风",
+        "target": 1350,
+        "status": "win",
+        "handsUsed": 2,
+        "discardsUsed": 0,
+        "bestAttack": 1080,
+        "peakRatio": 0.8,
+        "bestFormation": "同袍",
+        "generals": [
+          "刘备",
+          "马超",
+          "周瑜",
+          "关羽"
+        ],
+        "triggers": {
+          "刘备": 5,
+          "周瑜": 3,
+          "马超": 2,
+          "关羽": 1
+        },
+        "purchases": [
+          "整编：军师练兵：枪升至3点",
+          "武将：张飞"
+        ]
+      },
+      {
+        "stage": 7,
+        "name": "破军前夜",
+        "target": 1800,
+        "status": "win",
+        "handsUsed": 1,
+        "discardsUsed": 0,
+        "bestAttack": 9238,
+        "peakRatio": 5.132,
+        "bestFormation": "同袍",
+        "generals": [
+          "刘备",
+          "马超",
+          "周瑜",
+          "关羽",
+          "张飞"
+        ],
+        "triggers": {
+          "刘备": 9,
+          "张飞": 1,
+          "周瑜": 3,
+          "马超": 4,
+          "关羽": 1
+        },
+        "purchases": [
+          "整编：军师精锐：骑1获得+12点数"
+        ]
+      },
+      {
+        "stage": 8,
+        "name": "苍天已死",
+        "target": 1900,
+        "status": "win",
+        "handsUsed": 1,
+        "discardsUsed": 2,
+        "bestAttack": 3283,
+        "peakRatio": 1.728,
+        "bestFormation": "合击",
+        "generals": [
+          "刘备",
+          "马超",
+          "周瑜",
+          "关羽",
+          "张飞"
+        ],
+        "triggers": {
+          "刘备": 7,
+          "张飞": 1,
+          "马超": 2,
+          "周瑜": 2,
+          "关羽": 1
+        },
+        "purchases": []
+      }
+    ]
+  }
+}

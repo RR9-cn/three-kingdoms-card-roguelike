@@ -1,0 +1,394 @@
+{
+  "meta": {
+    "schemaVersion": 1,
+    "operation": "simulate_batch",
+    "gameVersion": "0.7.0",
+    "policy": "counterplay",
+    "localRuns": 600,
+    "rawLogs": false,
+    "interpretation": "Automated policy regression evidence; not human win rate or enjoyment."
+  },
+  "request": {
+    "starters": [
+      "guanyu",
+      "zhouyu",
+      "liubei"
+    ],
+    "runsPerStarter": 200,
+    "seedPrefix": "stage-balance-v1",
+    "overrides": {}
+  },
+  "results": [
+    {
+      "starter": "guanyu",
+      "runs": 200,
+      "wins": 172,
+      "winRate": 0.86,
+      "stages": [
+        {
+          "stage": 1,
+          "name": "初出茅庐",
+          "target": 180,
+          "reached": 200,
+          "wins": 200,
+          "failRate": 0,
+          "oneHandRate": 0.055,
+          "medianHands": 3,
+          "medianPeakRatio": 0.467,
+          "p90PeakRatio": 0.919,
+          "medianDiscards": 0
+        },
+        {
+          "stage": 2,
+          "name": "长坂试锋",
+          "target": 220,
+          "reached": 200,
+          "wins": 200,
+          "failRate": 0,
+          "oneHandRate": 0.235,
+          "medianHands": 2,
+          "medianPeakRatio": 0.827,
+          "p90PeakRatio": 1.269,
+          "medianDiscards": 0
+        },
+        {
+          "stage": 3,
+          "name": "虎牢列阵",
+          "target": 320,
+          "reached": 200,
+          "wins": 200,
+          "failRate": 0,
+          "oneHandRate": 0.355,
+          "medianHands": 2,
+          "medianPeakRatio": 0.929,
+          "p90PeakRatio": 1.969,
+          "medianDiscards": 0
+        },
+        {
+          "stage": 4,
+          "name": "地公设坛",
+          "target": 600,
+          "reached": 200,
+          "wins": 194,
+          "failRate": 0.03,
+          "oneHandRate": 0.211,
+          "medianHands": 2,
+          "medianPeakRatio": 0.692,
+          "p90PeakRatio": 1.32,
+          "medianDiscards": 1
+        },
+        {
+          "stage": 5,
+          "name": "官渡鏖兵",
+          "target": 950,
+          "reached": 194,
+          "wins": 192,
+          "failRate": 0.01,
+          "oneHandRate": 0.135,
+          "medianHands": 2,
+          "medianPeakRatio": 0.648,
+          "p90PeakRatio": 1.145,
+          "medianDiscards": 0
+        },
+        {
+          "stage": 6,
+          "name": "赤壁逆风",
+          "target": 1350,
+          "reached": 192,
+          "wins": 186,
+          "failRate": 0.031,
+          "oneHandRate": 0.07,
+          "medianHands": 3,
+          "medianPeakRatio": 0.609,
+          "p90PeakRatio": 1.121,
+          "medianDiscards": 0
+        },
+        {
+          "stage": 7,
+          "name": "破军前夜",
+          "target": 1800,
+          "reached": 186,
+          "wins": 181,
+          "failRate": 0.027,
+          "oneHandRate": 0.039,
+          "medianHands": 3,
+          "medianPeakRatio": 0.57,
+          "p90PeakRatio": 0.99,
+          "medianDiscards": 0
+        },
+        {
+          "stage": 8,
+          "name": "苍天已死",
+          "target": 1900,
+          "reached": 181,
+          "wins": 172,
+          "failRate": 0.05,
+          "oneHandRate": 0.099,
+          "medianHands": 3,
+          "medianPeakRatio": 0.605,
+          "p90PeakRatio": 1.084,
+          "medianDiscards": 0
+        }
+      ],
+      "representativeSeeds": {
+        "median": "stage-balance-v1-11",
+        "highRoll": "stage-balance-v1-188",
+        "failure": "stage-balance-v1-3"
+      }
+    },
+    {
+      "starter": "zhouyu",
+      "runs": 200,
+      "wins": 132,
+      "winRate": 0.66,
+      "stages": [
+        {
+          "stage": 1,
+          "name": "初出茅庐",
+          "target": 180,
+          "reached": 200,
+          "wins": 200,
+          "failRate": 0,
+          "oneHandRate": 0.085,
+          "medianHands": 2,
+          "medianPeakRatio": 0.8,
+          "p90PeakRatio": 1.17,
+          "medianDiscards": 0
+        },
+        {
+          "stage": 2,
+          "name": "长坂试锋",
+          "target": 220,
+          "reached": 200,
+          "wins": 200,
+          "failRate": 0,
+          "oneHandRate": 0.355,
+          "medianHands": 2,
+          "medianPeakRatio": 1.009,
+          "p90PeakRatio": 2.418,
+          "medianDiscards": 0
+        },
+        {
+          "stage": 3,
+          "name": "虎牢列阵",
+          "target": 320,
+          "reached": 200,
+          "wins": 200,
+          "failRate": 0,
+          "oneHandRate": 0.455,
+          "medianHands": 2,
+          "medianPeakRatio": 1.141,
+          "p90PeakRatio": 2.367,
+          "medianDiscards": 0
+        },
+        {
+          "stage": 4,
+          "name": "地公设坛",
+          "target": 600,
+          "reached": 200,
+          "wins": 175,
+          "failRate": 0.125,
+          "oneHandRate": 0.343,
+          "medianHands": 2,
+          "medianPeakRatio": 0.851,
+          "p90PeakRatio": 1.493,
+          "medianDiscards": 1
+        },
+        {
+          "stage": 5,
+          "name": "官渡鏖兵",
+          "target": 950,
+          "reached": 175,
+          "wins": 160,
+          "failRate": 0.086,
+          "oneHandRate": 0.213,
+          "medianHands": 2,
+          "medianPeakRatio": 0.739,
+          "p90PeakRatio": 1.411,
+          "medianDiscards": 0
+        },
+        {
+          "stage": 6,
+          "name": "赤壁逆风",
+          "target": 1350,
+          "reached": 160,
+          "wins": 153,
+          "failRate": 0.044,
+          "oneHandRate": 0.137,
+          "medianHands": 2,
+          "medianPeakRatio": 0.68,
+          "p90PeakRatio": 1.249,
+          "medianDiscards": 0
+        },
+        {
+          "stage": 7,
+          "name": "破军前夜",
+          "target": 1800,
+          "reached": 153,
+          "wins": 141,
+          "failRate": 0.078,
+          "oneHandRate": 0.078,
+          "medianHands": 2,
+          "medianPeakRatio": 0.63,
+          "p90PeakRatio": 0.974,
+          "medianDiscards": 0
+        },
+        {
+          "stage": 8,
+          "name": "苍天已死",
+          "target": 1900,
+          "reached": 141,
+          "wins": 132,
+          "failRate": 0.064,
+          "oneHandRate": 0.136,
+          "medianHands": 2,
+          "medianPeakRatio": 0.683,
+          "p90PeakRatio": 1.095,
+          "medianDiscards": 0
+        }
+      ],
+      "representativeSeeds": {
+        "median": "stage-balance-v1-171",
+        "highRoll": "stage-balance-v1-132",
+        "failure": "stage-balance-v1-8"
+      }
+    },
+    {
+      "starter": "liubei",
+      "runs": 200,
+      "wins": 141,
+      "winRate": 0.705,
+      "stages": [
+        {
+          "stage": 1,
+          "name": "初出茅庐",
+          "target": 180,
+          "reached": 200,
+          "wins": 200,
+          "failRate": 0,
+          "oneHandRate": 0.695,
+          "medianHands": 1,
+          "medianPeakRatio": 1.083,
+          "p90PeakRatio": 1.323,
+          "medianDiscards": 0
+        },
+        {
+          "stage": 2,
+          "name": "长坂试锋",
+          "target": 220,
+          "reached": 200,
+          "wins": 200,
+          "failRate": 0,
+          "oneHandRate": 0.57,
+          "medianHands": 1,
+          "medianPeakRatio": 1.152,
+          "p90PeakRatio": 2.473,
+          "medianDiscards": 0
+        },
+        {
+          "stage": 3,
+          "name": "虎牢列阵",
+          "target": 320,
+          "reached": 200,
+          "wins": 200,
+          "failRate": 0,
+          "oneHandRate": 0.5,
+          "medianHands": 1.5,
+          "medianPeakRatio": 1.097,
+          "p90PeakRatio": 2.313,
+          "medianDiscards": 0
+        },
+        {
+          "stage": 4,
+          "name": "地公设坛",
+          "target": 600,
+          "reached": 200,
+          "wins": 199,
+          "failRate": 0.005,
+          "oneHandRate": 0.357,
+          "medianHands": 2,
+          "medianPeakRatio": 0.829,
+          "p90PeakRatio": 1.506,
+          "medianDiscards": 1
+        },
+        {
+          "stage": 5,
+          "name": "官渡鏖兵",
+          "target": 950,
+          "reached": 199,
+          "wins": 190,
+          "failRate": 0.045,
+          "oneHandRate": 0.189,
+          "medianHands": 2,
+          "medianPeakRatio": 0.684,
+          "p90PeakRatio": 1.405,
+          "medianDiscards": 0
+        },
+        {
+          "stage": 6,
+          "name": "赤壁逆风",
+          "target": 1350,
+          "reached": 190,
+          "wins": 167,
+          "failRate": 0.121,
+          "oneHandRate": 0.054,
+          "medianHands": 2,
+          "medianPeakRatio": 0.617,
+          "p90PeakRatio": 1.033,
+          "medianDiscards": 0
+        },
+        {
+          "stage": 7,
+          "name": "破军前夜",
+          "target": 1800,
+          "reached": 167,
+          "wins": 153,
+          "failRate": 0.084,
+          "oneHandRate": 0.098,
+          "medianHands": 3,
+          "medianPeakRatio": 0.576,
+          "p90PeakRatio": 1.141,
+          "medianDiscards": 0
+        },
+        {
+          "stage": 8,
+          "name": "苍天已死",
+          "target": 1900,
+          "reached": 153,
+          "wins": 141,
+          "failRate": 0.078,
+          "oneHandRate": 0.142,
+          "medianHands": 2,
+          "medianPeakRatio": 0.626,
+          "p90PeakRatio": 1.298,
+          "medianDiscards": 0
+        }
+      ],
+      "representativeSeeds": {
+        "median": "stage-balance-v1-146",
+        "highRoll": "stage-balance-v1-174",
+        "failure": "stage-balance-v1-1"
+      }
+    }
+  ],
+  "alerts": [
+    {
+      "type": "high_one_hand_rate",
+      "starter": "liubei",
+      "stage": 1,
+      "value": 0.695
+    },
+    {
+      "type": "high_one_hand_rate",
+      "starter": "liubei",
+      "stage": 2,
+      "value": 0.57
+    },
+    {
+      "type": "high_one_hand_rate",
+      "starter": "liubei",
+      "stage": 3,
+      "value": 0.5
+    }
+  ]
+}

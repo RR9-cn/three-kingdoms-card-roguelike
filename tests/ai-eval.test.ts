@@ -1,0 +1,20 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {mkdtempSync,writeFileSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import path from 'node:path';
+import {execFileSync} from 'node:child_process';
+import {evaluateAiRequest,runEvaluation} from '../tools/ai-eval-lib';
+import {forgeAction,forgeView,newForge,previewForge} from '@three-card/core';
+
+test('empty tuning preserves default actions while transient tuning changes no saved state',()=>{let state=newForge('tuning-parity');state.phase='prepare';state.companions=[{id:'liubei',growth:0}];const action={seq:state.seq,type:'begin' as const},plain=forgeAction(state,action),empty=forgeAction(state,action,{});assert.deepEqual(empty,plain);assert.ok(!('tuning' in empty.state));state=plain.state;state.hand=['spear-1','cavalry-2','bow-3','scheme-4','spear-5','bow-8'];state.draw=state.army.filter(c=>!state.hand.includes(c.id)).map(c=>c.id);const ids=state.hand.slice(0,3);assert.ok(previewForge(state,ids,{liubeiMultiplier:5}).total<previewForge(state,ids).total);});
+
+test('simulate_batch is deterministic, aggregated and bounded independently of run count',()=>{const request={schemaVersion:1 as const,operation:'simulate_batch' as const,starters:['liubei' as const],runsPerStarter:20,seedPrefix:'ai-test',policy:'counterplay' as const},a=evaluateAiRequest(request) as any,b=evaluateAiRequest(request) as any;assert.deepEqual(a,b);assert.equal(a.meta.localRuns,20);assert.equal(a.meta.rawLogs,false);assert.equal(a.results[0].stages.length,8);assert.deepEqual(Object.keys(a.results[0].stages[0]),['stage','name','target','reached','wins','failRate','oneHandRate','medianHands','medianPeakRatio','p90PeakRatio','medianDiscards']);assert.ok(a.alerts.length<=12);assert.ok(JSON.stringify(a).length<15000);});
+
+test('inspect_run returns compact public summaries with purchases and no hidden state',()=>{const response=evaluateAiRequest({schemaVersion:1,operation:'inspect_run',seed:'forge-0',starter:'guanyu'}) as any,direct=runEvaluation('forge-0','guanyu');assert.deepEqual(response.run,direct);assert.ok(response.run.stages.length<=8);assert.ok(response.run.stages.some((stage:any)=>stage.purchases.length));const encoded=JSON.stringify(response);assert.ok(encoded.length<10000);assert.ok(!encoded.includes('"rng"'));assert.ok(!encoded.includes('"draw"'));});
+
+test('stage overrides are 1-based and comparison returns paired bounded deltas',()=>{const tuned=evaluateAiRequest({schemaVersion:1,operation:'simulate_batch',starters:['liubei'],runsPerStarter:3,seedPrefix:'target-test',overrides:{stageTargets:{'2':260}}}) as any;assert.equal(tuned.results[0].stages[1].target,260);const response=evaluateAiRequest({schemaVersion:1,operation:'compare_rules',starters:['liubei'],runsPerStarter:20,seedPrefix:'paired',baseline:'current',variants:{current:{},liubei_5:{liubeiMultiplier:5},stage2_260:{stageTargets:{'2':260}}}}) as any;assert.equal(response.meta.localRuns,60);assert.deepEqual(response.variants.map((x:any)=>x.name),['liubei_5','stage2_260']);assert.ok(response.variants.every((x:any)=>x.largestStageChanges.length<=12));assert.ok(JSON.stringify(response).length<15000);});
+
+test('request validation rejects unknown fields and unsafe limits before evaluation',()=>{for(const request of [{schemaVersion:2,operation:'simulate_batch'},{schemaVersion:1,operation:'simulate_batch',extra:true},{schemaVersion:1,operation:'simulate_batch',runsPerStarter:5001},{schemaVersion:1,operation:'inspect_run',seed:'x',starter:'unknown'},{schemaVersion:1,operation:'compare_rules',baseline:'current',variants:{current:{}}}])assert.throws(()=>evaluateAiRequest(request));});
+
+test('CLI accepts a request file and emits only JSON',()=>{const dir=mkdtempSync(path.join(tmpdir(),'ai-eval-')),file=path.join(dir,'request.json');writeFileSync(file,JSON.stringify({schemaVersion:1,operation:'inspect_run',seed:'cli-seed',starter:'zhouyu'}));const output=execFileSync(path.resolve('node_modules/.bin/tsx'),['tools/ai-eval.ts','--request',file],{encoding:'utf8'}),parsed=JSON.parse(output);assert.equal(parsed.meta.operation,'inspect_run');assert.equal(parsed.run.seed,'cli-seed');});
