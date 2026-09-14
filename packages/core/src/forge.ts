@@ -15,7 +15,7 @@ export interface ForgeState {
  result:Score|null;recruits:CompanionId[];offers:{id:CompanionId;sold:boolean}[];refreshes:number;
  stats:{plays:number;best:number;cleared:number;edits:number;pressureWins:number;recruited:number};
 }
-export interface ForgeTuning {stageTargets?:readonly number[];liubeiMultiplier?:number}
+export interface ForgeTuning {stageTargets?:readonly number[];liubeiMultiplier?:number;disabledCompanions?:readonly CompanionId[];zhouyuMode?:'all-shared'|'one-shared'|'all-three'}
 export type ForgeAction={seq:number;type:'starter'|'begin'|'play'|'discard'|'next'|'recruit'|'edit'|'random-edit'|'buy-edit'|'buy'|'sell'|'refresh'|'depart'|'bank'|'extend';id?:string;ids?:string[];replace?:string;pressed?:boolean;edit?:ForgeEdit;cardId?:string;suit?:Suit;category?:number};
 export function newForge(seed:string):ForgeState{return{schemaVersion:8,contentVersion:FORGE_VERSION,seed,seq:0,rng:randomState(seed),phase:'starter',stage:0,army:deck().map(c=>({...c,bonus:0})),nextId:0,hand:[],draw:[],discard:[],companions:[],levels:[0,0,0,0,0,0],gold:R.startGold,score:0,target:STAGES[0].target,pressed:false,hands:R.hands,discards:R.discards,played:0,lastCategory:null,scouted:false,lastSuit:null,challenge:0,stageBest:0,recordBefore:0,settlement:'bank',lastEdit:null,pendingEdit:null,result:null,recruits:[...STARTERS],offers:[],refreshes:0,stats:{plays:0,best:0,cleared:0,edits:0,pressureWins:0,recruited:0}};}
 export const owns=(s:Pick<ForgeState,'companions'>,id:CompanionId)=>s.companions.some(c=>c.id===id);
@@ -30,48 +30,50 @@ function scoreForge(s:ForgeState,ids:string[],resolve:boolean,tuning?:ForgeTunin
  let bursts=0;
  const steps:ScoreStep[]=[],growth:Record<string,number>={};
  const push=(source:string,text:string,cardId?:string)=>steps.push({source,text,chips,mult,...cardId?{cardId}:{}});
+ const active=(id:CompanionId)=>owns(s,id)&&!tuning?.disabledCompanions?.includes(id);
  push('阵型',`${HAND_NAMES[category]} Lv.${level+1} · ${mult}倍率`);
  const pair=cards.some(c=>cards.filter(x=>x.rank===c.rank).length>=2),firstPair=cards.find(c=>cards.filter(x=>x.rank===c.rank).length>=2)?.id;
  const suitCount=new Set(cards.map(c=>c.suit)).size;
  const sharedSuit=cards.find(c=>cards.filter(x=>x.suit===c.suit).length>=2)?.suit;
+ const zhouyuMode=tuning?.zhouyuMode??'all-three',zhouyuSuit=zhouyuMode==='all-three'?cards.find(c=>cards.filter(x=>x.suit===c.suit).length===3)?.suit:sharedSuit,zhouyuFirst=cards.find(c=>c.suit===zhouyuSuit)?.id;
  const straight=[2,4].includes(category),lowestStraight=straight?[...cards].sort((a,b)=>a.rank-b.rank)[0].id:undefined;
  let extraScores=0;
  for(let i=0;i<cards.length;i++){
   const card=cards[i];const repeatSources:string[]=[];
-  if(owns(s,'zhangfei')&&card.id===firstPair)repeatSources.push('张飞');
-  if(owns(s,'zhouyu')&&card.suit===sharedSuit)repeatSources.push('周瑜');
-  if(owns(s,'zhaoyun')&&card.id===lowestStraight)repeatSources.push('赵云');
-  if(owns(s,'zhugeliang')&&i===cards.length-1)repeatSources.push('诸葛亮');
+  if(active('zhangfei')&&card.id===firstPair)repeatSources.push('张飞');
+  if(active('zhouyu')&&card.suit===zhouyuSuit&&(zhouyuMode!=='one-shared'||card.id===zhouyuFirst))repeatSources.push('周瑜');
+  if(active('zhaoyun')&&card.id===lowestStraight)repeatSources.push('赵云');
+  if(active('zhugeliang')&&i===cards.length-1)repeatSources.push('诸葛亮');
   let repeat=1+repeatSources.length;
   for(let trigger=0;trigger<repeat;trigger++){
    if(trigger>0){extraScores++;push(repeatSources[trigger-1]??COMPANIONS.pursuit.name,`${card.rank}点牌 · 发起第${extraScores}次额外计分`,card.id);}
    const base=forgeStage(s).rule==='high-armor'&&card.rank>=7?0:card.rank;
    chips+=base+card.bonus;push(trigger?'额外计分牌':'阵牌',`+${base+card.bonus}点数${base===0?'（铁甲减免牌面点数）':''}`,card.id);
-   for(const c of s.companions){
-    if(c.id==='liubei'&&card.rank<=4){const value=tuning?.liubeiMultiplier??6;mult+=value;push(COMPANIONS[c.id].name,`低点牌：+${value}倍率`,card.id);}
+   for(const c of s.companions){if(tuning?.disabledCompanions?.includes(c.id))continue;
+    if(c.id==='liubei'&&card.rank<=4){const value=tuning?.liubeiMultiplier??5;mult+=value;push(COMPANIONS[c.id].name,`低点牌：+${value}倍率`,card.id);}
     if(c.id==='huangzhong'&&card.rank>=7){chips+=18;push(COMPANIONS[c.id].name,'高点牌：+18点数',card.id);}
     if(c.id==='blade'&&card.rank>=7){mult+=2;push(COMPANIONS[c.id].name,'高点牌：+2倍率',card.id);}
     if(c.id==='diaochan'&&card.suit==='scheme'){mult+=2;push(COMPANIONS[c.id].name,'谋牌：+2倍率',card.id);}
    }
-   if(trigger>0&&owns(s,'chain')){mult+=3;push(COMPANIONS.chain.name,'响应额外计分：+3倍率',card.id);}
-   if(resolve&&trigger>0&&owns(s,'pursuit')&&bursts<3){if(random(s.rng,'enemy')<.35){bursts++;repeat++;push(COMPANIONS.pursuit.name,`追击成功！追加第${bursts}/3次`,card.id);}else push(COMPANIONS.pursuit.name,'35%追击未触发',card.id);}
+   if(trigger>0&&active('chain')){mult+=3;push(COMPANIONS.chain.name,'响应额外计分：+3倍率',card.id);}
+   if(resolve&&trigger>0&&active('pursuit')&&bursts<3){if(random(s.rng,'enemy')<.35){bursts++;repeat++;push(COMPANIONS.pursuit.name,`追击成功！追加第${bursts}/3次`,card.id);}else push(COMPANIONS.pursuit.name,'35%追击未触发',card.id);}
   }
  }
- const held=(id:CompanionId)=>s.companions.find(c=>c.id===id);
+ const held=(id:CompanionId)=>active(id)?s.companions.find(c=>c.id===id):undefined;
  const guanyu=held('guanyu');if(guanyu){const activated=pair||extraScores>0,value=guanyu.growth+Number(activated);growth.guanyu=value;if(value){mult+=value;push('关羽',`${activated?'本手见对子或额外计分，成长+1；':''}累计 +${value}倍率`);}}
- if(owns(s,'sunquan')&&suitCount===3){mult+=4;push('孙权','三兵种：+4倍率');}
- if(owns(s,'granary')){const value=Math.min(8,Math.floor(s.gold/5));if(value){mult+=value;push(COMPANIONS.granary.name,`持有${s.gold}军资：+${value}倍率`);}}
- if(owns(s,'drum')&&pair){chips+=30;push(COMPANIONS.drum.name,'合击：+30点数');}
- if(owns(s,'abacus')){const value=Math.max(0,36-s.army.length)*6;if(value){chips+=value;push(COMPANIONS.abacus.name,`精简牌库：+${value}点数`);}}
- if(owns(s,'lvbu')&&category===5){mult*=3;push('吕布','三军同心：倍率 ×3');}
- if(owns(s,'simayi')&&s.hands===1){mult*=2;push('司马懿','最后一手：倍率 ×2');}
- if(owns(s,'seal')&&s.pressed){mult*=1.25;push(COMPANIONS.seal.name,'加压：倍率 ×1.25');}
- if(owns(s,'oath')&&suitCount===1){mult*=1.8;push(COMPANIONS.oath.name,'同袍：倍率 ×1.8');}
+ if(active('sunquan')&&suitCount===3){mult+=4;push('孙权','三兵种：+4倍率');}
+ if(active('granary')){const value=Math.min(8,Math.floor(s.gold/5));if(value){mult+=value;push(COMPANIONS.granary.name,`持有${s.gold}军资：+${value}倍率`);}}
+ if(active('drum')&&pair){chips+=30;push(COMPANIONS.drum.name,'合击：+30点数');}
+ if(active('abacus')){const value=Math.max(0,36-s.army.length)*6;if(value){chips+=value;push(COMPANIONS.abacus.name,`精简牌库：+${value}点数`);}}
+ if(active('lvbu')&&category===5){mult*=3;push('吕布','三军同心：倍率 ×3');}
+ if(active('simayi')&&s.hands===1){mult*=2;push('司马懿','最后一手：倍率 ×2');}
+ if(active('seal')&&s.pressed){mult*=1.25;push(COMPANIONS.seal.name,'加压：倍率 ×1.25');}
+ if(active('oath')&&suitCount===1){mult*=1.8;push(COMPANIONS.oath.name,'同袍：倍率 ×1.8');}
  let penalty=1;
  if(forgeRule(s)==='variety'&&s.lastCategory===category){penalty=.5;push('疑阵','连续相同阵型：最终攻势 ×0.5');}
  if(forgeRule(s)==='ambush'&&!s.scouted){penalty=.65;push('水寨伏击','本手未换牌：最终攻势 ×0.65');}
  if(forgeStage(s).rule==='flank'&&s.lastSuit===cards[0].suit){penalty=.5;push('渠帅识阵','首牌兵种与上手相同：最终攻势 ×0.5');}
- if(forgeRule(s)==='thunder'){const sheltered=s.hand.some(id=>!ids.includes(id)&&s.army.find(c=>c.id===id)?.suit==='scheme');if(!sheltered){penalty=.6;push('九天雷劫','未留下谋牌：最终攻势 ×0.6');}else push('以谋避雷','手中留有谋牌：雷劫已化解');}
+ if(forgeRule(s)==='thunder'){const sheltered=cards.some(card=>card.suit==='scheme');if(!sheltered){penalty=.6;push('九天雷劫','未打出谋牌：最终攻势 ×0.6');}else push('以谋避雷','本手打出谋牌：雷劫已化解');}
  return{category,chips,mult,total:Math.min(SCORE_CAP,Math.floor(chips*mult*penalty)),floor:Math.min(SCORE_CAP,Math.floor(chips*mult*penalty)),bursts,steps,cards:copy(cards),growth,penalty};
 }
 export function previewForge(s:ForgeState,ids:string[],tuning?:ForgeTuning):Score{return scoreForge(s,ids,false,tuning);}

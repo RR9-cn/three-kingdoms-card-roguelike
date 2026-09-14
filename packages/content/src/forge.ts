@@ -6,8 +6,8 @@ export const COMPANIONS={
  chain:{name:'陆逊',mark:'陆',role:'响应',price:16,text:'每次阵牌额外计分后，+3倍率。',hint:'不区分是谁发起；确定额外计分和马超追击都会放大。',effect:'burst-mult'},
  guanyu:{name:'关羽',mark:'关',role:'成长',price:10,text:'打出对子或本手发生额外计分，关羽永久 +1 倍率；每手一次。',hint:'自己能靠对子成长，也能接入任何额外计分来源。',effect:'pair-growth'},
  zhangfei:{name:'张飞',mark:'张',role:'发起',price:12,text:'含对子时，第一张对子牌额外计分一次。',hint:'让该牌的强化与逐牌将星再次发动。',effect:'pair-repeat'},
- liubei:{name:'刘备',mark:'刘',role:'响应',price:10,text:'每当不大于4点的牌计分，+6倍率。',hint:'额外计分时也发动，可接张飞、周瑜、赵云或诸葛亮。',effect:'low-card'},
- zhouyu:{name:'周瑜',mark:'周',role:'发起',price:10,text:'至少两张同兵种时，这些同兵种牌各额外计分一次。',hint:'两张即可启动；三张同兵种会发起三次接力。',effect:'two-suit'},
+ liubei:{name:'刘备',mark:'刘',role:'响应',price:10,text:'每当不大于4点的牌计分，+5倍率。',hint:'额外计分时也发动，可接张飞、周瑜、赵云或诸葛亮。',effect:'low-card'},
+ zhouyu:{name:'周瑜',mark:'周',role:'发起',price:10,text:'三张牌同兵种时，这三张牌各额外计分一次。',hint:'主动凑成同袍，一次发起三次接力。',effect:'two-suit'},
  zhaoyun:{name:'赵云',mark:'赵',role:'发起',price:10,text:'打出连阵或同袍连阵时，最低点牌额外计分一次。',hint:'低点牌可以继续触发刘备，也能带动追击。',effect:'straight-growth'},
  huangzhong:{name:'黄忠',mark:'黄',role:'逐牌',price:9,text:'每张点数不小于7的牌计分时，+18点数。',hint:'升点、复制和重触发共同放大高点牌。',effect:'high-chips'},
  zhugeliang:{name:'诸葛亮',mark:'诸',role:'发起',price:14,text:'最右侧出牌额外计分一次。',hint:'不要求阵型，能把任意逐牌效果接入连锁。',effect:'last-repeat'},
@@ -38,14 +38,14 @@ export const STAGES=[
  {name:'官渡鏖兵',enemy:'黄巾督军',target:950,rule:'none',text:'高目标检验成长与倍率的积累。'},
  {name:'赤壁逆风',enemy:'雷鼓祭司',target:1350,rule:'none',text:'中期构筑检验：用已经形成的组合跨过更高目标。'},
  {name:'破军前夜',enemy:'黄巾渠帅',target:1800,rule:'none',text:'决战前的强度检验，不改变你的出牌规则。'},
- {name:'苍天已死',enemy:'张角',target:1900,rule:'last-stand',text:'终局张角：仅3次出牌。击破40%兵力后唤雷；出牌后手中未留下谋牌，攻势×0.6。'},
+ {name:'苍天已死',enemy:'张角',target:1900,rule:'last-stand',text:'终局张角：仅3次出牌。击破40%兵力后唤雷；本手未打出谋牌，攻势×0.6。'},
 ] as const;
 export type ForgeEdit='remove'|'copy'|'rank'|'enhance'|'suit'|'level';
 export const EDITS:Record<ForgeEdit,{name:string;text:string}>={remove:{name:'裁军',text:'选择一张牌永久删除，牌库最低12张。'},copy:{name:'募兵',text:'选择一张牌复制，保留点数、兵种与强化。'},rank:{name:'练兵',text:'选择一张未满9点的牌，点数 +2。'},enhance:{name:'精锐',text:'选择一张牌，使其每次计分额外 +12点数。'},suit:{name:'改编',text:'选择一张牌，再决定它的新兵种。'},level:{name:'研习',text:'选择一种阵型，使其倍率永久 +1。'}};
 
 export const BOSSES:Partial<Record<number,{name:string;title:string;mark:string;intro:string;defeated:string;phases:readonly {name:string;text:string;quote:string}[]}>>={
  3:{name:'张宝',title:'地公将军',mark:'地',intro:'雾锁祭坛，黄巾伏兵四起。',defeated:'地公坛破，疑阵尽散。',phases:[{name:'伏兵蔽日',text:'未换牌的这一手攻势×0.65；换牌可解除。',quote:'入我阵中，还想全身而退？'},{name:'移形疑阵',text:'连续相同牌型攻势×0.5；换牌不再解除减伤。',quote:'破得了伏兵，可识得我的疑阵？'}]},
- 7:{name:'张角',title:'天公将军',mark:'天',intro:'黄天祭坛前，只剩三次出手机会。',defeated:'雷云散去，黄天大旗倾倒。',phases:[{name:'黄天蓄雷',text:'正常计分；击破40%兵力后，下一手开始雷劫。',quote:'苍天已死，黄天当立！'},{name:'九天雷劫',text:'出牌后手中留有谋牌则正常计分，否则攻势×0.6。',quote:'以谋避雷，还是倾尽全军？'}]},
+ 7:{name:'张角',title:'天公将军',mark:'天',intro:'黄天祭坛前，只剩三次出手机会。',defeated:'雷云散去，黄天大旗倾倒。',phases:[{name:'黄天蓄雷',text:'正常计分；击破40%兵力后，下一手开始雷劫。',quote:'苍天已死，黄天当立！'},{name:'九天雷劫',text:'本手打出至少一张谋牌则正常计分，否则攻势×0.6。',quote:'以谋避雷，还是倾尽全军？'}]},
 };
 
 export type Rarity='common'|'rare'|'legendary';

@@ -8,7 +8,7 @@
   "baseline": "current",
   "variants": {
     "current": {},
-    "liubei_5": {"liubeiMultiplier": 5},
+    "liubei_4": {"liubeiMultiplier": 4},
     "stage2_260": {"stageTargets": {"2": 260}}
   }
 }
