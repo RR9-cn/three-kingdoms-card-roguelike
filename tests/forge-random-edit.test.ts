@@ -1,7 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {copy,forgeAction,isForgeState,newForge,type ForgeAction,type ForgeState} from '@three-card/core';
-import type {ForgeEdit} from '@three-card/content';
+import {FORGE_RULES,type ForgeEdit} from '@three-card/content';
 
 const act=(state:ForgeState,action:Omit<ForgeAction,'seq'>)=>{const result=forgeAction(state,{...action,seq:state.seq});assert.equal(result.error,undefined);assert.ok(isForgeState(result.state));return result.state;};
 function forge(seed:string){const state=newForge(seed);state.phase='forge';return state;}
@@ -14,3 +14,7 @@ test('revealed edit rejects reroll, skip and mismatched action atomically',()=>{
 test('ineligible types leave reveal pool and skipping before reveal gives gold',()=>{let full=forge('full-ranks');full.army=Array.from({length:60},(_,i)=>({...full.army[i%full.army.length],id:`full-${i}`,rank:9}));for(let i=0;i<100;i++){const state=copy(full);state.seed=`full-${i}`;state.rng=newForge(state.seed).rng;const revealed=act(state,{type:'random-edit'});assert.ok(!['copy','rank'].includes(revealed.pendingEdit!));}const skipped=act(forge('skip-edit'),{type:'edit',id:'skip'});assert.equal(skipped.phase,'shop');assert.equal(skipped.gold,15);assert.equal(skipped.stats.edits,0);});
 
 test('old v8 state without pendingEdit remains loadable',()=>{const state:any=newForge('old-state');delete state.pendingEdit;assert.equal(isForgeState(state),true);assert.equal(state.pendingEdit,null);});
+
+test('a revealed shop edit costs 8, keeps the shelf, and returns after choosing a target',()=>{let state=newForge('paid-edit');state.phase='shop';state.gold=20;state.offers=[{id:'guanyu',sold:false},{id:'zhouyu',sold:false},{id:'liubei',sold:false}];state.pendingEdit='enhance';const offers=copy(state.offers);state=act(state,{type:'buy-edit'});assert.equal(state.phase,'forge');assert.equal(state.gold,20-FORGE_RULES.editCost);assert.equal(state.pendingEdit,'enhance');assert.deepEqual(state.offers,offers);state=resolve(state);assert.equal(state.phase,'shop');assert.equal(state.pendingEdit,null);assert.deepEqual(state.offers,offers);assert.equal(state.stats.edits,1);});
+
+test('insufficient funds cannot buy an edit and leaving discards it without compensation',()=>{let state=newForge('decline-edit');state.phase='shop';state.gold=FORGE_RULES.editCost-1;state.pendingEdit='level';const rejected=forgeAction(state,{seq:state.seq,type:'buy-edit'});assert.ok(rejected.error);assert.equal(rejected.state,state);const before=state.gold;state=act(state,{type:'depart'});assert.equal(state.phase,'prepare');assert.equal(state.gold,before);assert.equal(state.pendingEdit,null);});

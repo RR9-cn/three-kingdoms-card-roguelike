@@ -10,66 +10,66 @@
     1800,
     1900
   ],
-  "strategy": "Public-view greedy hand score; fixed starter-specific recruitment preference; accepts the revealed edit type and chooses its target; no discards, no pressure. This is a smoke heuristic, not an optimal build or human win-rate estimate.",
+  "strategy": "Public-view greedy hand score; fixed starter-specific shop preference; buys the revealed edit for 8 gold and chooses its target; no discards, no pressure. This is a smoke heuristic, not an optimal build or human win-rate estimate.",
   "results": [
     {
       "starter": "guanyu",
       "runs": 200,
-      "wins": 168,
-      "winRate": 0.84,
+      "wins": 122,
+      "winRate": 0.61,
       "firstWin": "forge-0",
-      "firstLoss": "forge-8",
-      "best": 4880,
-      "meanActions": 97.215,
+      "firstLoss": "forge-2",
+      "best": 4371,
+      "meanActions": 77.625,
       "failures": [
         4,
         0,
-        1,
-        1,
-        0,
+        37,
+        12,
         2,
-        1,
-        23
+        7,
+        2,
+        14
       ]
     },
     {
       "starter": "zhouyu",
       "runs": 200,
-      "wins": 103,
-      "winRate": 0.515,
+      "wins": 99,
+      "winRate": 0.495,
       "firstWin": "forge-0",
-      "firstLoss": "forge-1",
-      "best": 4586,
-      "meanActions": 93.005,
+      "firstLoss": "forge-5",
+      "best": 3492,
+      "meanActions": 69.965,
       "failures": [
         1,
-        0,
-        0,
-        6,
-        8,
-        7,
-        11,
-        64
+        3,
+        40,
+        26,
+        10,
+        2,
+        5,
+        14
       ]
     },
     {
       "starter": "liubei",
       "runs": 200,
-      "wins": 91,
-      "winRate": 0.455,
-      "firstWin": "forge-3",
+      "wins": 117,
+      "winRate": 0.585,
+      "firstWin": "forge-1",
       "firstLoss": "forge-0",
-      "best": 6854,
-      "meanActions": 92.405,
+      "best": 9462,
+      "meanActions": 76.45,
       "failures": [
         0,
         0,
-        1,
-        0,
-        0,
-        1,
-        27,
-        80
+        7,
+        13,
+        10,
+        18,
+        10,
+        25
       ]
     }
   ]

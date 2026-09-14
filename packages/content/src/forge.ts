@@ -1,6 +1,6 @@
 /** v0.7 content: all effects are implemented by the core, never executable text. */
 export const FORGE_VERSION='0.7.0';
-export const FORGE_RULES={hands:4,discards:2,handSize:6,slots:5,startGold:12,minDeck:12,maxDeck:60,baseMult:[1,2,3,4,6,10],levelMult:1,refreshBase:3,pressureReward:8,pressureFactor:1.5} as const;
+export const FORGE_RULES={hands:4,discards:2,handSize:6,slots:5,startGold:12,minDeck:12,maxDeck:60,baseMult:[1,2,3,4,6,10],levelMult:1,refreshBase:3,editCost:8,pressureReward:8,pressureFactor:1.5} as const;
 export const COMPANIONS={
  pursuit:{name:'马超',mark:'马',role:'接力',price:12,text:'每次额外计分后，35%概率让该牌再额外计分；每手最多追击3次。',hint:'张飞、周瑜、赵云和诸葛亮都能让马超起跑。',effect:'burst-repeat'},
  chain:{name:'陆逊',mark:'陆',role:'响应',price:16,text:'每次阵牌额外计分后，+3倍率。',hint:'不区分是谁发起；确定额外计分和马超追击都会放大。',effect:'burst-mult'},

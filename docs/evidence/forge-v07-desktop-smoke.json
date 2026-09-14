@@ -12,7 +12,8 @@
   "fullCampaignVictory": true,
   "endlessContinuation": true,
   "directHandSettlement": true,
-  "randomPostBattleEdit": true,
+  "unifiedPostBattleShop": true,
+  "paidPostBattleEdit": true,
   "simpleScoring": true,
   "zhangJiaoAnimation": true,
   "errors": []
