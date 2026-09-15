@@ -32,4 +32,3 @@ The re-theme MUST retain stable IDs, save schema, action availability, scoring a
 #### Scenario: Existing save is loaded
 - **WHEN** a valid schema 8 save is opened in the re-themed client
 - **THEN** the same run state and legal actions appear with auction-facing labels
-
