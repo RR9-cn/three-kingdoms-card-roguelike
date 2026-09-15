@@ -1,25 +1,26 @@
 # combo-readability Specification
 
 ## Purpose
-Make general abilities and resolved additional-scoring chains understandable while preserving player discovery of combinations.
+Make guest abilities and resolved bidding chains understandable while preserving player discovery of combinations.
+
 ## Requirements
 ### Requirement: General descriptions expose their connection
-The system SHALL describe each active scoring general as either starting additional scoring or responding whenever a card scores again, using the same “额外计分” wording.
+The system SHALL describe each active guest as either opening a renewed bid or responding whenever a lot receives another bid, using the same “追加竞价” wording.
 
-#### Scenario: Player compares rewards
-- **WHEN** the player views generals in the starter choice or shop
-- **THEN** compatible generals use matching language without requiring a fixed build label
+#### Scenario: Player compares invitations
+- **WHEN** the player views guests in the opening choice or backstage market
+- **THEN** compatible guests use matching language without requiring a fixed build label
 
 ### Requirement: Settlement shows causal order
-The system SHALL name the general that starts each deterministic additional scoring event and SHALL show each responder after the event it responds to.
+The system SHALL name the guest that starts each deterministic renewed bid and SHALL show each responder after the bid it responds to.
 
-#### Scenario: Additional scoring chain resolves
-- **WHEN** a general causes a card to score again and other generals respond
-- **THEN** the ledger shows the source, repeated card score, per-card responses, amplification, and pursuit result in execution order
+#### Scenario: Bidding chain resolves
+- **WHEN** a guest causes a lot to receive another bid and other guests respond
+- **THEN** the ledger shows the source, renewed lot value, per-lot responses, amplification, and random follow-up result in execution order
 
 ### Requirement: Product copy does not prescribe fixed engines
-The system SHALL present the active roster as freely combinable generals and SHALL remove the three fixed four-general engine prescription from current player-facing content.
+The system SHALL present the active roster as freely combinable auction guests and SHALL omit fixed guest recipes from current player-facing content.
 
-#### Scenario: Player starts a new run
+#### Scenario: Player starts a new auction
 - **WHEN** the home, rules, or content description is shown
-- **THEN** it invites the player to connect general effects rather than complete one of three named sets
+- **THEN** it invites the player to connect guest effects rather than complete a named set

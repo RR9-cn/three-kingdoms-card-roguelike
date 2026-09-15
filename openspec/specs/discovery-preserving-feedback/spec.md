@@ -1,37 +1,38 @@
 # discovery-preserving-feedback Specification
 
 ## Purpose
-Keep combination discovery with the player while clearly distinguishing ordinary settlement and resolved pursuit gains.
+Keep combination discovery with the player while distinguishing ordinary sales and resolved random bid gains.
+
 ## Requirements
 ### Requirement: Combination discovery remains with the player
-The game SHALL show each general's individual ability text where the player makes a starter, shop, or formation choice, and SHALL NOT display prescribed general combinations or linkage recommendations before play.
+The game SHALL show each guest's individual ability text where the player makes an opening, market, or pre-auction choice, and SHALL NOT display prescribed guest combinations before settlement.
 
-#### Scenario: Player reviews a general choice
-- **WHEN** the player views a starter, shop, or pre-battle general choice
-- **THEN** the interface shows the general's own ability without a suggested partner or combination recipe
+#### Scenario: Player reviews a guest choice
+- **WHEN** the player views an opening guest, invitation, backstage offer, or pre-auction guest list
+- **THEN** the interface shows the guest's own ability without a suggested partner or combination recipe
 
-#### Scenario: Player enters the fixed battle demo
-- **WHEN** the player views the independent battle demo
-- **THEN** the interface identifies it as a temporary demo without instructing a named general linkage sequence
+#### Scenario: Player enters the fixed settlement demo
+- **WHEN** the player views the independent settlement demo
+- **THEN** the interface identifies it as a temporary demo without instructing a named guest sequence
 
 ### Requirement: Settlement distinguishes ordinary scoring from linkage scoring
-The game SHALL label a resolved hand without any additional-score card as “普通结算” and SHALL reserve linkage settlement labels and tiers for hands containing at least one additional-score card.
+The game SHALL label a resolved selection without any renewed bid as “普通成交” and SHALL reserve bidding-war labels and tiers for selections containing at least one renewed bid.
 
-#### Scenario: Hand has no additional scoring
-- **WHEN** a played hand resolves without an `额外计分牌` step
-- **THEN** the result is labeled “普通结算” and no Ma Chao linkage tier is shown
+#### Scenario: Selection has no renewed bid
+- **WHEN** three lots resolve without an `追加竞价拍品` step
+- **THEN** the result is labeled “普通成交” and no bidding-war tier is shown
 
-#### Scenario: Hand has additional scoring
-- **WHEN** a played hand resolves with at least one `额外计分牌` step
-- **THEN** the result is labeled as a linkage settlement and its post-result causal explanation remains available
+#### Scenario: Selection has renewed bidding
+- **WHEN** three lots resolve with at least one `追加竞价拍品` step
+- **THEN** the result is labeled as a bidding war and its post-result causal explanation remains available
 
 ### Requirement: Successful Ma Chao pursuit reveals its exact gain
-The game SHALL keep the deterministic score as the pre-play guaranteed preview and, after at least one successful Ma Chao pursuit, SHALL display the exact increase from the guaranteed preview to the final offensive score.
+The game SHALL keep the deterministic hammer price as the pre-selection guaranteed preview and, after at least one successful random renewed bid, SHALL display the exact increase from the guaranteed preview to the final hammer price.
 
-#### Scenario: Ma Chao pursuit succeeds
-- **WHEN** a hand with additional scoring resolves with one or more successful Ma Chao pursuits
-- **THEN** the interface states that Ma Chao pursuit succeeded and displays `final score - guaranteed preview` as the attack gained by this linkage
+#### Scenario: Random renewed bid succeeds
+- **WHEN** a selection with renewed bidding resolves with one or more successful random follow-ups
+- **THEN** the interface names the responsible guest and displays `final hammer price - guaranteed preview` as the price gained by the bidding war
 
-#### Scenario: Ma Chao pursuit does not succeed
-- **WHEN** the player previews a hand or its Ma Chao pursuit resolves without success
-- **THEN** the interface does not show an estimated score range or claim an attack gain
+#### Scenario: Random renewed bid does not succeed
+- **WHEN** the player previews a selection or its random follow-up resolves without success
+- **THEN** the interface does not show an estimated price range or claim a price gain

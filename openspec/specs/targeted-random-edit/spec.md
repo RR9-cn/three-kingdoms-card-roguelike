@@ -1,25 +1,23 @@
 # targeted-random-edit Specification
 
 ## Purpose
-Reveal one random legal edit while leaving its target choice to the player.
+Reveal one random legal catalog edit while leaving its target choice to the player.
+
 ## Requirements
 ### Requirement: 随机整编只揭晓一种方式
+系统 SHALL 从当前合法的撤拍、入库、修复、精鉴、换类和研习中随机揭晓一种目录调整，并 MUST 保存已揭晓结果使重启不能重抽。
 
-系统 SHALL 从当前合法的裁军、募兵、练兵、精锐、改编和研习中随机揭晓一种，并 MUST 保存已揭晓结果使重启不能重抽。
-
-#### Scenario: 揭晓整编
-- **WHEN** 玩家请求军师整编
-- **THEN** 界面只显示一种整编方式及其合法目标
+#### Scenario: 揭晓目录调整
+- **WHEN** 玩家请求查看本场目录调整
+- **THEN** 界面只显示一种调整方式及其合法目标
 
 ### Requirement: 玩家决定整编目标
+系统 SHALL 要求玩家为已揭晓的目录调整选择一件合法拍品、一个新类别或一种藏品组合，完成后才返回后台交易厅。
 
-系统 SHALL 要求玩家为已揭晓的整编选择一张合法阵牌、一个新兵种或一种阵型，完成后才进入商店。
+#### Scenario: 选择拍品目标
+- **WHEN** 揭晓修复且玩家选择一件未满9点的拍品
+- **THEN** 只有该拍品永久增加2点标价
 
-#### Scenario: 选择阵牌目标
-- **WHEN** 揭晓练兵且玩家选择一张未满9点的阵牌
-- **THEN** 只有该阵牌永久增加2点
-
-#### Scenario: 拒绝更换整编方式
-- **WHEN** 玩家提交与已揭晓结果不同的整编动作
+#### Scenario: 拒绝更换调整方式
+- **WHEN** 玩家提交与已揭晓结果不同的调整动作
 - **THEN** 状态、资源与随机流保持不变
-

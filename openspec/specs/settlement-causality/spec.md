@@ -1,40 +1,41 @@
 # settlement-causality Specification
 
 ## Purpose
-Show only the already revealed portion of an additional-scoring chain in the central battle presentation.
+Show only the already revealed portion of a renewed-bidding chain in the central auction presentation.
+
 ## Requirements
 ### Requirement: Revealed causal chain
-During post-play settlement, the interface SHALL derive a compact causal chain only from score steps that have already been revealed and SHALL place it in the central battle area.
+During post-selection settlement, the interface SHALL derive a compact bidding chain only from score steps that have already been revealed and SHALL place it in the central auction area.
 
-#### Scenario: Additional scoring unfolds
-- **WHEN** a general's additional-scoring source, the repeated card score, and response generals are revealed in sequence
-- **THEN** the central chain adds the source general, the identified card's additional score, and each revealed response in that same order
+#### Scenario: Renewed bidding unfolds
+- **WHEN** a guest's renewed-bid source, the selected lot's additional value, and responding guests are revealed in sequence
+- **THEN** the central chain adds the source guest, the identified lot's renewed bid, and each revealed response in that same order
 
-#### Scenario: No source has been revealed
-- **WHEN** the visible settlement steps contain no additional-scoring source
-- **THEN** the central battle area shows no causal-chain placeholder
+#### Scenario: No renewed-bid source has been revealed
+- **WHEN** the visible settlement steps contain no renewed-bid source
+- **THEN** the central auction area shows no bidding-chain placeholder
 
 ### Requirement: Hidden random results remain hidden
-The causal chain SHALL NOT include an unrevealed pursuit result, future score step, or final score while the existing settlement animation has not revealed it.
+The bidding chain SHALL NOT include an unrevealed random follow-up, future score step, or hammer price while settlement has not revealed it.
 
-#### Scenario: Ma Chao pursuit is pending
-- **WHEN** visible steps end before the saved pursuit result is revealed
-- **THEN** the causal chain contains no success, failure, or subsequent pursuit node
+#### Scenario: A renewed bid is pending
+- **WHEN** visible steps end before the saved random result is revealed
+- **THEN** the bidding chain contains no success, failure, or subsequent follow-up node
 
 ### Requirement: Existing settlement controls remain intact
-The causal chain SHALL preserve the complete ledger, active-general highlight, direct-result action, reduced-motion behavior, direct hand settlement, and keyboard controls.
+The bidding chain SHALL preserve the complete ledger, active-guest highlight, direct-result action, reduced-motion behavior, direct settlement, and keyboard controls.
 
 #### Scenario: Player skips settlement animation
 - **WHEN** the player chooses the existing direct-result action
-- **THEN** the final score and last completed causal chain appear without changing the saved result
+- **THEN** the hammer price and last completed bidding chain appear without changing the saved result
 
 #### Scenario: Reduced motion is enabled
-- **WHEN** the operating system requests reduced motion before a hand is played
-- **THEN** settlement opens in its completed state with the same final causal chain and no timed reveal requirement
+- **WHEN** the operating system requests reduced motion before lots are selected
+- **THEN** settlement opens in its completed state with the same final bidding chain and no timed reveal requirement
 
 ### Requirement: Presentation-only change
-The implementation SHALL NOT change score calculation, content values, random streams, save data, Boss state, rewards, or available player actions.
+The implementation SHALL NOT change score calculation, content values, random streams, save data, signature-buyer state, rewards, or available player actions.
 
 #### Scenario: Existing deterministic result is rendered
 - **WHEN** the same saved result is rendered before and after the presentation change
-- **THEN** its cards, steps, score, settlement state, and available actions are identical
+- **THEN** its lots, steps, score, settlement state, and available actions are identical
