@@ -32,11 +32,11 @@ export function settlementCausalChain(score:Score,visibleCount:number):CausalNod
   if(step.cardId!==cardId)continue;
   if(step.source==='额外计分牌'){
    const card=score.cards.find(item=>item.id===step.cardId);
-   if(card)current.push({label:`${SUIT_NAMES[card.suit]}${card.rank}额外计分`,kind:'card'});
+   if(card)current.push({label:`${SUIT_NAMES[card.suit]}${card.rank}追加竞价`,kind:'card'});
    continue;
   }
   if(generalNames.has(step.source)){
-   const label=step.text.includes('追击成功')?`${step.source}追击`:step.text.includes('未触发')?`${step.source}未追击`:step.source;
+   const label=step.text.includes('追击成功')?`${step.source}再举牌`:step.text.includes('未触发')?`${step.source}未加价`:step.source;
    if(current.at(-1)?.label!==label)current.push({label,kind:'response'});
   }
  }
@@ -48,5 +48,5 @@ const escape=(value:string)=>value.replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&
 export function settlementCausalPanel(score:Score,visibleCount:number):string{
  const nodes=settlementCausalChain(score,visibleCount);
  if(!nodes.length)return'';
- return `<div class="causal-chain" role="status" aria-label="当前连锁：${nodes.map(node=>escape(node.label)).join('，')}\"><small>本次连锁</small><div>${nodes.map((node,index)=>`${index?'<i aria-hidden="true">→</i>':''}<b class="${node.kind}${index===nodes.length-1?' active':''}">${escape(node.label)}</b>`).join('')}</div></div>`;
+ return `<div class="causal-chain" role="status" aria-label="当前竞价：${nodes.map(node=>escape(node.label)).join('，')}\"><small>本轮竞价</small><div>${nodes.map((node,index)=>`${index?'<i aria-hidden="true">→</i>':''}<b class="${node.kind}${index===nodes.length-1?' active':''}">${escape(node.label)}</b>`).join('')}</div></div>`;
 }

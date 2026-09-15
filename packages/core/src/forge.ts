@@ -40,10 +40,10 @@ function scoreForge(s:ForgeState,ids:string[],resolve:boolean,tuning?:ForgeTunin
  let extraScores=0;
  for(let i=0;i<cards.length;i++){
   const card=cards[i];const repeatSources:string[]=[];
-  if(active('zhangfei')&&card.id===firstPair)repeatSources.push('张飞');
-  if(active('zhouyu')&&card.suit===zhouyuSuit&&(zhouyuMode!=='one-shared'||card.id===zhouyuFirst))repeatSources.push('周瑜');
-  if(active('zhaoyun')&&card.id===lowestStraight)repeatSources.push('赵云');
-  if(active('zhugeliang')&&i===cards.length-1)repeatSources.push('诸葛亮');
+  if(active('zhangfei')&&card.id===firstPair)repeatSources.push(COMPANIONS.zhangfei.name);
+  if(active('zhouyu')&&card.suit===zhouyuSuit&&(zhouyuMode!=='one-shared'||card.id===zhouyuFirst))repeatSources.push(COMPANIONS.zhouyu.name);
+  if(active('zhaoyun')&&card.id===lowestStraight)repeatSources.push(COMPANIONS.zhaoyun.name);
+  if(active('zhugeliang')&&i===cards.length-1)repeatSources.push(COMPANIONS.zhugeliang.name);
   let repeat=1+repeatSources.length;
   for(let trigger=0;trigger<repeat;trigger++){
    if(trigger>0){extraScores++;push(repeatSources[trigger-1]??COMPANIONS.pursuit.name,`${card.rank}点牌 · 发起第${extraScores}次额外计分`,card.id);}
@@ -60,20 +60,20 @@ function scoreForge(s:ForgeState,ids:string[],resolve:boolean,tuning?:ForgeTunin
   }
  }
  const held=(id:CompanionId)=>active(id)?s.companions.find(c=>c.id===id):undefined;
- const guanyu=held('guanyu');if(guanyu){const activated=pair||extraScores>0,value=guanyu.growth+Number(activated);growth.guanyu=value;if(value){mult+=value;push('关羽',`${activated?'本手见对子或额外计分，成长+1；':''}累计 +${value}倍率`);}}
- if(active('sunquan')&&suitCount===3){mult+=4;push('孙权','三兵种：+4倍率');}
+ const guanyu=held('guanyu');if(guanyu){const activated=pair||extraScores>0,value=guanyu.growth+Number(activated);growth.guanyu=value;if(value){mult+=value;push(COMPANIONS.guanyu.name,`${activated?'本手见对子或额外计分，成长+1；':''}累计 +${value}倍率`);}}
+ if(active('sunquan')&&suitCount===3){mult+=4;push(COMPANIONS.sunquan.name,'三兵种：+4倍率');}
  if(active('granary')){const value=Math.min(8,Math.floor(s.gold/5));if(value){mult+=value;push(COMPANIONS.granary.name,`持有${s.gold}军资：+${value}倍率`);}}
  if(active('drum')&&pair){chips+=30;push(COMPANIONS.drum.name,'合击：+30点数');}
  if(active('abacus')){const value=Math.max(0,36-s.army.length)*6;if(value){chips+=value;push(COMPANIONS.abacus.name,`精简牌库：+${value}点数`);}}
- if(active('lvbu')&&category===5){mult*=3;push('吕布','三军同心：倍率 ×3');}
- if(active('simayi')&&s.hands===1){mult*=2;push('司马懿','最后一手：倍率 ×2');}
+ if(active('lvbu')&&category===5){mult*=3;push(COMPANIONS.lvbu.name,'三军同心：倍率 ×3');}
+ if(active('simayi')&&s.hands===1){mult*=2;push(COMPANIONS.simayi.name,'最后一手：倍率 ×2');}
  if(active('seal')&&s.pressed){mult*=1.25;push(COMPANIONS.seal.name,'加压：倍率 ×1.25');}
  if(active('oath')&&suitCount===1){mult*=1.8;push(COMPANIONS.oath.name,'同袍：倍率 ×1.8');}
  let penalty=1;
- if(forgeRule(s)==='variety'&&s.lastCategory===category){penalty=.5;push('疑阵','连续相同阵型：最终攻势 ×0.5');}
- if(forgeRule(s)==='ambush'&&!s.scouted){penalty=.65;push('水寨伏击','本手未换牌：最终攻势 ×0.65');}
- if(forgeStage(s).rule==='flank'&&s.lastSuit===cards[0].suit){penalty=.5;push('渠帅识阵','首牌兵种与上手相同：最终攻势 ×0.5');}
- if(forgeRule(s)==='thunder'){const sheltered=cards.some(card=>card.suit==='scheme');if(!sheltered){penalty=.6;push('九天雷劫','未打出谋牌：最终攻势 ×0.6');}else push('以谋避雷','本手打出谋牌：雷劫已化解');}
+ if(forgeRule(s)==='variety'&&s.lastCategory===category){penalty=.5;push('重复估价','连续相同组合：最终成交价 ×0.5');}
+ if(forgeRule(s)==='ambush'&&!s.scouted){penalty=.65;push('冷场试探','本轮未撤换拍品：最终成交价 ×0.65');}
+ if(forgeStage(s).rule==='flank'&&s.lastSuit===cards[0].suit){penalty=.5;push('买家看穿','首件类别与上轮相同：最终成交价 ×0.5');}
+ if(forgeRule(s)==='thunder'){const sheltered=cards.some(card=>card.suit==='scheme');if(!sheltered){penalty=.6;push('禁品审查','未上拍诡物：最终成交价 ×0.6');}else push('诡物压场','本轮上拍诡物：压价已化解');}
  return{category,chips,mult,total:Math.min(SCORE_CAP,Math.floor(chips*mult*penalty)),floor:Math.min(SCORE_CAP,Math.floor(chips*mult*penalty)),bursts,steps,cards:copy(cards),growth,penalty};
 }
 export function previewForge(s:ForgeState,ids:string[],tuning?:ForgeTuning):Score{return scoreForge(s,ids,false,tuning);}

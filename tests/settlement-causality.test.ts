@@ -6,12 +6,12 @@ import {hasAdditionalScoring,pursuitAttackGain,settlementCausalChain,settlementC
 const steps:ScoreStep[]=[
  {source:'阵型',text:'合击 Lv.1 · 2倍率',chips:0,mult:2},
  {source:'阵牌',text:'+7点数',chips:7,mult:2,cardId:'spear-7'},
- {source:'张飞',text:'7点牌 · 发起第1次额外计分',chips:7,mult:2,cardId:'spear-7'},
+ {source:'双生客',text:'7点牌 · 发起第1次额外计分',chips:7,mult:2,cardId:'spear-7'},
  {source:'额外计分牌',text:'+7点数',chips:14,mult:2,cardId:'spear-7'},
- {source:'刘备',text:'低点牌：+6倍率',chips:14,mult:8,cardId:'spear-7'},
- {source:'陆逊',text:'响应额外计分：+3倍率',chips:14,mult:11,cardId:'spear-7'},
- {source:'马超',text:'追击成功！追加第1/3次',chips:14,mult:11,cardId:'spear-7'},
- {source:'马超',text:'7点牌 · 发起第2次额外计分',chips:14,mult:11,cardId:'spear-7'},
+ {source:'淘金客',text:'低点牌：+6倍率',chips:14,mult:8,cardId:'spear-7'},
+ {source:'抬价人',text:'响应额外计分：+3倍率',chips:14,mult:11,cardId:'spear-7'},
+ {source:'红手套',text:'追击成功！追加第1/3次',chips:14,mult:11,cardId:'spear-7'},
+ {source:'红手套',text:'7点牌 · 发起第2次额外计分',chips:14,mult:11,cardId:'spear-7'},
  {source:'额外计分牌',text:'+7点数',chips:21,mult:11,cardId:'spear-7'},
  {source:'阵牌',text:'+2点数',chips:23,mult:11,cardId:'bow-2'},
 ];
@@ -19,21 +19,21 @@ const score:Score={category:1,chips:23,mult:11,total:277,steps,cards:[{id:'spear
 
 test('causal chain appears only after a revealed trigger and grows in score-step order',()=>{
  assert.deepEqual(settlementCausalChain(score,2),[]);
- assert.deepEqual(settlementCausalChain(score,3).map(node=>node.label),['张飞']);
- assert.deepEqual(settlementCausalChain(score,7).map(node=>node.label),['张飞','枪7额外计分','刘备','陆逊','马超追击']);
+ assert.deepEqual(settlementCausalChain(score,3).map(node=>node.label),['双生客']);
+ assert.deepEqual(settlementCausalChain(score,7).map(node=>node.label),['双生客','器7追加竞价','淘金客','抬价人','红手套再举牌']);
 });
 
 test('a new extra-score trigger starts a new fragment and the next base card keeps it visible',()=>{
- assert.deepEqual(settlementCausalChain(score,8).map(node=>node.label),['马超']);
- assert.deepEqual(settlementCausalChain(score,9).map(node=>node.label),['马超','枪7额外计分']);
- assert.deepEqual(settlementCausalChain(score,10).map(node=>node.label),['马超','枪7额外计分']);
+ assert.deepEqual(settlementCausalChain(score,8).map(node=>node.label),['红手套']);
+ assert.deepEqual(settlementCausalChain(score,9).map(node=>node.label),['红手套','器7追加竞价']);
+ assert.deepEqual(settlementCausalChain(score,10).map(node=>node.label),['红手套','器7追加竞价']);
 });
 
 test('panel contains only nodes inside the revealed boundary',()=>{
  const html=settlementCausalPanel(score,4);
- assert.match(html,/张飞/);
- assert.match(html,/枪7额外计分/);
- assert.doesNotMatch(html,/刘备|陆逊|马超/);
+ assert.match(html,/双生客/);
+ assert.match(html,/器7追加竞价/);
+ assert.doesNotMatch(html,/淘金客|抬价人|红手套/);
 });
 
 test('settlement helpers distinguish an ordinary hand and report only resolved pursuit gain',()=>{

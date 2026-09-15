@@ -23,7 +23,7 @@ test('interactive AI can reach the shop and depart directly into the next battle
  try{
   const service=new AiPlayService(root);let view=await service.handle({schemaVersion:1,operation:'start',seed:'shop-run',starter:'zhouyu'}) as any;
   for(let i=0;i<4&&view.phase==='battle';i++)view=await service.handle({schemaVersion:1,operation:'act',sessionId:view.sessionId,turn:view.turn,decision:{type:'play',cards:view.combinations[0][0]}}) as any;
-  assert.equal(view.phase,'shop');assert.equal(view.offers.length,3);assert.ok(view.editOffer);assert.equal(view.nextStage.name,'长坂试锋');
+  assert.equal(view.phase,'shop');assert.equal(view.offers.length,3);assert.ok(view.editOffer);assert.equal(view.nextStage.name,'名流入席');
   view=await service.handle({schemaVersion:1,operation:'act',sessionId:view.sessionId,turn:view.turn,decision:{type:'buy_edit'}}) as any;assert.equal(view.phase,'forge');assert.ok(view.targets.length>=6);
   const edit=view.edit.type,first=view.targets[0],decision=edit==='level'?{type:'apply_edit',category:1}:{type:'apply_edit',target:first[0],...edit==='suit'?{suit:String(first[1]).startsWith('谋')?'spear':'scheme'}:{}};
   view=await service.handle({schemaVersion:1,operation:'act',sessionId:view.sessionId,turn:view.turn,decision}) as any;assert.equal(view.phase,'shop');
