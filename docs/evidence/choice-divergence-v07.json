@@ -10,21 +10,21 @@
     "interpretation": "报告用于定位人工审核候选，不代表强弱平衡结论或真人选择预测。"
   },
   "summary": {
-    "buildCount": 299,
-    "marginalComparisons": 321600,
-    "singleGeneralAgreementRate": 0.7271,
-    "meanBestSecondMarginPct": 25.49,
-    "meanDistinctSingleGeneralOptima": 2.88
+    "buildCount": 697,
+    "marginalComparisons": 774400,
+    "singleGeneralAgreementRate": 0.6985,
+    "meanBestSecondMarginPct": 25.39,
+    "meanDistinctSingleGeneralOptima": 3.48
   },
   "generals": [
     {
       "id": "guanyu",
-      "name": "关羽",
+      "name": "老鉴定师",
       "role": "成长",
       "scope": "guaranteed-battle",
-      "comparisons": 26800,
-      "choiceChangeRate": 0.1216,
-      "meanScoreUpliftPct": 17.98,
+      "comparisons": 48400,
+      "choiceChangeRate": 0.1188,
+      "meanScoreUpliftPct": 14.29,
       "byContextSize": [
         {
           "size": 0,
@@ -34,26 +34,26 @@
         },
         {
           "size": 1,
-          "comparisons": 4400,
-          "choiceChangeRate": 0.1536,
-          "meanScoreUpliftPct": 17.19
+          "comparisons": 6000,
+          "choiceChangeRate": 0.1485,
+          "meanScoreUpliftPct": 14.53
         },
         {
           "size": 2,
-          "comparisons": 22000,
-          "choiceChangeRate": 0.114,
-          "meanScoreUpliftPct": 18.23
+          "comparisons": 42000,
+          "choiceChangeRate": 0.1139,
+          "meanScoreUpliftPct": 14.27
         }
       ]
     },
     {
       "id": "zhangfei",
-      "name": "张飞",
-      "role": "发起",
+      "name": "双生客",
+      "role": "开价",
       "scope": "guaranteed-battle",
-      "comparisons": 26800,
-      "choiceChangeRate": 0.1639,
-      "meanScoreUpliftPct": 23.02,
+      "comparisons": 48400,
+      "choiceChangeRate": 0.1682,
+      "meanScoreUpliftPct": 22.76,
       "byContextSize": [
         {
           "size": 0,
@@ -63,24 +63,24 @@
         },
         {
           "size": 1,
-          "comparisons": 4400,
-          "choiceChangeRate": 0.1357,
-          "meanScoreUpliftPct": 19.25
+          "comparisons": 6000,
+          "choiceChangeRate": 0.1412,
+          "meanScoreUpliftPct": 18.51
         },
         {
           "size": 2,
-          "comparisons": 22000,
-          "choiceChangeRate": 0.1713,
-          "meanScoreUpliftPct": 24.04
+          "comparisons": 42000,
+          "choiceChangeRate": 0.173,
+          "meanScoreUpliftPct": 23.5
         }
       ]
     },
     {
       "id": "pursuit",
-      "name": "马超",
-      "role": "接力",
+      "name": "红手套",
+      "role": "追价",
       "scope": "random-after-play",
-      "comparisons": 26800,
+      "comparisons": 48400,
       "choiceChangeRate": 0,
       "meanScoreUpliftPct": 0,
       "byContextSize": [
@@ -92,13 +92,13 @@
         },
         {
           "size": 1,
-          "comparisons": 4400,
+          "comparisons": 6000,
           "choiceChangeRate": 0,
           "meanScoreUpliftPct": 0
         },
         {
           "size": 2,
-          "comparisons": 22000,
+          "comparisons": 42000,
           "choiceChangeRate": 0,
           "meanScoreUpliftPct": 0
         }
@@ -106,12 +106,12 @@
     },
     {
       "id": "chain",
-      "name": "陆逊",
+      "name": "抬价人",
       "role": "响应",
       "scope": "guaranteed-battle",
-      "comparisons": 26800,
-      "choiceChangeRate": 0.12,
-      "meanScoreUpliftPct": 66.52,
+      "comparisons": 48400,
+      "choiceChangeRate": 0.0726,
+      "meanScoreUpliftPct": 47.25,
       "byContextSize": [
         {
           "size": 0,
@@ -121,55 +121,55 @@
         },
         {
           "size": 1,
-          "comparisons": 4400,
-          "choiceChangeRate": 0.0843,
-          "meanScoreUpliftPct": 42.27
+          "comparisons": 6000,
+          "choiceChangeRate": 0.0498,
+          "meanScoreUpliftPct": 30.71
         },
         {
           "size": 2,
-          "comparisons": 22000,
-          "choiceChangeRate": 0.1293,
-          "meanScoreUpliftPct": 72.58
+          "comparisons": 42000,
+          "choiceChangeRate": 0.0766,
+          "meanScoreUpliftPct": 50.06
         }
       ]
     },
     {
       "id": "liubei",
-      "name": "刘备",
+      "name": "淘金客",
       "role": "响应",
       "scope": "guaranteed-battle",
-      "comparisons": 26800,
-      "choiceChangeRate": 0.6959,
-      "meanScoreUpliftPct": 268.59,
+      "comparisons": 48400,
+      "choiceChangeRate": 0.6388,
+      "meanScoreUpliftPct": 197.8,
       "byContextSize": [
         {
           "size": 0,
           "comparisons": 400,
-          "choiceChangeRate": 0.7525,
-          "meanScoreUpliftPct": 250.95
+          "choiceChangeRate": 0.6825,
+          "meanScoreUpliftPct": 207.13
         },
         {
           "size": 1,
-          "comparisons": 4400,
-          "choiceChangeRate": 0.7177,
-          "meanScoreUpliftPct": 266.76
+          "comparisons": 6000,
+          "choiceChangeRate": 0.6668,
+          "meanScoreUpliftPct": 206.86
         },
         {
           "size": 2,
-          "comparisons": 22000,
-          "choiceChangeRate": 0.6905,
-          "meanScoreUpliftPct": 269.28
+          "comparisons": 42000,
+          "choiceChangeRate": 0.6344,
+          "meanScoreUpliftPct": 196.42
         }
       ]
     },
     {
       "id": "zhugeliang",
-      "name": "诸葛亮",
-      "role": "发起",
+      "name": "落槌人",
+      "role": "开价",
       "scope": "guaranteed-battle",
-      "comparisons": 26800,
-      "choiceChangeRate": 0.131,
-      "meanScoreUpliftPct": 58.79,
+      "comparisons": 48400,
+      "choiceChangeRate": 0.1426,
+      "meanScoreUpliftPct": 57.31,
       "byContextSize": [
         {
           "size": 0,
@@ -179,24 +179,24 @@
         },
         {
           "size": 1,
-          "comparisons": 4400,
-          "choiceChangeRate": 0.1148,
-          "meanScoreUpliftPct": 51.71
+          "comparisons": 6000,
+          "choiceChangeRate": 0.1217,
+          "meanScoreUpliftPct": 50.17
         },
         {
           "size": 2,
-          "comparisons": 22000,
-          "choiceChangeRate": 0.1352,
-          "meanScoreUpliftPct": 60.64
+          "comparisons": 42000,
+          "choiceChangeRate": 0.1462,
+          "meanScoreUpliftPct": 58.54
         }
       ]
     },
     {
       "id": "caocao",
-      "name": "曹操",
-      "role": "经济",
+      "name": "清仓商",
+      "role": "现金",
       "scope": "discard-economy",
-      "comparisons": 26800,
+      "comparisons": 48400,
       "choiceChangeRate": 0,
       "meanScoreUpliftPct": 0,
       "byContextSize": [
@@ -208,13 +208,13 @@
         },
         {
           "size": 1,
-          "comparisons": 4400,
+          "comparisons": 6000,
           "choiceChangeRate": 0,
           "meanScoreUpliftPct": 0
         },
         {
           "size": 2,
-          "comparisons": 22000,
+          "comparisons": 42000,
           "choiceChangeRate": 0,
           "meanScoreUpliftPct": 0
         }
@@ -222,10 +222,10 @@
     },
     {
       "id": "abacus",
-      "name": "荀彧",
+      "name": "库房管家",
       "role": "精简",
       "scope": "deck-state",
-      "comparisons": 26800,
+      "comparisons": 48400,
       "choiceChangeRate": 0,
       "meanScoreUpliftPct": 0,
       "byContextSize": [
@@ -237,13 +237,13 @@
         },
         {
           "size": 1,
-          "comparisons": 4400,
+          "comparisons": 6000,
           "choiceChangeRate": 0,
           "meanScoreUpliftPct": 0
         },
         {
           "size": 2,
-          "comparisons": 22000,
+          "comparisons": 42000,
           "choiceChangeRate": 0,
           "meanScoreUpliftPct": 0
         }
@@ -251,41 +251,41 @@
     },
     {
       "id": "zhouyu",
-      "name": "周瑜",
-      "role": "发起",
+      "name": "策展人",
+      "role": "开价",
       "scope": "guaranteed-battle",
-      "comparisons": 26800,
-      "choiceChangeRate": 0.2911,
-      "meanScoreUpliftPct": 141.5,
+      "comparisons": 48400,
+      "choiceChangeRate": 0.1881,
+      "meanScoreUpliftPct": 86.08,
       "byContextSize": [
         {
           "size": 0,
           "comparisons": 400,
-          "choiceChangeRate": 0.1775,
-          "meanScoreUpliftPct": 73.89
+          "choiceChangeRate": 0.07,
+          "meanScoreUpliftPct": 57.37
         },
         {
           "size": 1,
-          "comparisons": 4400,
-          "choiceChangeRate": 0.2477,
-          "meanScoreUpliftPct": 119.91
+          "comparisons": 6000,
+          "choiceChangeRate": 0.1402,
+          "meanScoreUpliftPct": 76.92
         },
         {
           "size": 2,
-          "comparisons": 22000,
-          "choiceChangeRate": 0.3019,
-          "meanScoreUpliftPct": 147.05
+          "comparisons": 42000,
+          "choiceChangeRate": 0.1961,
+          "meanScoreUpliftPct": 87.66
         }
       ]
     },
     {
       "id": "diaochan",
-      "name": "貂蝉",
+      "name": "黑纱夫人",
       "role": "响应",
       "scope": "guaranteed-battle",
-      "comparisons": 26800,
-      "choiceChangeRate": 0.3702,
-      "meanScoreUpliftPct": 78.52,
+      "comparisons": 48400,
+      "choiceChangeRate": 0.318,
+      "meanScoreUpliftPct": 62.01,
       "byContextSize": [
         {
           "size": 0,
@@ -295,26 +295,26 @@
         },
         {
           "size": 1,
-          "comparisons": 4400,
-          "choiceChangeRate": 0.3768,
-          "meanScoreUpliftPct": 78.65
+          "comparisons": 6000,
+          "choiceChangeRate": 0.3455,
+          "meanScoreUpliftPct": 67.67
         },
         {
           "size": 2,
-          "comparisons": 22000,
-          "choiceChangeRate": 0.3688,
-          "meanScoreUpliftPct": 78.62
+          "comparisons": 42000,
+          "choiceChangeRate": 0.3135,
+          "meanScoreUpliftPct": 61.11
         }
       ]
     },
     {
       "id": "oath",
-      "name": "孙策",
+      "name": "大收藏家",
       "role": "爆发",
       "scope": "guaranteed-battle",
-      "comparisons": 26800,
-      "choiceChangeRate": 0.1419,
-      "meanScoreUpliftPct": 40.49,
+      "comparisons": 48400,
+      "choiceChangeRate": 0.1523,
+      "meanScoreUpliftPct": 36.89,
       "byContextSize": [
         {
           "size": 0,
@@ -324,44 +324,160 @@
         },
         {
           "size": 1,
-          "comparisons": 4400,
-          "choiceChangeRate": 0.1168,
-          "meanScoreUpliftPct": 43.08
+          "comparisons": 6000,
+          "choiceChangeRate": 0.1222,
+          "meanScoreUpliftPct": 40.45
         },
         {
           "size": 2,
-          "comparisons": 22000,
-          "choiceChangeRate": 0.1483,
-          "meanScoreUpliftPct": 39.89
+          "comparisons": 42000,
+          "choiceChangeRate": 0.1574,
+          "meanScoreUpliftPct": 36.3
         }
       ]
     },
     {
       "id": "zhaoyun",
-      "name": "赵云",
-      "role": "发起",
+      "name": "编目师",
+      "role": "开价",
       "scope": "guaranteed-battle",
-      "comparisons": 26800,
-      "choiceChangeRate": 0.119,
-      "meanScoreUpliftPct": 16.81,
+      "comparisons": 48400,
+      "choiceChangeRate": 0.2305,
+      "meanScoreUpliftPct": 67.74,
       "byContextSize": [
         {
           "size": 0,
           "comparisons": 400,
-          "choiceChangeRate": 0.1,
-          "meanScoreUpliftPct": 9.09
+          "choiceChangeRate": 0.1925,
+          "meanScoreUpliftPct": 39.11
         },
         {
           "size": 1,
-          "comparisons": 4400,
-          "choiceChangeRate": 0.108,
-          "meanScoreUpliftPct": 15.09
+          "comparisons": 6000,
+          "choiceChangeRate": 0.2092,
+          "meanScoreUpliftPct": 59.55
         },
         {
           "size": 2,
-          "comparisons": 22000,
-          "choiceChangeRate": 0.1216,
-          "meanScoreUpliftPct": 17.3
+          "comparisons": 42000,
+          "choiceChangeRate": 0.2339,
+          "meanScoreUpliftPct": 69.18
+        }
+      ]
+    },
+    {
+      "id": "blade",
+      "name": "估价师",
+      "role": "逐件",
+      "scope": "guaranteed-battle",
+      "comparisons": 48400,
+      "choiceChangeRate": 0.3217,
+      "meanScoreUpliftPct": 107.7,
+      "byContextSize": [
+        {
+          "size": 0,
+          "comparisons": 400,
+          "choiceChangeRate": 0.4125,
+          "meanScoreUpliftPct": 125.16
+        },
+        {
+          "size": 1,
+          "comparisons": 6000,
+          "choiceChangeRate": 0.3585,
+          "meanScoreUpliftPct": 117.51
+        },
+        {
+          "size": 2,
+          "comparisons": 42000,
+          "choiceChangeRate": 0.3156,
+          "meanScoreUpliftPct": 106.13
+        }
+      ]
+    },
+    {
+      "id": "sunquan",
+      "name": "异域商",
+      "role": "混搭",
+      "scope": "guaranteed-battle",
+      "comparisons": 48400,
+      "choiceChangeRate": 0.4712,
+      "meanScoreUpliftPct": 73.42,
+      "byContextSize": [
+        {
+          "size": 0,
+          "comparisons": 400,
+          "choiceChangeRate": 0.585,
+          "meanScoreUpliftPct": 103.62
+        },
+        {
+          "size": 1,
+          "comparisons": 6000,
+          "choiceChangeRate": 0.5228,
+          "meanScoreUpliftPct": 87.21
+        },
+        {
+          "size": 2,
+          "comparisons": 42000,
+          "choiceChangeRate": 0.4628,
+          "meanScoreUpliftPct": 71.16
+        }
+      ]
+    },
+    {
+      "id": "lvbu",
+      "name": "黑金侯",
+      "role": "爆发",
+      "scope": "guaranteed-battle",
+      "comparisons": 48400,
+      "choiceChangeRate": 0.0116,
+      "meanScoreUpliftPct": 11.25,
+      "byContextSize": [
+        {
+          "size": 0,
+          "comparisons": 400,
+          "choiceChangeRate": 0.005,
+          "meanScoreUpliftPct": 12.09
+        },
+        {
+          "size": 1,
+          "comparisons": 6000,
+          "choiceChangeRate": 0.0085,
+          "meanScoreUpliftPct": 11.72
+        },
+        {
+          "size": 2,
+          "comparisons": 42000,
+          "choiceChangeRate": 0.0121,
+          "meanScoreUpliftPct": 11.18
+        }
+      ]
+    },
+    {
+      "id": "simayi",
+      "name": "守夜人",
+      "role": "压轴",
+      "scope": "guaranteed-battle",
+      "comparisons": 48400,
+      "choiceChangeRate": 0,
+      "meanScoreUpliftPct": 0,
+      "byContextSize": [
+        {
+          "size": 0,
+          "comparisons": 400,
+          "choiceChangeRate": 0,
+          "meanScoreUpliftPct": 0
+        },
+        {
+          "size": 1,
+          "comparisons": 6000,
+          "choiceChangeRate": 0,
+          "meanScoreUpliftPct": 0
+        },
+        {
+          "size": 2,
+          "comparisons": 42000,
+          "choiceChangeRate": 0,
+          "meanScoreUpliftPct": 0
         }
       ]
     }
@@ -369,117 +485,112 @@
   "formations": [
     {
       "category": 0,
-      "name": "散阵",
-      "share": 0.0749
+      "name": "散件",
+      "share": 0.1301
     },
     {
       "category": 1,
-      "name": "合击",
-      "share": 0.2608
+      "name": "成对藏品",
+      "share": 0.2768
     },
     {
       "category": 2,
-      "name": "连阵",
-      "share": 0.1855
+      "name": "年代序列",
+      "share": 0.175
     },
     {
       "category": 3,
-      "name": "同袍",
-      "share": 0.3622
+      "name": "主题专场",
+      "share": 0.3111
     },
     {
       "category": 4,
-      "name": "同袍连阵",
-      "share": 0.0686
+      "name": "连号专场",
+      "share": 0.0584
     },
     {
       "category": 5,
-      "name": "三军同心",
-      "share": 0.048
+      "name": "传世三件套",
+      "share": 0.0486
     }
   ],
   "triggerSources": [
     {
-      "name": "诸葛亮",
-      "share": 0.2248
+      "name": "落槌人",
+      "share": 0.1739
     },
     {
-      "name": "周瑜",
-      "share": 0.2102
+      "name": "策展人",
+      "share": 0.0991
     },
     {
-      "name": "张飞",
-      "share": 0.0998
+      "name": "双生客",
+      "share": 0.0812
     },
     {
-      "name": "赵云",
-      "share": 0.0825
+      "name": "编目师",
+      "share": 0.0783
     }
   ],
   "closestSingleGeneralPairs": [
     {
-      "left": "曹操",
-      "right": "荀彧",
+      "left": "库房管家",
+      "right": "守夜人",
       "agreementRate": 1
     },
     {
-      "left": "陆逊",
-      "right": "曹操",
+      "left": "抬价人",
+      "right": "清仓商",
       "agreementRate": 1
     },
     {
-      "left": "陆逊",
-      "right": "荀彧",
+      "left": "抬价人",
+      "right": "库房管家",
       "agreementRate": 1
     },
     {
-      "left": "马超",
-      "right": "陆逊",
+      "left": "抬价人",
+      "right": "守夜人",
       "agreementRate": 1
     },
     {
-      "left": "马超",
-      "right": "曹操",
+      "left": "清仓商",
+      "right": "库房管家",
       "agreementRate": 1
     }
   ],
   "mostDivergentSingleGeneralPairs": [
     {
-      "left": "关羽",
-      "right": "刘备",
+      "left": "淘金客",
+      "right": "异域商",
+      "agreementRate": 0.14
+    },
+    {
+      "left": "淘金客",
+      "right": "估价师",
       "agreementRate": 0.175
     },
     {
-      "left": "刘备",
-      "right": "貂蝉",
-      "agreementRate": 0.195
+      "left": "淘金客",
+      "right": "编目师",
+      "agreementRate": 0.245
     },
     {
-      "left": "张飞",
-      "right": "刘备",
-      "agreementRate": 0.2225
+      "left": "淘金客",
+      "right": "黑纱夫人",
+      "agreementRate": 0.2475
     },
     {
-      "left": "刘备",
-      "right": "赵云",
-      "agreementRate": 0.2375
-    },
-    {
-      "left": "刘备",
-      "right": "诸葛亮",
-      "agreementRate": 0.2425
+      "left": "老鉴定师",
+      "right": "淘金客",
+      "agreementRate": 0.285
     }
   ],
   "manualReviewCandidates": [
     {
-      "id": "chain",
-      "name": "陆逊",
-      "reason": "确定得分平均提升 66.52%，但最优三张改变率为 12%；仅列为人工检查候选。"
-    },
-    {
       "id": "zhugeliang",
-      "name": "诸葛亮",
-      "reason": "确定得分平均提升 58.79%，但最优三张改变率为 13.1%；仅列为人工检查候选。"
+      "name": "落槌人",
+      "reason": "确定得分平均提升 57.31%，但最优三张改变率为 14.3%；仅列为人工检查候选。"
     }
   ]
 }

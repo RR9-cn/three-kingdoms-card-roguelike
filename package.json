@@ -1,6 +1,6 @@
 {
   "name": "three-card-kingdoms",
-  "version": "0.7.0",
+  "version": "0.9.0",
   "private": true,
   "type": "module",
   "workspaces": [
@@ -16,12 +16,9 @@
     "desktop": "npm run build && electron apps/desktop/main.cjs",
     "package:mac": "npm run build && node tools/package-desktop.mjs darwin arm64",
     "package:win": "npm run build && node tools/package-desktop.mjs win32 x64",
-    "simulate:forge": "tsx tools/simulate-forge.ts",
-    "analyze:choices": "tsx tools/analyze-choice-divergence.ts",
-    "test:desktop:forge": "tsx tools/smoke-forge.ts",
-    "compare:forge": "tsx tools/compare-forge.ts",
     "eval:ai": "tsx tools/ai-eval.ts",
-    "play:ai": "tsx tools/ai-play.ts"
+    "play:ai": "tsx tools/ai-play.ts",
+    "test:desktop": "npm run build && tsx tools/smoke-desktop.ts"
   },
   "devDependencies": {
     "@electron/packager": "20.3.0",

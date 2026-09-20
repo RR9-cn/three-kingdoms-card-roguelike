@@ -8,7 +8,7 @@ await cp(path.join(root,'dist'),path.join(stage,'dist'),{recursive:true});
 await cp(path.join(root,'apps/desktop/main.cjs'),path.join(stage,'apps/desktop/main.cjs'));
 await cp(path.join(root,'apps/desktop/preload.cjs'),path.join(stage,'apps/desktop/preload.cjs'));
 const pkg=JSON.parse(await readFile('package.json','utf8'));
-await writeFile(path.join(stage,'package.json'),JSON.stringify({name:'three-card-kingdoms',version:pkg.version,main:'apps/desktop/main.cjs',description:'三国 · 三张定天下 — 离线单人卡牌肉鸽',author:'Three Card Kingdoms'}));
+await writeFile(path.join(stage,'package.json'),JSON.stringify({name:'three-card-kingdoms',version:pkg.version,main:'apps/desktop/main.cjs',description:'午夜落槌 · 藏品连锁 — 离线单人卡牌肉鸽',author:'Three Card Kingdoms'}));
 const platform=process.argv[2]??process.platform,arch=process.argv[3]??process.arch;
 const outputs=await packager({dir:stage,out:path.join(root,'release'),name:'ThreeCardKingdoms',platform,arch,electronVersion:pkg.devDependencies.electron,overwrite:true,asar:true,prune:false,appBundleId:'games.threecard.kingdoms',appCategoryType:'public.app-category.card-games'});
 console.log(outputs.join('\n'));

@@ -1,8 +1,0 @@
-{
-  "schemaVersion": 1,
-  "operation": "simulate_batch",
-  "starters": ["guanyu", "zhouyu", "liubei"],
-  "runsPerStarter": 200,
-  "seedPrefix": "stage-balance-v1",
-  "policy": "counterplay"
-}

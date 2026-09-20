@@ -1,7 +1,0 @@
-{
-  "schemaVersion": 1,
-  "operation": "inspect_run",
-  "seed": "stage-balance-v1-17",
-  "starter": "liubei",
-  "policy": "counterplay"
-}

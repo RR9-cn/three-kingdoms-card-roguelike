@@ -1,73 +1,37 @@
-# AI交互试玩接口 v1
+# 卡牌构筑AI接口 v2
 
-这套接口让AI直接在公开游戏状态上完成一局征程，不需要截图、鼠标操作或逐项试选。会话保存在本地`.ai-play/`目录；接口不会返回随机状态、抽牌堆顺序或其他未来信息。
-
-## 调用方式
-
-每次调用向`play:ai`传入一个JSON请求：
-
-```bash
-npm run play:ai --silent <<'JSON'
-{"schemaVersion":1,"operation":"start","seed":"review-01","starter":"liubei"}
-JSON
-```
-
-响应中的`sessionId`用于后续调用，`turn`用于拒绝重复或过期决策。也可以将请求写入文件后使用`--request 文件路径`。
-
-## 五个操作
-
-### `start`
+调用 `npm run play:ai --silent -- --request request.json`，也可标准输入单个JSON。只支持schemaVersion 2，旧贵宾/牌型协议已删除。持久会话无需UI操作。
 
 ```json
-{"schemaVersion":1,"operation":"start","seed":"review-01","starter":"liubei","pressure":false}
+{"schemaVersion":2,"operation":"start","seed":"smoke-0"}
 ```
 
-创建会话并直接进入第一关战斗。`starter`可选`guanyu`、`zhouyu`、`liubei`。
-
-### `observe`
+返回sessionId、seq、phase、手牌hand、公开收藏collection、剩余轮数、撤换数、目标。手牌含实牌id、点数、类别、完整能力。choices只返回最多6个保底高分顺序供参考，玩家可任意指定三张顺序，不应只选第一项。
 
 ```json
-{"schemaVersion":1,"operation":"observe","sessionId":"响应中的ID"}
+{"schemaVersion":2,"operation":"act","sessionId":"返回的ID","seq":0,"decision":{"type":"play","ids":["c4","c6","c7"]}}
 ```
 
-重新读取当前公开局面，不推进游戏。
+seq必须使用最新返回值。play按ids顺序触发并入账一次，进入result；使用next才补牌或进入奖励。观察、预览不推进随机。
 
-### `act`
+| 阶段 | decision |
+|---|---|
+| battle | `{"type":"play","ids":["a","b","c"]}` 或 `{"type":"swap","ids":["a"]}`，撤换1–3张 |
+| result | `{"type":"next"}` |
+| reward | `{"type":"take","kind":"mirror"}`，从offers选一种 |
+| upgrade | `{"type":"upgrade","id":"c6"}`，任选一张实牌+2点，进入下一场 |
+| victory / defeat | 本局结束，读取history然后close |
+
+其他操作：
 
 ```json
-{"schemaVersion":1,"operation":"act","sessionId":"响应中的ID","turn":2,"decision":{"type":"play","cards":[1,3,6]}}
+{"schemaVersion":2,"operation":"observe","sessionId":"返回的ID"}
 ```
-
-战斗局面会一次返回六张手牌和全部20种三牌组合。为减少token，每个组合按照`combinationFields`声明的顺序使用短数组：手牌编号、阵型、保底攻势、Boss惩罚与确定触发。AI直接引用编号出牌，无需分别调用预览。
-
-可用决策：
-
-- `play`：`{"type":"play","cards":[1,3,6]}`。接口自动完成结算、入账、胜负判断和补牌，并在`lastResult`返回保底攻势、实际攻势与触发摘要。
-- `discard`：`{"type":"discard","cards":[2,4]}`。
-- `buy_general`：`{"type":"buy_general","offer":2}`；五将已满时增加`"replace":3`。
-- `buy_edit`：购买当前公开整编。
-- `apply_edit`：普通整编使用`target`牌库编号；研习使用1–6的`category`；改编同时传`suit`。
-- `sell_general`：`{"type":"sell_general","general":2}`。
-- `refresh`：刷新武将货架。
-- `depart`：`{"type":"depart","pressure":false}`，离开市集并直接开始下一关。
-- `extend`：通关后进入极限挑战市集。
-
-### `history`
 
 ```json
-{"schemaVersion":1,"operation":"history","sessionId":"响应中的ID"}
+{"schemaVersion":2,"operation":"preview","sessionId":"返回的ID","ids":["c4","c6","c7"]}
 ```
 
-只返回紧凑决策记录，适合AI在通关或失败后总结构筑与关卡体验。
+`history`和`close`同observe的字段结构。history返回动作和结算，close删除该会话。过期seq、无效ID和不合法阶段操作不会改变状态。并发操作被会话锁拒绝，重新observe后再试。
 
-### `close`
-
-```json
-{"schemaVersion":1,"operation":"close","sessionId":"响应中的ID"}
-```
-
-删除本地会话。
-
-## 调用量
-
-原本UI试玩的一次选牌通常需要截图、三次点击、出牌、等待结算和继续等多次操作。接口把它压缩为一次`act`。普通一局预计需要约20–40次小型JSON调用，具体取决于战斗手数和市集购买次数。批量平衡仍使用`eval:ai`；需要AI亲自判断每一步时使用`play:ai`。
+不能读取.ai-play原始会话来获取未来牌序或随机状态。接口不接受隐藏状态替换。JSON测试不能评价动画、美术或桌面手感。

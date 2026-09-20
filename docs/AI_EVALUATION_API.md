@@ -1,61 +1,11 @@
-# AI本地评测接口 v1
+# 当前批量回归接口
 
-这组接口让AI用一次工具调用在本地运行数百局，只读取聚合结果和少量代表种子。模拟策略只读取公开的 `ForgeView`；响应不包含未来抽牌顺序、随机状态或逐手原始日志。
+唯一版本trigger-1；旧贵宾与牌型评测已删除。
 
-## 调用
-
-传入文件：
-
-```bash
-npm run eval:ai --silent -- --request docs/examples/ai-eval/simulate-batch.json
+```sh
+printf '%s' '{"schemaVersion":2,"operation":"simulate","runs":30,"seedPrefix":"trigger-smoke"}' | npm run eval:ai --silent
 ```
 
-通过标准输入：
+runs范围1–500。返回总局数、胜局、平均最高单手和最多3个样本摘要。策略枚举公开手牌的有序三张选择，以保底最高值出牌；奖励和升级基于公开收藏的有界样本，不读取真实抽牌顺序。样本不返回隐藏牌序。
 
-```bash
-cat docs/examples/ai-eval/inspect-run.json | npm run eval:ai --silent
-```
-
-CLI成功时只向标准输出写入JSON。无效请求以非零状态退出，并向标准错误输出一行原因。所有请求必须包含 `"schemaVersion": 1`。
-
-## `simulate_batch`
-
-批量运行并返回每个开局的征程胜率，以及逐关的到达数、失败率、一手通关率、通关手数中位数、最高单手/目标的中位数与90分位、换牌次数中位数。最多返回12条异常提示，每个开局只给出中位、高爆发和首个失败三个代表种子。
-
-`buildConcentration`用于检查同兵种路线是否变成默认答案：
-
-- `focus`统计周瑜、孙策在商店出现后被购买的比例、最终留队比例，以及留队时的胜率。
-- `routes`把最终构筑分为都没有、仅周瑜、仅孙策、二者都有四组，直接比较构筑集中度与胜率。
-- `topFinalBuilds`只返回最常见的五套最终武将组合。
-- `activation`统计所有出牌中周瑜、孙策及二者同时实际触发的比例。它只表示触发频率，不把非线性伤害强行归因给某位武将。
-
-请求示例见 [`simulate-batch.json`](examples/ai-eval/simulate-batch.json)。`runsPerStarter`范围为1–5000，默认200；`starters`默认包含三个开局；`policy`可选`counterplay`或`greedy`。
-
-可选的`neverBuy`让策略照常看见指定武将，但永远不购买。它用于在相同种子和出牌逻辑下做武将缺席实验，例如`"neverBuy":["zhouyu"]`可以检验其他开局对周瑜的依赖；它不会改变正式商店、存档或游戏规则。
-
-## `inspect_run`
-
-重放一个确定种子，最多返回八条逐关摘要。摘要包含结果、使用手数和换牌数、最高单手、阵型、当时持有武将、最高单手中的武将触发计数，以及关后的武将和整编购买。
-
-请求示例见 [`inspect-run.json`](examples/ai-eval/inspect-run.json)。它适合检查批量接口返回的中位、高爆发或失败种子，不应用来代替分布统计。
-
-## `compare_rules`
-
-在相同种子和策略上配对比较2–8个方案。响应只给出各开局胜率变化，以及相对基线绝对变化最大的12项逐关指标，避免返回每个方案的完整重复报表。
-
-请求示例见 [`compare-rules.json`](examples/ai-eval/compare-rules.json)。首版支持两个临时参数：
-
-- `liubeiMultiplier`：刘备每次低点牌计分增加的倍率，范围0–50。
-- `stageTargets`：以1–8为键覆盖关卡目标，范围1–1万亿。
-
-临时参数通过规则函数参数传递，不写入源码、存档或桌面游戏。空方案 `{}` 与正式规则完全一致。
-
-`disabledCompanions`可在仍然正常购买和持有武将的前提下，仅关闭其计分效果。它适合做技能消融实验，能避免`neverBuy`造成商店少一个可用选项的干扰。例如用`{"disabledCompanions":["zhouyu"]}`与空方案配对，可以测量周瑜技能本身对当前自动策略的影响。
-
-`zhouyuMode`用于比较周瑜规则：`all-three`是当前三张同兵种时全部重算，`all-shared`是旧版至少两张同兵种时全部重算，`one-shared`则只重算其中第一张。它只存在于临时评测参数中。
-
-## 输出边界
-
-`meta.localRuns`表示本地实际执行局数。例如三个开局、每个200局、三个比较方案等于1800局，但仍只返回一个有界JSON。`rawLogs`固定为`false`。
-
-自动策略用于发现回归、路线差异和异常种子，不能证明游戏好玩、公平或代表真人胜率。推荐流程是先批量统计，再检查3–5个代表种子，最后用配对比较验证一个数值假设。
+该策略不代表真人：它不主动撤换、不充分评估保留下一手的价值、会偏向当前点数收益。胜率只用于流程与规则回归，不能当作构筑多样性、难度或付费意愿结论。

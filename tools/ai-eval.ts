@@ -1,10 +1,11 @@
 import {readFile} from 'node:fs/promises';
-import {evaluateAiRequest} from './ai-eval-lib';
-
-try{
- const index=process.argv.indexOf('--request');
- if(index>=0&&!process.argv[index+1])throw Error('--request requires a JSON file path');
- const source=index>=0?await readFile(process.argv[index+1],'utf8'):await new Promise<string>((resolve,reject)=>{let data='';process.stdin.setEncoding('utf8');process.stdin.on('data',chunk=>data+=chunk);process.stdin.on('end',()=>resolve(data));process.stdin.on('error',reject);});
- if(!source.trim())throw Error('provide one JSON request through --request or stdin');
- process.stdout.write(JSON.stringify(evaluateAiRequest(JSON.parse(source)),null,2)+'\n');
-}catch(error){process.stderr.write((error instanceof Error?error.message:String(error))+'\n');process.exitCode=1;}
+import {newTrigger,actTrigger,previewTrigger,type TriggerAction,type TriggerState} from '../packages/core/src/trigger';
+import {orderedChoices} from './ai-play-lib';
+export function runTrigger(seed:string){let s=newTrigger(seed);const stages:{stage:number;hands:number;score:number;target:number}[]=[];let plays=0;
+ for(let n=0;n<100;n++){let a:TriggerAction;switch(s.phase){case 'battle':a={seq:s.seq,type:'play',ids:orderedChoices(s)[0].ids};plays++;break;case 'result':{const stage=s.stage,prev=s; a={seq:s.seq,type:'next'};s=actTrigger(s,a);if(s.phase==='reward'||s.phase==='victory'||s.phase==='defeat')stages.push({stage:stage+1,hands:4-prev.hands,score:prev.score,target:[150,260,420][stage]});continue;}case 'reward':{
+ // Public collection samples only, never use actual draw order or burst state.
+ const value=(x:TriggerState)=>{let total=0;for(let i=0;i<6;i++){const t=structuredClone(x);t.hand=Array.from({length:6},(_,j)=>x.deck[(i+j)%x.deck.length].id);total+=orderedChoices(t)[0].total;}return total;};
+ const kind=s.offers.map(kind=>{const t=structuredClone(s);t.deck.push({id:'candidate',kind,bonus:0});return{kind,value:value(t)};}).sort((a,b)=>b.value-a.value)[0].kind;a={seq:s.seq,type:'take',kind};break;}
+ case 'upgrade':{const scores=s.deck.map(c=>{let total=0;for(let i=0;i<s.deck.length;i++)for(let j=i+1;j<s.deck.length;j++){if(s.deck[i].id===c.id||s.deck[j].id===c.id)continue;const t=structuredClone(s);t.hand=[c.id,s.deck[i].id,s.deck[j].id];const before=orderedChoices(t)[0].total;t.deck.find(x=>x.id===c.id)!.bonus+=2;total+=orderedChoices(t)[0].total-before;}return{id:c.id,total};}).sort((a,b)=>b.total-a.total);a={seq:s.seq,type:'upgrade',id:scores[0].id};break;}
+ default:return{seed,result:s.phase,best:s.best,plays,collection:s.deck,stages};}s=actTrigger(s,a);}throw Error('run exceeded action limit');}
+if(process.argv[1]?.endsWith('ai-eval.ts')){try{const i=process.argv.indexOf('--request');const raw=i>=0?await readFile(process.argv[i+1],'utf8'):await new Promise<string>(resolve=>{let data='';process.stdin.on('data',x=>data+=x);process.stdin.on('end',()=>resolve(data));});const q=JSON.parse(raw);if(q.schemaVersion!==2||q.operation!=='simulate'||!Number.isInteger(q.runs)||q.runs<1||q.runs>500||typeof q.seedPrefix!=='string'||Object.keys(q).some(k=>!['schemaVersion','operation','runs','seedPrefix'].includes(k)))throw Error('use schemaVersion 2, operation simulate, runs 1..500, seedPrefix');const runs=Array.from({length:q.runs},(_,i)=>runTrigger(`${q.seedPrefix}-${i}`));console.log(JSON.stringify({version:'trigger-1',policy:'public-greedy',runs:runs.length,wins:runs.filter(r=>r.result==='victory').length,meanBest:runs.reduce((n,r)=>n+r.best,0)/runs.length,samples:runs.slice(0,3),note:'Automated regression, not human enjoyment or win rate.'}));}catch(e){console.error((e as Error).message);process.exitCode=1;}}
