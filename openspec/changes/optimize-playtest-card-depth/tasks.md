@@ -50,4 +50,4 @@
 
 - [x] 7.1 核对与 `optimize-playtest-ui-consistency` 的兼容条款：`:root` 令牌层、`.card` 仍为语义化 `<button>`、弹层结构与焦点行为、`.card small` ≥12px 与对比度、≤1050px/700px 无横向溢出。
 - [x] 7.2 确认未改动规则文档与规则类规格（`docs/GAME_DESIGN.md`、`simple-scoring`、`general-combo-chain` 等）；展示层规格仅落在本变更的 `playtest-visual-depth`。
-- [ ] 7.3 提交并推送工作分支 `feat/ui-3d-card-effect-oysk`，确认远端可见。
+- [x] 7.3 提交并推送工作分支 `feat/ui-3d-card-effect-oysk`，确认远端可见（远端 `refs/heads/feat/ui-3d-card-effect-oysk` = `dc12da5`，与本地 HEAD 一致）。
