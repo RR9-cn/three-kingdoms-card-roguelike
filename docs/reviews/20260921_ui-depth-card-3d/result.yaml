@@ -1,0 +1,8 @@
+version: 1
+result: passed
+report: report.md
+confirmedCritical: 0
+confirmedHigh: 0
+needsDiscussion: 0
+reviewedHead: d8a351ddd65bf77b7dfb6ce3092e03e324137bd9
+reviewedAt: 2026-09-21T14:21:01Z
