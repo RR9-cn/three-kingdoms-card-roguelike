@@ -1,1 +1,222 @@
-:root{font-family:Georgia,'Songti SC',serif;color:#eee1bd;background:#111b1c;font-synthesis:none}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 65% 10%,#33433e 0,transparent 60%);min-height:100vh}button,input{font:inherit}button{cursor:pointer;color:inherit;border:1px solid #827352;background:#1a2928;padding:11px 17px;border-radius:3px}button:hover:not(:disabled){border-color:#e0bd70;background:#344039}button:focus-visible,input:focus-visible{outline:3px solid #e9b956;outline-offset:3px}button:disabled{opacity:.35;cursor:default}button.primary{background:#d5b36b;color:#1b2320;font-weight:bold}header{display:flex;justify-content:space-between;align-items:center;padding:20px 4vw;border-bottom:1px solid #645e41}header a{color:#d8b878;text-decoration:none;font-size:23px;letter-spacing:3px}header a span{color:#dfdec9;font-size:15px}nav{display:flex;gap:12px;align-items:center}.version,.muted,small{color:#a9b2a0}.version{font-size:12px}main{max-width:1400px;margin:auto;padding:28px 4vw 50px}.eyebrow{color:#d5b36b;letter-spacing:3px;font-size:12px}h1{font-weight:500;font-size:clamp(30px,4vw,54px);line-height:1.3;margin:15px 0 22px}h2{font-weight:500;margin:7px 0 16px}p{line-height:1.7}.home{padding-top:7vh;max-width:1150px}.home h1{font-size:clamp(38px,5vw,70px)}.home h1 span{color:#d5b36b}.intro{color:#b8c5b8;font-size:18px}.home-example{display:flex;align-items:center;gap:18px;margin:30px 0}.home-example span{padding:18px;border:1px solid #6c6347;background:#24322e}.home-example b{margin-left:20px;color:#dabb7b}.home label{display:block;color:#a9b2a0;font-size:13px}input{display:block;padding:12px;width:350px;max-width:100%;margin:8px 0 20px;background:#142321;border:1px solid #637565;color:#eee1bd}.actions{display:flex;gap:12px;align-items:center}.status{display:flex;gap:30px;justify-content:space-between;padding-bottom:20px;border-bottom:1px solid #565d4d;margin-bottom:24px}.status strong{display:block;font-size:27px;margin-top:7px}.status em{font-size:15px;font-style:normal;color:#9eac98}.status h2{margin-bottom:0}.section-title{display:flex;justify-content:space-between;align-items:center}.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:16px 0}.slot{padding:14px 18px;border:1px dashed #7b785c;background:#1c2d2a;min-height:125px;display:flex;flex-direction:column;gap:8px}.slot b{font-size:20px}.slot small{font-size:11px;color:#d5b36b}.slot span{color:#acb8a4;font-size:12px}.slot button{padding:4px 13px;margin-right:6px}.preview{display:flex;justify-content:space-between;gap:20px;align-items:center;background:#283830;border:1px solid #686d4e;padding:15px 20px;margin:18px 0 25px}.preview strong{display:block;font-size:23px;margin:5px 0}.preview span{font-size:12px;color:#bbc0aa}.cards{display:grid;gap:12px}.hand{grid-template-columns:repeat(6,1fr)}.card{min-width:0;text-align:left;display:flex;flex-direction:column;position:relative;min-height:235px;padding:14px;background:linear-gradient(150deg,#ede1b8,#c6b789);color:#26312d;border:2px solid #b5a371;transition:transform .15s,box-shadow .15s}.card:hover:not(:disabled){background:#e7dcb5;transform:translateY(-4px)}.card.selected{border-color:#fff0ab;box-shadow:0 0 0 3px #be914c;transform:translateY(-5px)}.card.haunted{background:linear-gradient(150deg,#d6bdb8,#aa8f91)}.card.tool{background:linear-gradient(150deg,#bed0c9,#92aaa3)}.card-top{display:flex;justify-content:space-between;align-items:center}.card-top b{font-size:32px;line-height:1}.card-top span{font-size:12px}.sigil{font-size:44px;text-align:center;display:block;margin:10px;color:#46534b}.card strong{font-size:17px}.card .ability{font-size:12px;line-height:1.65;margin-top:9px;flex:1}.card small{font-size:10px;color:#4c5549;margin-top:10px}.rewards{grid-template-columns:repeat(3,210px);justify-content:center;margin-top:32px}.compact{grid-template-columns:repeat(5,1fr)}.compact .card{min-height:220px}.played{grid-template-columns:repeat(3,165px);justify-content:center;margin:22px 0}.played .card{min-height:160px}.played .sigil{font-size:28px;margin:4px}.played .ability{font-size:11px}.scoreboard{display:flex;gap:16px;justify-content:center;align-items:baseline}.scoreboard b{font-size:48px;color:#e8c375}.scoreboard strong{font-size:48px;color:#ffe6a3}.log{max-width:900px;margin:20px auto;min-height:100px}.log p{display:flex;justify-content:space-between;gap:14px;padding:10px;margin:3px 0;border-bottom:1px solid #3c5045;animation:appear .25s ease-out;font-size:13px}.log .extra{color:#e6ba79;background:#453c27}.settlement>.actions{justify-content:center;margin:25px}.reward,.ending{text-align:center;padding:25px 0}.notice{color:#c8d7a3}.error{background:#622c2c;padding:12px 4vw;color:#ffdcc7}.overlay{position:fixed;inset:0;background:#040b0bda;display:flex;justify-content:center;align-items:center;z-index:10;padding:25px}.modal{background:#20312d;border:1px solid #a99560;padding:30px;max-width:760px;max-height:90vh;overflow:auto;width:100%;box-shadow:0 20px 80px #000}.modal.wide{max-width:1200px}.close{float:right}.modal li{margin:10px 0;line-height:1.7}details{margin:24px 0;color:#bec7b4}details p{font-size:13px}summary{cursor:pointer}@keyframes appear{from{opacity:.2;transform:translateY(6px)}to{opacity:1;transform:none}}@media(max-width:1050px){main{padding:20px 25px}.hand{gap:7px}.card{padding:9px}.status{gap:16px}.status strong{font-size:23px}.version{display:none}.compact{grid-template-columns:repeat(4,1fr)}}@media(max-width:700px){.hand{grid-template-columns:repeat(3,1fr)}header{padding:12px}header a{font-size:17px}header a span{display:none}nav{gap:5px}.status{flex-wrap:wrap}.preview{flex-direction:column;align-items:stretch}.slots{gap:5px}.slot{padding:9px}.slot b{font-size:15px}.rewards,.played{grid-template-columns:repeat(3,1fr)}.compact{grid-template-columns:repeat(2,1fr)}.scoreboard{gap:7px}.scoreboard b,.scoreboard strong{font-size:32px}.log p{flex-wrap:wrap}}@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* 午夜落槌 · 藏品连锁 — 展示层样式。
+   只影响呈现：规则与数值在 packages/core/src/trigger.ts，内容在 packages/content/src/trigger.ts。
+   本次改动新增的颜色、渐变、阴影与纹理一律以 --auction-* 令牌声明在本 :root 块内；:root 之外不出现颜色字面量。
+   卡牌 3D 分层：卡面材质层（::before）与投影板（::after）都用负 Z 与卡牌自身平面分离。
+   Chromium 会把正 Z 的伪元素绘制在卡牌文本之上，因此材质层必须落在文本之后（负 Z），卡牌自身背景保持透明。
+   --mx/--my 由 main.ts 的指针钩子以 CSSOM 写入（CSP 禁止内联 style 属性），驱动卡面高光位置。 */
+
+:root{
+  /* 页面色阶（沿用既有取值） */
+  --auction-ink:#eee1bd;
+  --auction-void:#111b1c;
+  --auction-glow:#33433e;
+  --auction-floor:#1b2a28;
+  --auction-brass:#d5b36b;
+  --auction-brass-hi:#e0bd70;
+  --auction-gold:#e9b956;
+  --auction-title:#d8b878;
+  --auction-title-soft:#dfdec9;
+  --auction-muted:#a9b2a0;
+  --auction-body:#b8c5b8;
+  --auction-panel:#1a2928;
+  --auction-panel-hi:#344039;
+  --auction-line:#827352;
+  --auction-on-brass:#1b2320;
+  --auction-hairline:#645e41;
+  --auction-home-line:#6c6347;
+  --auction-home-accent:#dabb7b;
+  --auction-input-bg:#142321;
+  --auction-input-line:#637565;
+  --auction-status-line:#565d4d;
+  --auction-status-em:#9eac98;
+  --auction-slot-line:#7b785c;
+  --auction-slot-bg:#1c2d2a;
+  --auction-slot-text:#acb8a4;
+  --auction-preview-bg:#283830;
+  --auction-preview-line:#686d4e;
+  --auction-preview-text:#bbc0aa;
+  --auction-log-line:#3c5045;
+  --auction-log-rule:#6f5a33;
+  --auction-log-extra:#e6ba79;
+  --auction-log-extra-bg:#453c27;
+  --auction-notice:#c8d7a3;
+  --auction-error-bg:#622c2c;
+  --auction-error-ink:#ffdcc7;
+  --auction-overlay:#040b0bda;
+  --auction-modal-bg:#20312d;
+  --auction-modal-line:#a99560;
+  --auction-modal-shadow:#000;
+  --auction-details:#bec7b4;
+  --auction-score-a:#e8c375;
+  --auction-score-b:#ffe6a3;
+  --auction-score-glow:#8a6a2a;
+  /* 字重节奏 */
+  --auction-weight-title:500;
+  --auction-weight-label:700;
+  --auction-weight-value:700;
+  /* 统一光源方向（顶部偏左）与背景层次 */
+  --auction-light-x:65%;
+  --auction-light-y:10%;
+  --auction-vignette:radial-gradient(ellipse at 50% 118%,var(--auction-floor) 0,transparent 62%);
+  /* 卡面材质：纸纹/磨砂/拉丝/哑光，均为 inline data: URI */
+  --auction-texture-paper:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cg fill='%23ffffff' fill-opacity='.55'%3E%3Ccircle cx='7' cy='11' r='.6'/%3E%3Ccircle cx='23' cy='4' r='.5'/%3E%3Ccircle cx='41' cy='17' r='.7'/%3E%3Ccircle cx='54' cy='9' r='.5'/%3E%3Ccircle cx='13' cy='31' r='.6'/%3E%3Ccircle cx='33' cy='27' r='.5'/%3E%3Ccircle cx='49' cy='38' r='.7'/%3E%3Ccircle cx='5' cy='47' r='.5'/%3E%3Ccircle cx='27' cy='52' r='.6'/%3E%3Ccircle cx='45' cy='57' r='.5'/%3E%3C/g%3E%3Cg stroke='%23000000' stroke-opacity='.16' stroke-width='.4'%3E%3Cpath d='M0 22h60M0 44h60M18 0v60M47 0v60'/%3E%3C/g%3E%3C/svg%3E");
+  --auction-texture-frost:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cg fill='%23ffffff' fill-opacity='.5'%3E%3Ccircle cx='6' cy='7' r='1.5'/%3E%3Ccircle cx='22' cy='15' r='2.1'/%3E%3Ccircle cx='38' cy='5' r='1.3'/%3E%3Ccircle cx='12' cy='29' r='1.9'/%3E%3Ccircle cx='32' cy='37' r='1.6'/%3E%3Ccircle cx='4' cy='42' r='1.2'/%3E%3Ccircle cx='43' cy='22' r='1.4'/%3E%3C/g%3E%3Cg fill='%23000000' fill-opacity='.22'%3E%3Ccircle cx='29' cy='25' r='1.5'/%3E%3Ccircle cx='45' cy='44' r='1.2'/%3E%3Ccircle cx='17' cy='44' r='1.4'/%3E%3C/g%3E%3C/svg%3E");
+  --auction-texture-hatch:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Cg stroke='%23ffffff' stroke-opacity='.5' stroke-width='.7'%3E%3Cpath d='M-4 10 10 -4M1 15 15 1M-9 5 5 -9'/%3E%3C/g%3E%3Cg stroke='%23000000' stroke-opacity='.14' stroke-width='.5'%3E%3Cpath d='M-1 13 13 -1M4 18 18 4'/%3E%3C/g%3E%3C/svg%3E");
+  --auction-texture-matte:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cg fill='%23ffffff' fill-opacity='.3'%3E%3Ccircle cx='12' cy='20' r='.6'/%3E%3Ccircle cx='52' cy='9' r='.5'/%3E%3Ccircle cx='34' cy='44' r='.7'/%3E%3Ccircle cx='68' cy='62' r='.5'/%3E%3Ccircle cx='22' cy='70' r='.6'/%3E%3C/g%3E%3C/svg%3E");
+  /* 卡面高光（跟随 --mx/--my 位移） */
+  --auction-sheen:radial-gradient(circle at 50% 50%,rgba(255,255,255,.34),rgba(255,255,255,0) 58%);
+  /* 卡面底版：卡牌三变体的渐变端点色与既有取值一致 */
+  --auction-plate-rest:linear-gradient(150deg,#ede1b8,#c6b789);
+  --auction-plate-hover:linear-gradient(150deg,#e7dcb5,#e7dcb5);
+  --auction-plate-haunted:linear-gradient(150deg,#d6bdb8,#aa8f91);
+  --auction-plate-tool:linear-gradient(150deg,#bed0c9,#92aaa3);
+  --auction-home-bg:#24322e;
+  --auction-card-ink:#26312d;
+  --auction-card-edge:#b5a371;
+  --auction-card-sigil:#46534b;
+  --auction-card-small:#4c5549;
+  --auction-select-edge:#fff0ab;
+  --auction-select-ring:#be914c;
+  --auction-order-chip:#e8c583;
+  --auction-order-chip-edge:#8d6f33;
+  /* 卡牌变体的非色相材质差异：边宽、内描边深度、投影深度、纹理强度 */
+  --auction-inset-rest:inset 0 0 0 1px rgba(255,255,255,.3),inset 0 13px 18px -15px rgba(255,255,255,.55);
+  --auction-inset-haunted:inset 0 0 0 1px rgba(255,255,255,.18),inset 0 20px 26px -20px rgba(255,255,255,.4);
+  --auction-inset-tool:inset 0 0 0 3px rgba(255,255,255,.32),inset 0 7px 12px -9px rgba(255,255,255,.6);
+  --auction-inset-played:inset 0 0 0 1px rgba(255,255,255,.16),inset 0 22px 30px -26px rgba(0,0,0,.35);
+  /* 分层投影：各层垂直偏移同向（光来自上方） */
+  --auction-shadow-rest:0 1px 0 rgba(0,0,0,.3),0 9px 16px -8px rgba(0,0,0,.55),0 22px 34px -20px rgba(0,0,0,.6);
+  --auction-shadow-haunted:0 2px 0 rgba(0,0,0,.34),0 13px 24px -10px rgba(0,0,0,.6),0 30px 46px -24px rgba(0,0,0,.66);
+  --auction-shadow-tool:0 1px 0 rgba(0,0,0,.26),0 7px 12px -6px rgba(0,0,0,.5),0 16px 26px -15px rgba(0,0,0,.55);
+  --auction-shadow-played:0 1px 0 rgba(0,0,0,.26),0 6px 11px -7px rgba(0,0,0,.45);
+  --auction-shadow-hover:0 2px 0 rgba(0,0,0,.32),0 16px 26px -10px rgba(0,0,0,.6),0 34px 52px -26px rgba(0,0,0,.68);
+  --auction-shadow-selected:0 3px 0 rgba(0,0,0,.36),0 22px 34px -12px rgba(0,0,0,.66),0 46px 68px -32px rgba(0,0,0,.72);
+  --auction-shadow-home:0 1px 0 rgba(0,0,0,.3),0 8px 14px -8px rgba(0,0,0,.5);
+  /* 3D 纵深参数 */
+  --auction-perspective:900px;
+  --auction-tilt-max:8deg;
+  --auction-lift-hover:10px;
+  --auction-lift-selected:28px;
+  --auction-static-depth:4px;
+  --auction-face-z:-2px;
+  --auction-shadow-z:-16px;
+  --auction-shadow-plane:radial-gradient(ellipse at 50% 52%,rgba(0,0,0,.55),rgba(0,0,0,0) 70%);
+  --auction-shadow-plane-inset:4% 4% -9%;
+  --auction-shadow-plane-blur:8px;
+  /* 落槌过渡 */
+  --auction-hammer-duration:170ms;
+  --auction-hammer-ease:cubic-bezier(.22,.68,.28,1);
+  --auction-hammer-lift:56px;
+  --auction-hammer-tilt:-6deg;
+  --auction-hammer-rebound:5px;
+}
+
+*{box-sizing:border-box}
+:root{font-family:Georgia,'Songti SC',serif;color:var(--auction-ink);background:var(--auction-void);font-synthesis:none}
+body{margin:0;background-image:var(--auction-vignette),radial-gradient(ellipse at var(--auction-light-x) var(--auction-light-y),var(--auction-glow) 0,transparent 60%);min-height:100vh}
+button,input{font:inherit}
+button{cursor:pointer;color:inherit;border:1px solid var(--auction-line);background:var(--auction-panel);padding:11px 17px;border-radius:3px}
+button:hover:not(:disabled){border-color:var(--auction-brass-hi);background:var(--auction-panel-hi)}
+button:focus-visible,input:focus-visible{outline:3px solid var(--auction-gold);outline-offset:3px}
+button:disabled{opacity:.35;cursor:default}
+button.primary{background:var(--auction-brass);color:var(--auction-on-brass);font-weight:bold}
+header{display:flex;justify-content:space-between;align-items:center;padding:20px 4vw;border-bottom:1px solid var(--auction-hairline)}
+header a{color:var(--auction-title);text-decoration:none;font-size:23px;letter-spacing:3px}
+header a span{color:var(--auction-title-soft);font-size:15px}
+nav{display:flex;gap:12px;align-items:center}
+.version,.muted,small{color:var(--auction-muted)}
+.version{font-size:12px}
+main{max-width:1400px;margin:auto;padding:28px 4vw 50px}
+.eyebrow{color:var(--auction-brass);letter-spacing:3px;font-size:12px;font-weight:var(--auction-weight-label)}
+h1{font-weight:var(--auction-weight-title);font-size:clamp(30px,4vw,54px);line-height:1.3;margin:15px 0 22px}
+h2{font-weight:var(--auction-weight-title);margin:7px 0 16px}
+p{line-height:1.7}
+.home{padding-top:7vh;max-width:1150px}
+.home h1{font-size:clamp(38px,5vw,70px)}
+.home h1 span{color:var(--auction-brass)}
+.intro{color:var(--auction-body);font-size:18px}
+.home-example{display:flex;align-items:center;gap:18px;margin:30px 0}
+.home-example span{padding:18px;border:1px solid var(--auction-home-line);background-color:var(--auction-home-bg);background-image:var(--auction-texture-frost);background-blend-mode:soft-light;box-shadow:var(--auction-shadow-home);transform:perspective(var(--auction-perspective)) translateZ(var(--auction-static-depth));transform-style:preserve-3d}
+.home-example b{margin-left:20px;color:var(--auction-home-accent)}
+.home label{display:block;color:var(--auction-muted);font-size:13px}
+input{display:block;padding:12px;width:350px;max-width:100%;margin:8px 0 20px;background:var(--auction-input-bg);border:1px solid var(--auction-input-line);color:var(--auction-ink)}
+.actions{display:flex;gap:12px;align-items:center}
+.status{display:flex;gap:30px;justify-content:space-between;padding-bottom:20px;border-bottom:1px solid var(--auction-status-line);margin-bottom:24px}
+.status strong{display:block;font-size:27px;margin-top:7px;font-weight:var(--auction-weight-value);font-variant-numeric:tabular-nums}
+.status em{font-size:15px;font-style:normal;color:var(--auction-status-em)}
+.status h2{margin-bottom:0}
+.section-title{display:flex;justify-content:space-between;align-items:center}
+.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:16px 0}
+.slot{padding:14px 18px;border:1px dashed var(--auction-slot-line);background:var(--auction-slot-bg);min-height:125px;display:flex;flex-direction:column;gap:8px}
+.slot b{font-size:20px}
+.slot small{font-size:11px;color:var(--auction-brass);font-weight:var(--auction-weight-label);letter-spacing:2px}
+.slot span{color:var(--auction-slot-text);font-size:12px}
+.slot button{padding:4px 13px;margin-right:6px}
+.preview{display:flex;justify-content:space-between;gap:20px;align-items:center;background:var(--auction-preview-bg);border:1px solid var(--auction-preview-line);padding:15px 20px;margin:18px 0 25px}
+.preview strong{display:block;font-size:23px;margin:5px 0}
+.preview span{font-size:12px;color:var(--auction-preview-text)}
+.cards{display:grid;gap:12px}
+.hand{grid-template-columns:repeat(6,1fr)}
+.card{min-width:0;text-align:left;display:flex;flex-direction:column;position:relative;min-height:235px;padding:14px;color:var(--auction-card-ink);background:transparent;border:var(--auction-edge-width,2px) solid var(--auction-edge,var(--auction-card-edge));transition:transform .15s,box-shadow .15s,border-color .15s;box-shadow:var(--auction-shadow);transform:perspective(var(--auction-perspective)) translateZ(var(--tz,0px)) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transform-style:preserve-3d;perspective:var(--auction-perspective);--tz:0px;--rx:0deg;--ry:0deg;--mx:50%;--my:50%;--auction-face-plate:var(--auction-plate-rest);--auction-face-texture:var(--auction-texture-paper);--auction-face-inset:var(--auction-inset-rest);--auction-face-z:-2px;--auction-shadow:var(--auction-shadow-rest);--auction-shadow-plane-blur:8px}
+.card::before{content:'';position:absolute;inset:0;transform:translateZ(var(--auction-face-z));pointer-events:none;background-image:var(--auction-face-texture),var(--auction-sheen),var(--auction-face-plate);background-size:auto,140% 140%,auto;background-position:0 0,var(--mx) var(--my),0 0;background-blend-mode:soft-light,soft-light,normal;box-shadow:var(--auction-face-inset)}
+.card::after{content:'';position:absolute;inset:var(--auction-shadow-plane-inset);transform:translateZ(var(--auction-shadow-z));pointer-events:none;background-image:var(--auction-shadow-plane);filter:blur(var(--auction-shadow-plane-blur))}
+/* 变体材质：非色相差异（边宽/纹理/内描边/投影深度），写在状态规则之前，状态规则才能覆盖投影 */
+.card.haunted{--auction-face-plate:var(--auction-plate-haunted);--auction-face-texture:var(--auction-texture-frost);--auction-face-inset:var(--auction-inset-haunted);--auction-edge-width:1px;--auction-shadow:var(--auction-shadow-haunted);--auction-shadow-plane-blur:11px}
+.card.tool{--auction-face-plate:var(--auction-plate-tool);--auction-face-texture:var(--auction-texture-hatch);--auction-face-inset:var(--auction-inset-tool);--auction-edge-width:3px;--auction-shadow:var(--auction-shadow-tool);--auction-shadow-plane-blur:6px}
+/* 悬停：背景必须显式保持透明，否则会被通用 button:hover 的底色盖住卡面材质层 */
+.card:hover:not(:disabled){background:transparent;--auction-face-plate:var(--auction-plate-hover);--auction-edge:var(--auction-brass-hi);--tz:var(--auction-lift-hover);--auction-shadow:var(--auction-shadow-hover)}
+.card.selected{--auction-edge:var(--auction-select-edge);--tz:var(--auction-lift-selected);--auction-shadow:var(--auction-shadow-selected),0 0 0 3px var(--auction-select-ring)}
+.card.selected:hover:not(:disabled){--tz:var(--auction-lift-selected);--auction-shadow:var(--auction-shadow-selected),0 0 0 3px var(--auction-select-ring)}
+.card.tilting{transition:box-shadow .15s,border-color .15s}
+.card-top{display:flex;justify-content:space-between;align-items:center}
+.card-top b{font-size:32px;line-height:1}
+.card-top span{font-size:12px}
+.sigil{font-size:44px;text-align:center;display:block;margin:10px;color:var(--auction-card-sigil)}
+.card strong{font-size:17px}
+.card .ability{font-size:12px;line-height:1.65;margin-top:9px;flex:1}
+.card small{font-size:10px;color:var(--auction-card-small);margin-top:10px}
+.card.selected small{background:var(--auction-order-chip);box-shadow:inset 0 0 0 1px var(--auction-order-chip-edge);border-radius:2px;padding:3px 5px;margin:7px -5px -3px}
+.rewards{grid-template-columns:repeat(3,210px);justify-content:center;margin-top:32px}
+.compact{grid-template-columns:repeat(5,1fr)}
+.compact .card{min-height:220px}
+.played{grid-template-columns:repeat(3,165px);justify-content:center;margin:22px 0}
+.played .card{min-height:160px;--auction-face-texture:var(--auction-texture-matte);--auction-face-inset:var(--auction-inset-played);--auction-face-z:-1px;--auction-shadow-z:-8px;--auction-shadow-plane-blur:6px;--auction-shadow:var(--auction-shadow-played)}
+.played .sigil{font-size:28px;margin:4px}
+.played .ability{font-size:11px}
+.scoreboard{display:flex;gap:16px;justify-content:center;align-items:baseline}
+.scoreboard b{font-size:48px;color:var(--auction-score-a);font-variant-numeric:tabular-nums}
+.scoreboard strong{font-size:48px;color:var(--auction-score-b);font-variant-numeric:tabular-nums;text-shadow:0 0 22px var(--auction-score-glow)}
+.log{max-width:900px;margin:20px auto;min-height:100px}
+.log p{display:flex;justify-content:space-between;gap:14px;padding:10px 12px;margin:3px 0;border-bottom:1px solid var(--auction-log-line);border-left:2px solid var(--auction-log-rule);animation:appear .25s ease-out;font-size:13px}
+.log .extra{color:var(--auction-log-extra);background:var(--auction-log-extra-bg)}
+.settlement>.actions{justify-content:center;margin:25px}
+.reward,.ending{text-align:center;padding:25px 0}
+.notice{color:var(--auction-notice)}
+.error{background:var(--auction-error-bg);padding:12px 4vw;color:var(--auction-error-ink)}
+.overlay{position:fixed;inset:0;background:var(--auction-overlay);display:flex;justify-content:center;align-items:center;z-index:10;padding:25px}
+.modal{background:var(--auction-modal-bg);border:1px solid var(--auction-modal-line);padding:30px;max-width:760px;max-height:90vh;overflow:auto;width:100%;box-shadow:0 20px 80px var(--auction-modal-shadow)}
+.modal.wide{max-width:1200px}
+.close{float:right}
+.modal li{margin:10px 0;line-height:1.7}
+details{margin:24px 0;color:var(--auction-details)}
+details p{font-size:13px}
+summary{cursor:pointer}
+@keyframes appear{from{opacity:.2;transform:translateY(6px)}to{opacity:1;transform:none}}
+/* 落槌：沿 Z 轴压落，投影收紧再扩散；牌面保持正向可读，不翻面、无牌背 */
+@keyframes auction-hammer-fall{
+  0%{transform:perspective(var(--auction-perspective)) translateZ(var(--auction-hammer-lift)) rotateX(var(--auction-hammer-tilt))}
+  62%{transform:perspective(var(--auction-perspective)) translateZ(0) rotateX(0deg)}
+  78%{transform:perspective(var(--auction-perspective)) translateZ(var(--auction-hammer-rebound)) rotateX(0deg)}
+  100%{transform:perspective(var(--auction-perspective)) translateZ(var(--tz,0px)) rotateX(0deg) rotateY(0deg)}
+}
+@keyframes auction-hammer-shadow{
+  0%{transform:translateZ(var(--auction-shadow-z)) scale(1.08);opacity:.45;filter:blur(calc(var(--auction-shadow-plane-blur) * 1.6))}
+  62%{transform:translateZ(var(--auction-shadow-z)) scale(.9);opacity:1;filter:blur(calc(var(--auction-shadow-plane-blur) * .5))}
+  78%{transform:translateZ(var(--auction-shadow-z)) scale(1.02);opacity:1;filter:blur(var(--auction-shadow-plane-blur))}
+  100%{transform:translateZ(var(--auction-shadow-z)) scale(1);opacity:1;filter:blur(var(--auction-shadow-plane-blur))}
+}
+.card[data-landing]{animation:auction-hammer-fall var(--auction-hammer-duration) var(--auction-hammer-ease) both}
+.card[data-landing]::after{animation:auction-hammer-shadow var(--auction-hammer-duration) var(--auction-hammer-ease) both}
+@media(max-width:1050px){main{padding:20px 25px}.hand{gap:7px}.card{padding:9px}.status{gap:16px}.status strong{font-size:23px}.version{display:none}.compact{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:700px){.hand{grid-template-columns:repeat(3,1fr)}header{padding:12px}header a{font-size:17px}header a span{display:none}nav{gap:5px}.status{flex-wrap:wrap}.preview{flex-direction:column;align-items:stretch}.slots{gap:5px}.slot{padding:9px}.slot b{font-size:15px}.rewards,.played{grid-template-columns:repeat(3,1fr)}.compact{grid-template-columns:repeat(2,1fr)}.scoreboard{gap:7px}.scoreboard b,.scoreboard strong{font-size:32px}.log p{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.card{--rx:0deg!important;--ry:0deg!important}}
