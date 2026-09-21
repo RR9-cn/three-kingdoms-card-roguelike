@@ -86,11 +86,27 @@ test('cards render layered material with CSS-3D depth and pointer-following tilt
   await page.locator('.hand .card').nth(0).click();await page.locator('.hand .card').nth(1).click();await page.locator('.hand .card').nth(2).click();
   for(const vp of [{width:700,height:800},{width:1000,height:700},{width:1280,height:800},{width:1440,height:900}]){
     await page.setViewportSize(vp);
-    const edge=(await page.locator('.hand .card').last().boundingBox())!;
-    await page.mouse.move(edge.x+edge.width-4,edge.y+4);
-    await page.waitForTimeout(150);
-    expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
-    if(vp.width===1440)await page.screenshot({path:'docs/evidence/ui-depth-hover-1440.png',fullPage:true});
+    // 逐张倾斜可视卡牌（右列卡牌决定横向溢出），每张都不得撑出横向滚动
+    const boxes=await page.evaluate(()=>[...document.querySelectorAll('.hand .card')].map(n=>{const r=n.getBoundingClientRect();return {x:r.left,y:r.top,w:r.width,h:r.height};}).filter(b=>b.y+4<innerHeight-8));
+    expect(boxes.length).toBeGreaterThan(0);
+    for(const b of boxes){
+      await page.mouse.move(b.x+b.w-4,b.y+4);
+      await page.waitForTimeout(150);
+      expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+    }
+    // 点数/标签/名称/能力/标注仍完整落在卡牌盒内，未被材质层或 3D 变换挤出或裁切
+    expect(await page.locator('.hand .card').evaluateAll(nodes=>nodes.every(n=>{
+      const c=n.getBoundingClientRect();
+      return [...n.querySelectorAll('.card-top b,.card-top span,strong,.ability,small')].every(p=>{
+        const r=p.getBoundingClientRect();
+        return r.width>0&&r.height>0&&r.left>=c.left-1&&r.right<=c.right+1&&r.top>=c.top-1&&r.bottom<=c.bottom+1;
+      });
+    }))).toBe(true);
+    if(vp.width===1440){
+      const edge=(await page.locator('.hand .card').last().boundingBox())!;
+      await page.mouse.move(edge.x+edge.width-4,edge.y+4);await page.waitForTimeout(150);
+      await page.screenshot({path:'docs/evidence/ui-depth-hover-1440.png',fullPage:true});
+    }
   }
 });
 
@@ -203,6 +219,11 @@ test('the depth presentation keeps DOM, keyboard, CSP and resource contracts',as
   await expect(page.locator('.slot button',{hasText:'移除'})).toBeVisible();
   const hit=await first.evaluate(el=>{const r=el.getBoundingClientRect();const hit=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2);return el===hit||el.contains(hit);});
   expect(hit).toBe(true);                                                               // 变换后点击热区仍与可见卡牌一致
+  const hoverBox=(await first.boundingBox())!;
+  await page.mouse.move(hoverBox.x+8,hoverBox.y+8);await page.waitForTimeout(120);
+  await page.mouse.move(hoverBox.x+hoverBox.width-8,hoverBox.y+8);await page.waitForTimeout(120);
+  expect(await first.evaluate(el=>el.getAttribute('style')||'')).toContain('--rx');      // 倾斜经 CSSOM 写入，在当前 CSP 下生效
+  expect(errors).toEqual([]);                                                           // 且未产生 CSP 违规或脚本错误
   const tabbed=new Set<string>();
   for(let i=0;i<24;i++){
     await page.keyboard.press('Tab');

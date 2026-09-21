@@ -99,6 +99,6 @@
 | `prefers-reduced-motion: reduce` 降级 | 仅关闭过渡，未关闭 transform | 通过：指针钩子不挂载、无倾斜变量、`.played .card` 计算 `animation-name` 为 `none`、结算直接终态、点数/名称/能力文本齐全 | 用例 7 + `ui-depth-reduced-1280.png` |
 | 粗指针 / 无 hover 降级 | 无倾斜（本就无 3D） | 通过：`hasTouch` 上下文下 `(hover:hover) and (pointer:fine)` 为 false，卡牌在两个指针位置的计算 `transform` 完全一致且无倾斜变量；静态材质分层仍在；选择、排序、上拍、跳过全部可用并到达终态 | 用例 9 |
 | 键盘可达性与点击热区 | 通过 | 通过：`.hand .card` 6 张全部 Tab 可达且 `:focus-visible` 为 `solid` 轮廓；`aria-label`（左移/右移/移除）不变；变换后卡牌中心点命中自身 | 用例 8 |
-| 无横向溢出（1000/1280/1440，另加验 700×800） | 1280 基线 `scrollWidth == innerWidth` | 通过：四个视口在倾斜 + 三张已选状态下 `scrollWidth ≤ innerWidth` | 用例 4 |
-| 无新增外部资源、满足 CSP | 通过 | 通过：`:root` 外颜色字面量 0、纹理为 inline `data:` URI、`#app [style]` 计数 0、无新增控制台错误、请求全部落在 `http://127.0.0.1:4173/` | 用例 4/8 |
+| 无横向溢出（1000/1280/1440，另加验 700×800） | 1280 基线 `scrollWidth == innerWidth` | 通过：四个视口下逐张倾斜每张可视卡牌（含决定右边界的那一张）后 `scrollWidth ≤ innerWidth`；同时断言每张卡牌的点数、标签、名称、能力与标注矩形完整落在卡牌盒内（未被材质层或 3D 变换挤出/裁切） | 用例 4 |
+| 无新增外部资源、满足 CSP | 通过 | 通过：`:root` 外颜色字面量 0、纹理为 inline `data:` URI、模板不产生内联 `style` 属性（`#app [style]` 计数 0）、倾斜经 CSSOM `setProperty` 在当前 CSP 下实际生效且无 CSP 违规/控制台错误、请求全部落在 `http://127.0.0.1:4173/`；构建产物 `dist/trigger.css` 含 4 个 inline `data:` URI 且无外部 URL | 用例 4/8 + 产物扫描 |
 | 既有验证（build/test/test:browser） | 11/11、3/3 | 通过：`build` 通过、`npm test` 11/11、浏览器用例 9/9（默认配置受本机无 Chrome 限制，见 R7） | 命令输出 |
