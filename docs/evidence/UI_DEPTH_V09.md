@@ -70,6 +70,7 @@
 - `docs/evidence/ui-depth-selected-1280.png` — 3 张已选：Z 轴抬升、更强投影、"第 1/2/3 位"角标
 - `docs/evidence/ui-depth-settlement-1280.png` — 结算第 3 步落槌：同一时刻只有当前揭晓步的卡牌带过渡
 - `docs/evidence/ui-depth-reduced-1280.png` — `prefers-reduced-motion: reduce`：无倾斜、无过渡、信息完整
+- `docs/evidence/ui-depth-collection-1280.png` — 收藏弹层（`.modal` 为 `overflow:auto`）：卡牌保留材质与 3D 分层，投影板未被滚动容器裁切，文本完整、命中区与可见卡牌一致（设计风险 R13 的确认证据）
 
 被浏览器用例自动覆盖更新的既有截图（用例、取景与状态节点均未改动，仅呈现变化）：
 
@@ -83,7 +84,7 @@
 | `npm run build`（`tsc --noEmit` + `vite build`） | 通过（`dist/assets/index-qK0h60DS.js` 18.57 kB，gzip 8.24 kB） |
 | `npm test` | **11/11 通过** |
 | `npm run test:browser`（仓库默认配置） | 失败：`Chromium distribution 'chrome' is not found at /opt/google/chrome/chrome`——既有环境限制（设计风险 R7），与本变更无关，未改仓库配置 |
-| `npx playwright test --config=<临时配置>`（`launchOptions.executablePath` 指向 `/opt/chromium.org/chromium/chromium-browser`） | **9/9 通过**（既有 3 项 + 本次新增 6 项） |
+| `npx playwright test --config=<临时配置>`（`launchOptions.executablePath` 指向 `/opt/chromium.org/chromium/chromium-browser`） | **10/10 通过**（既有 3 项 + 本次新增 7 项） |
 | 静态自查 | `:root` 外颜色字面量 0；`--auction-*` 无未定义引用；`apps/playtest` 无内联 `style=`；无新增外部 URL 引用；CSS 花括号配对 |
 
 环境：Chromium 135.0.7049.78；Node.js 22.21.0（低于 README 要求的 24）；npm 10.9.4。
@@ -97,8 +98,9 @@
 | 选中 Z 轴抬升与 3 张顺序可辨、取消后复原 | 仅 `translateY(-5px)` | 通过：`translateZ(28px)` 且投影含金色描边环；三张同选时"第 1/2/3 位"角标与槽位 `01/02/03` 同索引；清空后 `translateZ` 与 `box-shadow` 与静止态逐字符一致 | 用例 5 + `ui-depth-selected-1280.png` |
 | 结算落槌过渡与步进同步、跳过立即终态、无残留 | 无 3D 过渡 | 通过：MutationObserver 记录每次 `[data-landing]` 出现时数量恒为 1 且指向当前揭晓步；终态与新一次结算起始标记数均为 0；"跳过动画"立即出现 `data-action="next"` | 用例 6 + `ui-depth-settlement-1280.png` |
 | `prefers-reduced-motion: reduce` 降级 | 仅关闭过渡，未关闭 transform | 通过：指针钩子不挂载、无倾斜变量、`.played .card` 计算 `animation-name` 为 `none`、结算直接终态、点数/名称/能力文本齐全 | 用例 7 + `ui-depth-reduced-1280.png` |
+| 收藏弹层（`.cards.compact`）内的材质与 3D | 仅平面渐变 | 通过：弹层内卡牌保留 `preserve-3d`、非零透视与负 Z 材质层；弹层（`overflow:auto`）不裁切卡面文本，每张卡的文本矩形完整落在卡牌盒内；投影板 `pointer-events:none` 且不超出卡牌盒；弹层与文档均无横向溢出；命中区与可见卡牌一致 | 用例 10 + `ui-depth-collection-1280.png` |
 | 粗指针 / 无 hover 降级 | 无倾斜（本就无 3D） | 通过：`hasTouch` 上下文下 `(hover:hover) and (pointer:fine)` 为 false，卡牌在两个指针位置的计算 `transform` 完全一致且无倾斜变量；静态材质分层仍在；选择、排序、上拍、跳过全部可用并到达终态 | 用例 9 |
 | 键盘可达性与点击热区 | 通过 | 通过：`.hand .card` 6 张全部 Tab 可达且 `:focus-visible` 为 `solid` 轮廓；`aria-label`（左移/右移/移除）不变；变换后卡牌中心点命中自身 | 用例 8 |
 | 无横向溢出（1000/1280/1440，另加验 700×800） | 1280 基线 `scrollWidth == innerWidth` | 通过：四个视口下逐张倾斜每张可视卡牌（含决定右边界的那一张）后 `scrollWidth ≤ innerWidth`；同时断言每张卡牌的点数、标签、名称、能力与标注矩形完整落在卡牌盒内（未被材质层或 3D 变换挤出/裁切） | 用例 4 |
 | 无新增外部资源、满足 CSP | 通过 | 通过：`:root` 外颜色字面量 0、纹理为 inline `data:` URI、模板不产生内联 `style` 属性（`#app [style]` 计数 0）、倾斜经 CSSOM `setProperty` 在当前 CSP 下实际生效且无 CSP 违规/控制台错误、请求全部落在 `http://127.0.0.1:4173/`；构建产物 `dist/trigger.css` 含 4 个 inline `data:` URI 且无外部 URL | 用例 4/8 + 产物扫描 |
-| 既有验证（build/test/test:browser） | 11/11、3/3 | 通过：`build` 通过、`npm test` 11/11、浏览器用例 9/9（默认配置受本机无 Chrome 限制，见 R7） | 命令输出 |
+| 既有验证（build/test/test:browser） | 11/11、3/3 | 通过：`build` 通过、`npm test` 11/11、浏览器用例 10/10（默认配置受本机无 Chrome 限制，见 R7） | 命令输出 |

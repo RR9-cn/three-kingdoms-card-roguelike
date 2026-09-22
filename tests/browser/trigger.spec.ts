@@ -267,3 +267,35 @@ test('coarse pointer without hover keeps the game operable and untilted',async({
   expect(await page.locator('.scoreboard strong').textContent()).toContain('=');
   await context.close();
 });
+
+test('collection overlay keeps layered depth readable and hit-testable inside its scroll container',async({page})=>{
+  await page.setViewportSize({width:1280,height:800});
+  await startRun(page,'smoke-0');
+  await page.getByRole('button',{name:/^收藏/}).click();
+  const modal=page.locator('.modal');
+  await expect(modal).toBeVisible();
+  const cards=modal.locator('.compact .card');
+  expect(await cards.count()).toBeGreaterThan(3);
+  const card=await cardStyle(page,'.modal .compact .card');
+  expect(card.transformStyle).toBe('preserve-3d');                                      // 弹层内卡牌保留 3D 分层
+  expect(matrixM34(card.transform)).not.toBe(0);
+  const face=await cardStyle(page,'.modal .compact .card','::before');
+  expect(matrixZ(face.transform)).toBeLessThan(0);
+  expect(face.backgroundImage).toContain('data:image/svg+xml');                          // 弹层内卡牌保留材质层
+  // 弹层容器 overflow:auto 不裁切卡面文本：每张卡的文本完整落在卡牌盒内
+  expect(await cards.evaluateAll(nodes=>nodes.every(n=>{
+    const c=n.getBoundingClientRect();
+    return [...n.querySelectorAll('.card-top b,.card-top span,strong,.ability,small')].every(p=>{
+      const r=p.getBoundingClientRect();
+      return r.width>0&&r.height>0&&r.left>=c.left-1&&r.right<=c.right+1&&r.top>=c.top-1&&r.bottom<=c.bottom+1;
+    });
+  }))).toBe(true);
+  // 投影板不超出卡牌盒，故不被滚动容器裁切；弹层与文档均无横向溢出
+  expect(await cards.first().evaluate(el=>{const s=getComputedStyle(el,'::after');return {left:s.left,right:s.right,pointerEvents:s.pointerEvents};})).toEqual(expect.objectContaining({pointerEvents:'none'}));
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  // 命中区与可见卡牌一致
+  expect(await cards.first().evaluate(el=>{const r=el.getBoundingClientRect();const hit=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2);return el===hit||el.contains(hit);})).toBe(true);
+  await page.screenshot({path:'docs/evidence/ui-depth-collection-1280.png'});
+  await page.getByRole('button',{name:'关闭',exact:true}).click();
+  await expect(modal).toBeHidden();
+});
