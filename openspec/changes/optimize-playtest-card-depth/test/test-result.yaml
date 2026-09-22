@@ -1,0 +1,15 @@
+version: 1
+result: passed
+plans:
+  - 卡牌3D纵深与界面质感-test-plan.md
+executedHead: 969ddc42975ad13c000d2a68a690248aaf81c659
+coverage:
+  required: e2e
+  actual: e2e
+cases:
+  total: 17
+  passed: 17
+  failed: 0
+nonReplaceableAssertionsPassed: true
+engineeringVerificationPassed: true
+completedAt: 2026-09-22T01:50:56Z
