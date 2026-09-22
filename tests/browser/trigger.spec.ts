@@ -332,8 +332,9 @@ test('collection overlay keeps layered depth readable and hit-testable inside it
   expect(await contained()).toBe(true);                                                 // 滚动到底后文本仍完整
   const last=cards.last();
   expect(await last.evaluate(el=>{const r=el.getBoundingClientRect();const hit=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2);return el===hit||el.contains(hit);})).toBe(true);
-  const lastGeom=await last.evaluate(el=>{const r=el.getBoundingClientRect(),a=getComputedStyle(el,'::after');const v=a.inset.split(/\s+/).map(parseFloat);const b=v[2];const m=el.closest('.modal')!.getBoundingClientRect();const border=parseFloat(getComputedStyle(el.closest('.modal')!).borderBottomWidth);return {shadowBottom:r.bottom+b,clipBottom:m.bottom-border};});
-  expect(lastGeom.shadowBottom).toBeLessThan(lastGeom.clipBottom);                       // 滚动到底时底行投影板仍未被裁切
+  const lastGeom=await last.evaluate(el=>{const r=el.getBoundingClientRect(),a=getComputedStyle(el,'::after');const v=a.inset.split(/\s+/).map(parseFloat);const b=v[2];const m=el.closest('.modal')!.getBoundingClientRect();const border=parseFloat(getComputedStyle(el.closest('.modal')!).borderBottomWidth);return {cardBottom:r.bottom,shadowBottom:r.bottom-b,clipBottom:m.bottom-border};});
+  expect(lastGeom.cardBottom).toBeLessThanOrEqual(lastGeom.clipBottom);                 // 滚动到底后末张卡牌完整落在弹层可视区内
+  expect(lastGeom.shadowBottom).toBeLessThan(lastGeom.clipBottom);                      // 且投影板下沿未被裁切（与几何循环同源的交叉校验）
   await page.getByRole('button',{name:'关闭',exact:true}).click();
   await expect(modal).toBeHidden();
 });
