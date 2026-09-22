@@ -61,6 +61,13 @@
 | 3D 变换后卡牌的命中矩形随变换位移，指针停在卡角会反复进出产生抖动 | 停留判定使用**静止矩形**（`inTiltRect`），并补 `pointerleave` / 无 `relatedTarget` 的 `pointerout` 清理 |
 | 令牌自查发现 1 处未定义引用与 1 处冗余字面量 | 补 `--auction-home-bg`；`--auction-vignette` 改用 `--auction-floor` |
 
+### 已知取舍与偏差（记录，不擅自改语义）
+
+| 项 | 说明 |
+|---|---|
+| 投影板纵向超出卡牌盒 | `--auction-shadow-plane-inset:4% 4% -9%` 使投影板下沿外扩卡牌高度的 9%（≈22px），因此**字面上**不完全满足 `tasks.md` 2.3 的「不超出卡牌盒」。该条的实质目的是「避免遮挡相邻卡牌的点击热区」，由三项事实满足：投影板 `pointer-events:none`；左右沿在卡牌盒内 4%（不侵入 12px 网格间隙，已断言）；`.hand`/`.rewards` 为单行网格，纵向外扩落在卡片下方空白。Spec 的对应 Requirement（`playtest-visual-depth`）只要求「卡面与投影分层」「单卡倾斜不移动相邻卡牌且不引入横向溢出」，未约束投影板必须落在卡牌盒内；若把下沿收到 0，投影板将被卡面完全遮住而失去可见的地面投影。已按「记录偏差 + 证据」处理，未擅自改动 Spec 文本或视觉取值。 |
+| 弹层边界裁切（设计 R13） | 实测**未发生**：弹层 `padding:30px` 大于投影板外扩 ≈22px，故 1280×800（`scrollHeight == clientHeight == 656`，不滚动）与 1280×560（`scrollHeight 656 > clientHeight 502`，滚动到底）两种状态下投影板下沿均未越过弹层裁切边（底行 721 < 裁切边 728）。 |
+
 ### 截图
 
 新增（1280×800 与 1440×900）：
@@ -70,7 +77,7 @@
 - `docs/evidence/ui-depth-selected-1280.png` — 3 张已选：Z 轴抬升、更强投影、"第 1/2/3 位"角标
 - `docs/evidence/ui-depth-settlement-1280.png` — 结算第 3 步落槌：同一时刻只有当前揭晓步的卡牌带过渡
 - `docs/evidence/ui-depth-reduced-1280.png` — `prefers-reduced-motion: reduce`：无倾斜、无过渡、信息完整
-- `docs/evidence/ui-depth-collection-1280.png` — 收藏弹层（`.modal` 为 `overflow:auto`）：卡牌保留材质与 3D 分层，投影板未被滚动容器裁切，文本完整、命中区与可见卡牌一致（设计风险 R13 的确认证据）
+- `docs/evidence/ui-depth-collection-1280.png` — 收藏弹层（`.modal` 为 `overflow:auto`）：卡牌保留材质与 3D 分层，文本完整、命中区与可见卡牌一致（设计风险 R13 的确认证据；投影板几何见下方「已知取舍与偏差」）
 
 被浏览器用例自动覆盖更新的既有截图（用例、取景与状态节点均未改动，仅呈现变化）：
 
@@ -98,7 +105,7 @@
 | 选中 Z 轴抬升与 3 张顺序可辨、取消后复原 | 仅 `translateY(-5px)` | 通过：`translateZ(28px)` 且投影含金色描边环；三张同选时"第 1/2/3 位"角标与槽位 `01/02/03` 同索引；清空后 `translateZ` 与 `box-shadow` 与静止态逐字符一致 | 用例 5 + `ui-depth-selected-1280.png` |
 | 结算落槌过渡与步进同步、跳过立即终态、无残留 | 无 3D 过渡 | 通过：MutationObserver 记录每次 `[data-landing]` 出现时数量恒为 1 且指向当前揭晓步；终态与新一次结算起始标记数均为 0；"跳过动画"立即出现 `data-action="next"` | 用例 6 + `ui-depth-settlement-1280.png` |
 | `prefers-reduced-motion: reduce` 降级 | 仅关闭过渡，未关闭 transform | 通过：指针钩子不挂载、无倾斜变量、`.played .card` 计算 `animation-name` 为 `none`、结算直接终态、点数/名称/能力文本齐全 | 用例 7 + `ui-depth-reduced-1280.png` |
-| 收藏弹层（`.cards.compact`）内的材质与 3D | 仅平面渐变 | 通过：弹层内卡牌保留 `preserve-3d`、非零透视与负 Z 材质层；弹层（`overflow:auto`）不裁切卡面文本，每张卡的文本矩形完整落在卡牌盒内；投影板 `pointer-events:none` 且不超出卡牌盒；弹层与文档均无横向溢出；命中区与可见卡牌一致 | 用例 10 + `ui-depth-collection-1280.png` |
+| 收藏弹层（`.cards.compact`）内的材质与 3D | 仅平面渐变 | 通过：弹层内卡牌保留 `preserve-3d`、非零透视与负 Z 材质层；文本矩形完整落在卡牌盒内（弹层 `overflow:auto` 不裁切文本）；投影板 `pointer-events:none`，左右与上沿均在卡牌盒内（不侵入 12px 网格间隙，实测卡牌间隙的 `elementFromPoint` 不落在任何卡牌上，故不夺取相邻卡牌热区），纵向按设计外扩 9%（≈22px）且小于弹层 30px 内边距——1280×800（不滚动）与 1280×560（`scrollHeight 656 > clientHeight 502`，滚动到底）两种状态下投影板下沿均未越过弹层裁切边；弹层与文档均无横向溢出；命中区与可见卡牌一致 | 用例 10 + `ui-depth-collection-1280.png` |
 | 粗指针 / 无 hover 降级 | 无倾斜（本就无 3D） | 通过：`hasTouch` 上下文下 `(hover:hover) and (pointer:fine)` 为 false，卡牌在两个指针位置的计算 `transform` 完全一致且无倾斜变量；静态材质分层仍在；选择、排序、上拍、跳过全部可用并到达终态 | 用例 9 |
 | 键盘可达性与点击热区 | 通过 | 通过：`.hand .card` 6 张全部 Tab 可达且 `:focus-visible` 为 `solid` 轮廓；`aria-label`（左移/右移/移除）不变；变换后卡牌中心点命中自身 | 用例 8 |
 | 无横向溢出（1000/1280/1440，另加验 700×800） | 1280 基线 `scrollWidth == innerWidth` | 通过：四个视口下逐张倾斜每张可视卡牌（含决定右边界的那一张）后 `scrollWidth ≤ innerWidth`；同时断言每张卡牌的点数、标签、名称、能力与标注矩形完整落在卡牌盒内（未被材质层或 3D 变换挤出/裁切） | 用例 4 |

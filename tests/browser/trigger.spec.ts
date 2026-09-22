@@ -282,20 +282,55 @@ test('collection overlay keeps layered depth readable and hit-testable inside it
   const face=await cardStyle(page,'.modal .compact .card','::before');
   expect(matrixZ(face.transform)).toBeLessThan(0);
   expect(face.backgroundImage).toContain('data:image/svg+xml');                          // 弹层内卡牌保留材质层
+  // 投影板几何：横向完全落在卡牌盒内（不侵入网格间隙，故不会遮挡相邻卡牌热区）；
+  // 纵向按设计外扩，量级必须小于弹层内边距，否则会被 overflow:auto 裁切
+  const geom=await modal.evaluate(m=>{
+    const mp=m.getBoundingClientRect(),ms=getComputedStyle(m);
+    const border=parseFloat(ms.borderTopWidth),pad=parseFloat(ms.paddingTop);
+    return {clipBottom:mp.bottom-border,pad,
+      rows:[...m.querySelectorAll('.compact .card')].map(el=>{
+        const r=el.getBoundingClientRect(),a=getComputedStyle(el,'::after');
+        const v=a.inset.split(/\s+/).map(parseFloat);const [t,rl,b]=v.length===3?v:[v[0],v[1],v[2]];
+        return {left:r.left,right:r.right,bottom:r.bottom,top:r.top,pe:a.pointerEvents,insetTop:t,insetX:rl,insetBottom:b};})};
+  });
+  expect(geom.pad).toBeGreaterThan(0);
+  for(const r of geom.rows){
+    expect(r.pe).toBe('none');                                                          // 投影板不参与命中测试
+    expect(r.insetX).toBeGreaterThan(0);                                                // 左右沿都在卡牌盒内
+    expect(r.insetTop).toBeGreaterThan(0);                                              // 上沿在卡牌盒内
+    expect(r.insetBottom).toBeLessThan(0);                                              // 下沿按设计外扩（可见的地面投影）
+    expect(-r.insetBottom).toBeLessThan(geom.pad);                                      // 外扩量小于弹层内边距 → 不被滚动容器裁切
+  }
+  // 外扩后的投影板下沿仍高于弹层裁切边（取所有卡牌中最靠下的一张）
+  const lowest=geom.rows.reduce((a,b)=>a.bottom>b.bottom?a:b);
+  expect(lowest.bottom-lowest.insetBottom).toBeLessThan(geom.clipBottom);
+  // 相邻卡牌之间的网格间隙不属于任何卡牌（投影板横向不越界，不会夺取相邻卡牌热区）
+  expect(await cards.first().evaluate(el=>{const a=el.getBoundingClientRect(),b=el.nextElementSibling!.getBoundingClientRect();const hit=document.elementFromPoint((a.right+b.left)/2,a.top+8);return hit===el||hit===el.nextElementSibling||el.contains(hit)||el.nextElementSibling!.contains(hit);})).toBe(false);
+  // 命中区与可见卡牌一致
+  expect(await cards.first().evaluate(el=>{const r=el.getBoundingClientRect();const hit=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2);return el===hit||el.contains(hit);})).toBe(true);
   // 弹层容器 overflow:auto 不裁切卡面文本：每张卡的文本完整落在卡牌盒内
-  expect(await cards.evaluateAll(nodes=>nodes.every(n=>{
+  const contained=async()=>cards.evaluateAll(nodes=>nodes.every(n=>{
     const c=n.getBoundingClientRect();
     return [...n.querySelectorAll('.card-top b,.card-top span,strong,.ability,small')].every(p=>{
       const r=p.getBoundingClientRect();
       return r.width>0&&r.height>0&&r.left>=c.left-1&&r.right<=c.right+1&&r.top>=c.top-1&&r.bottom<=c.bottom+1;
     });
-  }))).toBe(true);
-  // 投影板不超出卡牌盒，故不被滚动容器裁切；弹层与文档均无横向溢出
-  expect(await cards.first().evaluate(el=>{const s=getComputedStyle(el,'::after');return {left:s.left,right:s.right,pointerEvents:s.pointerEvents};})).toEqual(expect.objectContaining({pointerEvents:'none'}));
+  }));
+  expect(await contained()).toBe(true);
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
-  // 命中区与可见卡牌一致
-  expect(await cards.first().evaluate(el=>{const r=el.getBoundingClientRect();const hit=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2);return el===hit||el.contains(hit);})).toBe(true);
   await page.screenshot({path:'docs/evidence/ui-depth-collection-1280.png'});
+  // 缩短视口使弹层真正产生滚动，滚动到底后回归文本可读与命中
+  await page.setViewportSize({width:1280,height:560});
+  const scroll=await modal.evaluate(m=>({scrollH:m.scrollHeight,clientH:m.clientHeight,scrollW:m.scrollWidth,clientW:m.clientWidth}));
+  expect(scroll.scrollH).toBeGreaterThan(scroll.clientH);                               // 弹层确实可滚动
+  expect(scroll.scrollW).toBeLessThanOrEqual(scroll.clientW);                           // 弹层无横向溢出
+  await modal.evaluate(m=>{m.scrollTop=m.scrollHeight;});
+  await page.waitForTimeout(80);
+  expect(await contained()).toBe(true);                                                 // 滚动到底后文本仍完整
+  const last=cards.last();
+  expect(await last.evaluate(el=>{const r=el.getBoundingClientRect();const hit=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2);return el===hit||el.contains(hit);})).toBe(true);
+  const lastGeom=await last.evaluate(el=>{const r=el.getBoundingClientRect(),a=getComputedStyle(el,'::after');const v=a.inset.split(/\s+/).map(parseFloat);const b=v.length===3?v[2]:v[2];const m=el.closest('.modal')!.getBoundingClientRect();const border=parseFloat(getComputedStyle(el.closest('.modal')!).borderTopWidth);return {shadowBottom:r.bottom+b,clipBottom:m.bottom-border};});
+  expect(lastGeom.shadowBottom).toBeLessThan(lastGeom.clipBottom);                       // 滚动到底时底行投影板仍未被裁切
   await page.getByRole('button',{name:'关闭',exact:true}).click();
   await expect(modal).toBeHidden();
 });
