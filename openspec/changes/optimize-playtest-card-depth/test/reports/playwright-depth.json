@@ -1,0 +1,198 @@
+{
+  "config": {
+    "argv": [
+      "/usr/bin/node",
+      "/home/gem/.agentnative/sessions/agent-session-yevm9hu3284nd8nok91u/repos/RR9-cn_three-kingdoms-card-roguelike/node_modules/.bin/playwright",
+      "test",
+      "openspec/changes/optimize-playtest-card-depth/test/browser/mutation-probe.spec.ts",
+      "--config=openspec/changes/optimize-playtest-card-depth/test/browser/playwright.depth.config.ts"
+    ],
+    "configFile": "/home/gem/.agentnative/sessions/agent-session-yevm9hu3284nd8nok91u/repos/RR9-cn_three-kingdoms-card-roguelike/openspec/changes/optimize-playtest-card-depth/test/browser/playwright.depth.config.ts",
+    "rootDir": "/home/gem/.agentnative/sessions/agent-session-yevm9hu3284nd8nok91u/repos/RR9-cn_three-kingdoms-card-roguelike",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/home/gem/.agentnative/sessions/agent-session-yevm9hu3284nd8nok91u/repos/RR9-cn_three-kingdoms-card-roguelike/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/home/gem/.agentnative/sessions/agent-session-yevm9hu3284nd8nok91u/repos/RR9-cn_three-kingdoms-card-roguelike",
+        "testIgnore": [
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "tests/browser/**/*.spec.ts",
+          "openspec/changes/**/test/browser/**/*.spec.ts"
+        ],
+        "timeout": 180000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/home/gem/.agentnative/sessions/agent-session-yevm9hu3284nd8nok91u/repos/RR9-cn_three-kingdoms-card-roguelike/openspec/changes/optimize-playtest-card-depth/test/reports/playwright-depth.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev",
+      "cwd": "/home/gem/.agentnative/sessions/agent-session-yevm9hu3284nd8nok91u/repos/RR9-cn_three-kingdoms-card-roguelike",
+      "url": "http://127.0.0.1:4173",
+      "reuseExistingServer": true,
+      "timeout": 120000
+    }
+  },
+  "suites": [
+    {
+      "title": "openspec/changes/optimize-playtest-card-depth/test/browser/mutation-probe.spec.ts",
+      "file": "openspec/changes/optimize-playtest-card-depth/test/browser/mutation-probe.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "M1 材质层 Z 变正时，“材质在文本之后”断言必须失败",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 426,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T01:45:31.013Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ee5b64f23e244f6e5dab-cedc9e75b05861095134",
+          "file": "openspec/changes/optimize-playtest-card-depth/test/browser/mutation-probe.spec.ts",
+          "line": 21,
+          "column": 1
+        },
+        {
+          "title": "M2 投影板夺取热区时，网格间隙命中断言必须失败",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 714,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T01:45:31.589Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ee5b64f23e244f6e5dab-f22cc4c2a7a2f92a064b",
+          "file": "openspec/changes/optimize-playtest-card-depth/test/browser/mutation-probe.spec.ts",
+          "line": 29,
+          "column": 1
+        },
+        {
+          "title": "M3 transform 被置为 none 时，倾斜影响渲染的断言必须失败",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 887,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T01:45:32.320Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ee5b64f23e244f6e5dab-aa1ba07a0f3b4dd3174a",
+          "file": "openspec/changes/optimize-playtest-card-depth/test/browser/mutation-probe.spec.ts",
+          "line": 46,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-22T01:45:30.127Z",
+    "duration": 3151.967,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
