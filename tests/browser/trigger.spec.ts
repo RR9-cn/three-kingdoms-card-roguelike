@@ -282,11 +282,16 @@ test('collection overlay keeps layered depth readable and hit-testable inside it
   const face=await cardStyle(page,'.modal .compact .card','::before');
   expect(matrixZ(face.transform)).toBeLessThan(0);
   expect(face.backgroundImage).toContain('data:image/svg+xml');                          // 弹层内卡牌保留材质层
+  // 相邻卡牌之间的网格间隙不属于任何卡牌：取样点在投影板纵向覆盖范围内（卡高中部），
+  // 若投影板横向越界且参与命中测试，该点会返回卡牌本身（伪元素命中测试返回宿主元素）
+  expect(await cards.first().evaluate(el=>{const a=el.getBoundingClientRect(),n=el.nextElementSibling!.getBoundingClientRect();const y=a.top+a.height*.6;const hit=document.elementFromPoint((a.right+n.left)/2,y);return hit===el||hit===el.nextElementSibling||el.contains(hit)||el.nextElementSibling!.contains(hit);})).toBe(false);
+  // 相邻卡牌自身中心仍命中该卡牌（投影板未夺取他人热区）
+  expect(await cards.nth(1).evaluate(el=>{const r=el.getBoundingClientRect();const hit=document.elementFromPoint(r.left+r.width/2,r.top+r.height*.6);return el===hit||el.contains(hit);})).toBe(true);
   // 投影板几何：横向完全落在卡牌盒内（不侵入网格间隙，故不会遮挡相邻卡牌热区）；
   // 纵向按设计外扩，量级必须小于弹层内边距，否则会被 overflow:auto 裁切
   const geom=await modal.evaluate(m=>{
     const mp=m.getBoundingClientRect(),ms=getComputedStyle(m);
-    const border=parseFloat(ms.borderTopWidth),pad=parseFloat(ms.paddingTop);
+    const border=parseFloat(ms.borderBottomWidth),pad=parseFloat(ms.paddingTop);
     return {clipBottom:mp.bottom-border,pad,
       rows:[...m.querySelectorAll('.compact .card')].map(el=>{
         const r=el.getBoundingClientRect(),a=getComputedStyle(el,'::after');
@@ -304,8 +309,6 @@ test('collection overlay keeps layered depth readable and hit-testable inside it
   // 外扩后的投影板下沿仍高于弹层裁切边（取所有卡牌中最靠下的一张）
   const lowest=geom.rows.reduce((a,b)=>a.bottom>b.bottom?a:b);
   expect(lowest.bottom-lowest.insetBottom).toBeLessThan(geom.clipBottom);
-  // 相邻卡牌之间的网格间隙不属于任何卡牌（投影板横向不越界，不会夺取相邻卡牌热区）
-  expect(await cards.first().evaluate(el=>{const a=el.getBoundingClientRect(),b=el.nextElementSibling!.getBoundingClientRect();const hit=document.elementFromPoint((a.right+b.left)/2,a.top+8);return hit===el||hit===el.nextElementSibling||el.contains(hit)||el.nextElementSibling!.contains(hit);})).toBe(false);
   // 命中区与可见卡牌一致
   expect(await cards.first().evaluate(el=>{const r=el.getBoundingClientRect();const hit=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2);return el===hit||el.contains(hit);})).toBe(true);
   // 弹层容器 overflow:auto 不裁切卡面文本：每张卡的文本完整落在卡牌盒内
@@ -329,7 +332,7 @@ test('collection overlay keeps layered depth readable and hit-testable inside it
   expect(await contained()).toBe(true);                                                 // 滚动到底后文本仍完整
   const last=cards.last();
   expect(await last.evaluate(el=>{const r=el.getBoundingClientRect();const hit=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2);return el===hit||el.contains(hit);})).toBe(true);
-  const lastGeom=await last.evaluate(el=>{const r=el.getBoundingClientRect(),a=getComputedStyle(el,'::after');const v=a.inset.split(/\s+/).map(parseFloat);const b=v.length===3?v[2]:v[2];const m=el.closest('.modal')!.getBoundingClientRect();const border=parseFloat(getComputedStyle(el.closest('.modal')!).borderTopWidth);return {shadowBottom:r.bottom+b,clipBottom:m.bottom-border};});
+  const lastGeom=await last.evaluate(el=>{const r=el.getBoundingClientRect(),a=getComputedStyle(el,'::after');const v=a.inset.split(/\s+/).map(parseFloat);const b=v[2];const m=el.closest('.modal')!.getBoundingClientRect();const border=parseFloat(getComputedStyle(el.closest('.modal')!).borderBottomWidth);return {shadowBottom:r.bottom+b,clipBottom:m.bottom-border};});
   expect(lastGeom.shadowBottom).toBeLessThan(lastGeom.clipBottom);                       // 滚动到底时底行投影板仍未被裁切
   await page.getByRole('button',{name:'关闭',exact:true}).click();
   await expect(modal).toBeHidden();
