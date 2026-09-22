@@ -13,6 +13,7 @@
 | 执行环境 | Linux 容器；Node.js 22.21.0 / npm 10.9.4；Playwright 1.63.0；Chromium 135.0.7049.78（`/opt/chromium.org/chromium/chrome`）；本机**无** Google Chrome |
 | 权威依据 | 任务需求（REQ-1/REQ-2 + 9 项验收标准）；Spec 产物 `workflow-node-artifact-yevkotznr4b39mae7i3t`（能力 `playtest-visual-depth`）；需求共识产物 `workflow-node-artifact-yevkl4e39cb39mae7hp5`；改动前截图产物 `workflow-node-artifact-yevkl4nx8gth91b420op` |
 | 独立验证脚本 | 本次验收自写的 Playwright 脚本 8 个场景（不依赖节点自带用例），原始数据见 §4 与共享产物 bundle `workflow-node-artifact-yevmcxd91cd4thrjveax`（`verification/independent-*.log`、`verification/playwright-*.log`、`screenshots/after-*.png`） |
+| 验收提交说明 | 被验收的交付提交为 `8ae54c3`；本报告随后以纯文档提交 `1c7e7e4` 落入仓库，`git diff 8ae54c3..1c7e7e4 -- apps/ packages/ tests/ docs/evidence/` 为空，产品代码、断言与证据未被任何验收动作改动 |
 | Review / 测试证据 | `docs/reviews/20260921_ui-depth-card-3d/report.md`（独立 Code Review，`result: passed`，critical/high = 0）、`openspec/changes/optimize-playtest-card-depth/test/reports/20260922T015056Z-test-report.md`（独立测试，17/17）、`test/test-result.yaml`（`result: passed`） |
 
 ---
