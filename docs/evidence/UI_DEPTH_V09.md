@@ -2,6 +2,8 @@
 
 对应 OpenSpec 变更 `optimize-playtest-card-depth`（能力 `playtest-visual-depth`）。本文件记录改动前基线与改动后验收对照。改动前基线提交于 Spec 阶段；改动后章节由编码节点（工作分支 `feat/ui-3d-card-effect-oysk`）补齐，未实际完成项保持未勾选。
 
+> **归档（2026-09-23，验收归档节点）**：本变更已移入 `openspec/changes/archive/2026-09-22-optimize-playtest-card-depth/`，能力规格已并入 `openspec/specs/playtest-visual-depth/spec.md`；验收结论为**有条件通过**（见该目录下 `acceptance/20260922-ui-depth-acceptance.md`）。下方出现的 `openspec/changes/optimize-playtest-card-depth/...` 为归档前路径。
+
 ## 改动前基线（提交于 Spec 阶段）
 
 - 仓库基线：`main@f5ae6b8`（工作分支 `feat/ui-3d-card-effect-oysk`）。

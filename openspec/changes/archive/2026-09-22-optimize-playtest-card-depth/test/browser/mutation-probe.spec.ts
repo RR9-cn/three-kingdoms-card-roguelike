@@ -1,9 +1,9 @@
 // 变异探针（有效性证据，随测试节点提交）：用 CSSOM 注入规则破坏被测行为，
 // 证明本方案的几何/计算样式断言不是恒真断言——每个变异都必须被对应断言捕获。
-// 运行：npx playwright test openspec/changes/optimize-playtest-card-depth/test/browser/mutation-probe.spec.ts --config=<本目录>/playwright.depth.config.ts
+// 运行：npx playwright test openspec/changes/archive/2026-09-22-optimize-playtest-card-depth/test/browser/mutation-probe.spec.ts --config=<本目录>/playwright.depth.config.ts
 import {test, expect} from '@playwright/test';
 
-const SHOTS = 'openspec/changes/optimize-playtest-card-depth/test/reports/shots';
+const SHOTS = 'openspec/changes/archive/2026-09-22-optimize-playtest-card-depth/test/reports/shots';
 
 async function startRun(page: any) {
   await page.goto('/');

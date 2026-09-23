@@ -1,13 +1,13 @@
 // 独立验证用例（AI-自动化测试节点）：UI 质感提升与卡牌 3D 纵深
-// 对应测试方案：openspec/changes/optimize-playtest-card-depth/test/卡牌3D纵深与界面质感-test-plan.md
-// 运行：npx playwright test openspec/changes/optimize-playtest-card-depth/test/browser --config=openspec/changes/optimize-playtest-card-depth/test/browser/playwright.depth.config.ts
+// 对应测试方案：openspec/changes/archive/2026-09-22-optimize-playtest-card-depth/test/卡牌3D纵深与界面质感-test-plan.md
+// 运行：npx playwright test openspec/changes/archive/2026-09-22-optimize-playtest-card-depth/test/browser --config=openspec/changes/archive/2026-09-22-optimize-playtest-card-depth/test/browser/playwright.depth.config.ts
 import {readFileSync} from 'node:fs';
 import {test, expect, type Page, type Locator} from '@playwright/test';
-import {newTrigger, TRIGGER_SAVE_KEY, type TriggerCard} from '../../../../../packages/core/src/trigger';
-import {orderedChoices} from '../../../../../tools/ai-play-lib';
+import {newTrigger, TRIGGER_SAVE_KEY, type TriggerCard} from '../../../../../../packages/core/src/trigger';
+import {orderedChoices} from '../../../../../../tools/ai-play-lib';
 
 const CSS_PATH = 'apps/playtest/public/trigger.css';
-const SHOTS = 'openspec/changes/optimize-playtest-card-depth/test/reports/shots';
+const SHOTS = 'openspec/changes/archive/2026-09-22-optimize-playtest-card-depth/test/reports/shots';
 const COLOR_LITERAL = /#[0-9a-fA-F]{3,8}\b|\brgba?\(|\bhsla?\(/g;
 
 /* ---------- 静态样式工具（TC-013 / TC-014） ---------- */

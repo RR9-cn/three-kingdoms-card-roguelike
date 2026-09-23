@@ -8,7 +8,7 @@ import path from 'node:path';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 // <repo>/openspec/changes/<change>/test/browser -> 仓库根
-const repoRoot = path.resolve(here, '../../../../..');
+const repoRoot = path.resolve(here, '../../../../../..');
 const chromium = process.env.DEPTH_CHROMIUM_PATH || '/opt/chromium.org/chromium/chrome';
 
 export default defineConfig({

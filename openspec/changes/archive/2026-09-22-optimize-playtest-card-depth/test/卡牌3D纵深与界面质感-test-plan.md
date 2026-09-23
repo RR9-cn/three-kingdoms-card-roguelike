@@ -1,9 +1,9 @@
 # 测试方案
 
-> 基于：任务《【UI 优化】提升界面质感并为卡牌加入 3D 效果》需求共识、Spec 产物 `workflow-node-artifact-yevkotznr4b39mae7i3t`（`openspec/changes/optimize-playtest-card-depth/specs/playtest-visual-depth/spec.md`）、`design.md`、`tasks.md`、独立 Review 报告 `docs/reviews/20260921_ui-depth-card-3d/report.md`、实现提交 `e47c8e4`（工作分支 `feat/ui-3d-card-effect-oysk`）
+> 基于：任务《【UI 优化】提升界面质感并为卡牌加入 3D 效果》需求共识、Spec 产物 `workflow-node-artifact-yevkotznr4b39mae7i3t`（`openspec/changes/archive/2026-09-22-optimize-playtest-card-depth/specs/playtest-visual-depth/spec.md`）、`design.md`、`tasks.md`、独立 Review 报告 `docs/reviews/20260921_ui-depth-card-3d/report.md`、实现提交 `e47c8e4`（工作分支 `feat/ui-3d-card-effect-oysk`）
 > 生成日期：2026-09-22
 
-**迭代目录（featureRoot）**：`openspec/changes/optimize-playtest-card-depth`（本仓库无 `harness/` 目录、无 `fshows` CLI，故以 OpenSpec 变更目录作为迭代目录；本方案所有一次性测试资产均落在 `<featureRoot>/test/` 下）
+**迭代目录（featureRoot）**：`openspec/changes/archive/2026-09-22-optimize-playtest-card-depth`（本仓库无 `harness/` 目录、无 `fshows` CLI，故以 OpenSpec 变更目录作为迭代目录；本方案所有一次性测试资产均落在 `<featureRoot>/test/` 下）
 
 **执行环境矩阵（本机实测确定）**：
 
@@ -46,9 +46,9 @@
 | 规则内核 | `packages/core/src/trigger.ts` | `newTrigger` / `actTrigger` / `triggerView` / `isTriggerState` / `TRIGGER_SAVE_KEY`（本次**不改**，仅回归断言） |
 | 内容 | `packages/content/src/trigger.ts` | 12 种卡牌定义（本次**不改**） |
 | 既有自动化 | `tests/trigger.test.ts`（11 项单元）、`tests/browser/trigger.spec.ts`（3 既有 + 7 新增） | 回归基线，不修改其断言 |
-| 本方案新增测试 | `openspec/changes/optimize-playtest-card-depth/test/browser/depth-ui.spec.ts` | 独立验证用例（Node.js + Playwright 黑盒） |
-| 临时运行配置 | `openspec/changes/optimize-playtest-card-depth/test/browser/playwright.depth.config.ts` | 指向系统 Chromium 的等价配置（不改仓库 `playwright.config.ts`） |
-| Mock/Stub | `openspec/changes/optimize-playtest-card-depth/test/browser/depth-ui.spec.ts` 内 | 浏览器上下文级模拟（reduced-motion / 粗指针 / 畸形存档注入），无外部服务 Mock |
+| 本方案新增测试 | `openspec/changes/archive/2026-09-22-optimize-playtest-card-depth/test/browser/depth-ui.spec.ts` | 独立验证用例（Node.js + Playwright 黑盒） |
+| 临时运行配置 | `openspec/changes/archive/2026-09-22-optimize-playtest-card-depth/test/browser/playwright.depth.config.ts` | 指向系统 Chromium 的等价配置（不改仓库 `playwright.config.ts`） |
+| Mock/Stub | `openspec/changes/archive/2026-09-22-optimize-playtest-card-depth/test/browser/depth-ui.spec.ts` 内 | 浏览器上下文级模拟（reduced-motion / 粗指针 / 畸形存档注入），无外部服务 Mock |
 
 ---
 
@@ -156,8 +156,8 @@
 
 | 类型 | 是否采用 | 理由 | 文件位置 |
 |---|---|---|---|
-| **`node_api`**（主） | 是 | 唯一入口是 HTTP 提供的页面 + 浏览器内交互；用 Node.js（Playwright，Node 运行时）做黑盒自动化，断言落在真实 DOM 计算样式、几何与网络/控制台副作用上 | `openspec/changes/optimize-playtest-card-depth/test/browser/depth-ui.spec.ts` |
-| `manual_smoke`（辅） | 是 | 结算动画“无明显卡顿”的主观观感、材质观感属人工判断；仅在自动化无法判定时作为补充 | `openspec/changes/optimize-playtest-card-depth/test/reports/` 中的人工核对记录 |
+| **`node_api`**（主） | 是 | 唯一入口是 HTTP 提供的页面 + 浏览器内交互；用 Node.js（Playwright，Node 运行时）做黑盒自动化，断言落在真实 DOM 计算样式、几何与网络/控制台副作用上 | `openspec/changes/archive/2026-09-22-optimize-playtest-card-depth/test/browser/depth-ui.spec.ts` |
+| `manual_smoke`（辅） | 是 | 结算动画“无明显卡顿”的主观观感、材质观感属人工判断；仅在自动化无法判定时作为补充 | `openspec/changes/archive/2026-09-22-optimize-playtest-card-depth/test/reports/` 中的人工核对记录 |
 | `java_unit` / `java_integration` | 否 | 本仓库为 TypeScript，无 Java 代码 | — |
 
 **被拒绝的类型**：

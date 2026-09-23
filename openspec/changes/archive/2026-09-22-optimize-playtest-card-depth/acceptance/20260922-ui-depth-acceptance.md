@@ -14,7 +14,7 @@
 | 权威依据 | 任务需求（REQ-1/REQ-2 + 9 项验收标准）；Spec 产物 `workflow-node-artifact-yevkotznr4b39mae7i3t`（能力 `playtest-visual-depth`）；需求共识产物 `workflow-node-artifact-yevkl4e39cb39mae7hp5`；改动前截图产物 `workflow-node-artifact-yevkl4nx8gth91b420op` |
 | 独立验证脚本 | 本次验收自写的 Playwright 脚本 8 个场景（不依赖节点自带用例），原始数据见 §4 与共享产物 bundle `workflow-node-artifact-yevmcxd91cd4thrjveax`（`verification/independent-*.log`、`verification/playwright-*.log`、`screenshots/after-*.png`） |
 | 验收提交说明 | 被验收的交付提交为 `8ae54c3`；本报告随后以纯文档提交 `1c7e7e4` 落入仓库，`git diff 8ae54c3..1c7e7e4 -- apps/ packages/ tests/ docs/evidence/` 为空，产品代码、断言与证据未被任何验收动作改动 |
-| Review / 测试证据 | `docs/reviews/20260921_ui-depth-card-3d/report.md`（独立 Code Review，`result: passed`，critical/high = 0）、`openspec/changes/optimize-playtest-card-depth/test/reports/20260922T015056Z-test-report.md`（独立测试，17/17）、`test/test-result.yaml`（`result: passed`） |
+| Review / 测试证据 | `docs/reviews/20260921_ui-depth-card-3d/report.md`（独立 Code Review，`result: passed`，critical/high = 0）、`openspec/changes/archive/2026-09-22-optimize-playtest-card-depth/test/reports/20260922T015056Z-test-report.md`（独立测试，17/17）、`test/test-result.yaml`（`result: passed`） |
 
 ---
 
@@ -30,7 +30,7 @@
 
 | 维度 | 范围 |
 |---|---|
-| 变更面 | `apps/playtest/public/trigger.css`（+223 行）、`apps/playtest/src/main.ts`（+32/-5）、`tests/browser/trigger.spec.ts`（+334）、`docs/evidence/*`（截图与说明）、`docs/reviews/*`、`openspec/changes/optimize-playtest-card-depth/*` |
+| 变更面 | `apps/playtest/public/trigger.css`（+223 行）、`apps/playtest/src/main.ts`（+32/-5）、`tests/browser/trigger.spec.ts`（+334）、`docs/evidence/*`（截图与说明）、`docs/reviews/*`、`openspec/changes/archive/2026-09-22-optimize-playtest-card-depth/*` |
 | 覆盖区域 | 手牌 `.cards.hand`、槽位 `.slots`、结算牌区 `.cards.played`、战后选牌 `.cards.rewards`、收藏/升级弹层 `.cards.compact`、首页示例 `.home-example`、顶部状态 `.status` 与日志 `.log` |
 | 不在本次验收范围 | 规则/数值/内容正确性（`packages/*` 未改动，由既有 11 项单元用例覆盖）；Windows/Steam 原生发布验证（README 明确未完成）；产品信息架构与文案（非目标）；主观审美终审（见 §3 备注） |
 
@@ -104,20 +104,40 @@
 **归档清单**
 
 - 被验收提交：`8ae54c3`（分支 `feat/ui-3d-card-effect-oysk`，远端可见）；实现提交 `e47c8e4`；证据提交 `4e51a90`/`d8a351d`；Review 提交 `dc12da5`/`a494758`；测试提交 `969ddc4`/`b22ae4e`/`8ae54c3`。
-- Spec 与设计：`openspec/changes/optimize-playtest-card-depth/{proposal,design,tasks}.md`、`specs/playtest-visual-depth/spec.md`（共享产物 `workflow-node-artifact-yevkotznr4b39mae7i3t`）。
+- Spec 与设计：`openspec/changes/archive/2026-09-22-optimize-playtest-card-depth/{proposal,design,tasks}.md`、`specs/playtest-visual-depth/spec.md`（共享产物 `workflow-node-artifact-yevkotznr4b39mae7i3t`）。
 - 视觉证据：`docs/evidence/UI_DEPTH_V09.md`、`ui-depth-{before,hover,selected,settlement,reduced,collection}-*.png`；被用例自动覆盖并说明的 `trigger-battle/reward/victory.png`。
-- 测试资产与报告：`openspec/changes/optimize-playtest-card-depth/test/`（测试方案、`depth-ui.spec.ts` 14 项、`mutation-probe.spec.ts` 3 项、Playwright JSON 报告、12 张状态/变异截图、`test-result.yaml`）。
+- 测试资产与报告：`openspec/changes/archive/2026-09-22-optimize-playtest-card-depth/test/`（测试方案、`depth-ui.spec.ts` 14 项、`mutation-probe.spec.ts` 3 项、Playwright JSON 报告、12 张状态/变异截图、`test-result.yaml`）。
 - 代码评审：`docs/reviews/20260921_ui-depth-card-3d/{report.md,result.yaml}`。
-- 本验收报告与其独立验证证据：`openspec/changes/optimize-playtest-card-depth/acceptance/20260922-ui-depth-acceptance.md` + 共享产物 bundle `workflow-node-artifact-yevmcxd91cd4thrjveax`（独立脚本原始日志、等价/默认配置运行日志、本次独立截图 8 张）。
+- 本验收报告与其独立验证证据：`openspec/changes/archive/2026-09-22-optimize-playtest-card-depth/acceptance/20260922-ui-depth-acceptance.md` + 共享产物 bundle `workflow-node-artifact-yevmcxd91cd4thrjveax`（独立脚本原始日志、等价/默认配置运行日志、本次独立截图 8 张）。
 
 **建议后续动作**
 
 1. **发布/合并**：本次交付达到可发布状态（有条件通过，条件见 §5）；建议先与 `optimize/product-ui-kkrx` 商定合并顺序，合并后复跑两边用例集。
-2. **OpenSpec 归档**：本次验收**未**擅自移动 `openspec/changes/optimize-playtest-card-depth/` 到 `archive/`、也未把 `playtest-visual-depth` 写入 `openspec/specs/`（该归档动作与“合并到 main”同步执行更安全，且并行分支也在改同一批规格）。建议在合并到 `main` 时一并执行归档。
+2. **OpenSpec 归档**：已由本节点执行（变更移入 `openspec/changes/archive/2026-09-22-optimize-playtest-card-depth/`，能力规格并入 `openspec/specs/playtest-visual-depth/spec.md`，归档后复跑 27/27），详见 §8；该提交可整体回滚，如团队更希望在合并到 `main` 时归档，revert 单个提交即可。
 3. **环境收口**：在具备 Google Chrome 与 Node 24 的环境复跑 `npm run test:browser` 与 `npm test`（G1/G2）。
 4. **文本收敛**：按 G3 收敛 `tasks.md` 2.3 的表述或投影取值。
 5. **留观项**：若业务认为质感强度不足，应作为**新变更**提出（本次按 D-07/D-08 的量级边界交付，无过度形变、无外部素材依赖）。
 
+
+## 8. 归档执行记录（验收归档节点，2026-09-23）
+
+本次继续执行的归档动作（纯文档/结构变更，可单提交回滚）：
+
+| 动作 | 结果 |
+|---|---|
+| OpenSpec 变更归档 | `openspec/changes/optimize-playtest-card-depth/` → `openspec/changes/archive/2026-09-22-optimize-playtest-card-depth/`（`git mv`，内容逐字节保留；历史测试报告与 Playwright JSON 报告未被改写） |
+| 能力规格并入 | 新建 `openspec/specs/playtest-visual-depth/spec.md`：`# playtest-visual-depth Specification` + `## Purpose` + `## Requirements`，含 **7 条 Requirement / 28 个 Scenario**（与 delta 逐条一致） |
+| 归档后可用性修复 | `test/browser/playwright.depth.config.ts` 的 `repoRoot` 解析与 `depth-ui.spec.ts` 的相对导入各补一级 `../`；可运行文档/常量中的路径改为归档路径 |
+| 归档后复跑 | 从归档路径运行等价配置完整用例集：**27/27 通过**（42.9s），日志见同目录 `acceptance/20260923-archived-path-rerun.log`；`npm ci`、`npm run build`（`index-qK0h60DS.js` 18.57 kB，同哈希）、`npm test`（11/11）通过 |
+| 截图基线 | 复跑覆盖的 `docs/evidence/{trigger-battle,trigger-reward,ui-depth-hover-1280}.png` 已按负责人决策 `git checkout` 复原（不更新截图） |
+| 路径映射 | 旧 `openspec/changes/optimize-playtest-card-depth/<x>` ↔ 新 `openspec/changes/archive/2026-09-22-optimize-playtest-card-depth/<x>`；能力规格另落在 `openspec/specs/playtest-visual-depth/spec.md` |
+
+### 本轮对 §5 条件的更新
+
+| ID | 更新 |
+|---|---|
+| G1 | **本环境确认无法闭环**：容器内无 root（`uid=1000(gem)`）、`/opt` 不可写（`touch /opt/.write-test` → Permission denied），Playwright `channel:'chrome'` 固定解析 `/opt/google/chrome/chrome`，故默认 `npm run test:browser` 在本环境恒失败；等价配置口径继续有效。剩余动作仍是「在具备 Google Chrome 的环境复跑」 |
+| G4 | **当前无冲突**：`origin/optimize/product-ui-kkrx`（`5a94fdb`）截至本轮仍只含 OpenSpec 文档（5 个文件 / +251 行），与本分支**文件零重叠**，现在合并不会产生冲突。其编码节点改写 `trigger.css` 时冲突才会出现。逐条比对本次实现与其不变量：`:root` 外零颜色字面量 **满足**（实测 0）；单一样式表、无构建期 token 生成 **满足**；`.card` 仍为语义化 `<button>`、弹层结构与焦点行为 **未改**；`.card small` 仍为 10px（**未改**，其 ≥12px 与对比度修正需由该变更自行落地，本变更不阻塞） |
 ---
 
-**验收判定：有条件通过**。条件为环境（G1/G2）与流程（G4）项，均不涉及本次交付的功能、验收标准与红线；未满足项 0、阻塞项 0。
+**验收判定：有条件通过**。条件为环境（G1/G2）与流程（G4）项，均不涉及本次交付的功能、验收标准与红线；未满足项 0、阻塞项 0。OpenSpec 归档动作已由本节点完成（见 §8），合并顺序与「具备 Chrome/Node 24 的环境复跑」仍为后续动作。
